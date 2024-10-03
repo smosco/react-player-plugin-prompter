@@ -1452,7 +1452,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"core@workspace:core":
+"core@workspace:*, core@workspace:core":
   version: 0.0.0-use.local
   resolution: "core@workspace:core"
   dependencies:
@@ -1572,6 +1572,7 @@ __metadata:
     "@types/react-dom": "npm:18.3.0"
     "@typescript-eslint/eslint-plugin": "npm:^8.8.0"
     "@vitejs/plugin-react": "npm:^4.3.2"
+    core: "workspace:*"
     eslint-plugin-prettier: "npm:^5.2.1"
     eslint-plugin-react: "npm:^7.37.1"
     eslint-plugin-react-hooks: "npm:^4.6.2"

@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../src/components/Button.tsx"],
+  "sourcesContent": ["import React from 'react';\n\ninterface ButtonProps {\n  label: string;\n  onClick: () => void;\n}\n\nexport function Button({ label, onClick }: ButtonProps) {\n  return <button onClick={onClick}>{label}</button>;\n}\n"],
+  "mappings": ";AAQS;AADF,SAAS,OAAO,EAAE,OAAO,QAAQ,GAAgB;AACtD,SAAO,oBAAC,YAAO,SAAmB,iBAAM;AAC1C;",
+  "names": []
+}
