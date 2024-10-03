@@ -1,4 +1,6 @@
+// eslint-disable-next-line @typescript-eslint/no-require-imports
 const esbuild = require('esbuild');
+// eslint-disable-next-line @typescript-eslint/no-require-imports
 const { execSync } = require('child_process');
 
 const isWatchMode = process.argv.includes('--watch');
@@ -22,7 +24,9 @@ const buildOptions = {
 const buildDts = () => {
   console.log('Generating type declaration files...');
   try {
-    execSync('tsc --emitDeclarationOnly --outDir dist/types', { stdio: 'inherit' });
+    execSync('tsc --emitDeclarationOnly --outDir dist/types', {
+      stdio: 'inherit',
+    });
     console.log('Type declaration files generated successfully.');
   } catch (error) {
     console.error('Failed to generate type declaration files:', error);
@@ -34,6 +38,7 @@ const build = async () => {
     if (isWatchMode) {
       const context = await esbuild.context(buildOptions);
       await context.watch({
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
         onRebuild(error, result) {
           if (error) {
             console.error('Watch build failed:', error);
