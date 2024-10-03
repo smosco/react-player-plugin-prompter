@@ -11,6 +11,7 @@
     "core": "yarn workspace core",
     "demo": "yarn workspace demo",
     "docs": "yarn workspace docs",
+    "typecheck": "yarn workspaces foreach --all run typecheck",
     "format": "prettier --write ."
   },
   "devDependencies": {
