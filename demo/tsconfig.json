@@ -1,10 +1,11 @@
 {
   "extends": "../tsconfig.json",
   "compilerOptions": {
+    "composite": true,
     "baseUrl": "./src",
     "outDir": "./dist",
     "module": "ESNext",
-    "moduleResolution": "Bundler"
+    "moduleResolution": "Bundler",
   },
   "exclude": ["./dist", "./build"]
 }
