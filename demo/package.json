@@ -1,7 +1,10 @@
 {
   "name": "demo",
   "packageManager": "yarn@4.3.1",
-    "scripts": {
+  "scripts": {
     "typecheck": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "typescript": "5.5.4"
   }
 }
