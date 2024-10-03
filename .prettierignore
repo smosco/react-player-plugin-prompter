@@ -1,0 +1,29 @@
+# Build outputs
+build
+dist
+
+# Package manager files
+.pnp.cjs
+.pnp.loader.mjs
+.yarn/**
+node_modules
+
+# Version control
+.changeset/**
+.github/**
+
+# IDE settings
+.vscode/**
+
+# Generated files
+__generated__/**
+
+# Cache files
+.ultra.cache.json
+
+# Package info
+package.json
+
+# Lock files (선택적)
+yarn.lock
+package-lock.json

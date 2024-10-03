@@ -10,7 +10,8 @@
   "scripts": {
     "core": "yarn workspace core",
     "demo": "yarn workspace demo",
-    "docs": "yarn workspace docs"
+    "docs": "yarn workspace docs",
+    "format": "prettier --write ."
   },
   "devDependencies": {
     "prettier": "^3.3.3",
