@@ -12,11 +12,16 @@
     "demo": "yarn workspace demo",
     "docs": "yarn workspace docs",
     "typecheck": "yarn workspaces foreach --all run typecheck",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
     "format": "prettier --write ."
   },
   "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^8.8.0",
+    "@typescript-eslint/parser": "^8.8.0",
+    "eslint": "8.57.1",
     "prettier": "^3.3.3",
-    "typescript": "5.5.4"
+    "typescript": "5.5.3"
   },
   "resolutions": {
     "@types/react": "18.3.3",
