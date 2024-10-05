@@ -4,8 +4,11 @@
     "composite": true,
     "baseUrl": "./src",
     "outDir": "./dist",
+    "rootDir": "./src", // rootDir 설정 추가
     "module": "ESNext",
-    "moduleResolution": "Bundler"
+    "moduleResolution": "Node"
   },
-  "exclude": ["./dist", "./build"]
+  "include": ["src/**/*"],
+  "exclude": ["dist", "build"],
+  "references": [{ "path": "../core" }]
 }
