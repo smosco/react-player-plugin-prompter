@@ -1838,6 +1838,16 @@ const RAW_RUNTIME_STATE =
         "linkType": "HARD"\
       }]\
     ]],\
+    ["chokidar", [\
+      ["npm:4.0.1", {\
+        "packageLocation": "../../AppData/Local/Yarn/Berry/cache/chokidar-npm-4.0.1-989df9ae3c-10c0.zip/node_modules/chokidar/",\
+        "packageDependencies": [\
+          ["chokidar", "npm:4.0.1"],\
+          ["readdirp", "npm:4.0.2"]\
+        ],\
+        "linkType": "HARD"\
+      }]\
+    ]],\
     ["chownr", [\
       ["npm:2.0.0", {\
         "packageLocation": "../../AppData/Local/Yarn/Berry/cache/chownr-npm-2.0.0-638f1c9c61-10c0.zip/node_modules/chownr/",\
@@ -1917,11 +1927,13 @@ const RAW_RUNTIME_STATE =
           ["@types/react-dom", "npm:18.3.0"],\
           ["@typescript-eslint/eslint-plugin", "virtual:6c81ad46755bd436c3abba45768de75731c4aa1f85c17b8bda14592f510b5621624990547f287cd6339d94d18bb44f1a9a12c06ab8224f348ecb91dcbf92b060#npm:8.8.0"],\
           ["esbuild", "npm:0.24.0"],\
+          ["esbuild-sass-plugin", "virtual:6c81ad46755bd436c3abba45768de75731c4aa1f85c17b8bda14592f510b5621624990547f287cd6339d94d18bb44f1a9a12c06ab8224f348ecb91dcbf92b060#npm:3.3.1"],\
           ["eslint-plugin-prettier", "virtual:6c81ad46755bd436c3abba45768de75731c4aa1f85c17b8bda14592f510b5621624990547f287cd6339d94d18bb44f1a9a12c06ab8224f348ecb91dcbf92b060#npm:5.2.1"],\
           ["eslint-plugin-react", "virtual:6c81ad46755bd436c3abba45768de75731c4aa1f85c17b8bda14592f510b5621624990547f287cd6339d94d18bb44f1a9a12c06ab8224f348ecb91dcbf92b060#npm:7.37.1"],\
           ["eslint-plugin-react-hooks", "virtual:6c81ad46755bd436c3abba45768de75731c4aa1f85c17b8bda14592f510b5621624990547f287cd6339d94d18bb44f1a9a12c06ab8224f348ecb91dcbf92b060#npm:4.6.2"],\
           ["react", "npm:18.3.1"],\
           ["react-dom", "virtual:6c81ad46755bd436c3abba45768de75731c4aa1f85c17b8bda14592f510b5621624990547f287cd6339d94d18bb44f1a9a12c06ab8224f348ecb91dcbf92b060#npm:18.3.1"],\
+          ["sass", "npm:1.79.4"],\
           ["typescript", "patch:typescript@npm%3A5.5.3#optional!builtin<compat/typescript>::version=5.5.3&hash=379a07"]\
         ],\
         "packagePeers": [\
@@ -1940,11 +1952,13 @@ const RAW_RUNTIME_STATE =
           ["@types/react-dom", "npm:18.3.0"],\
           ["@typescript-eslint/eslint-plugin", "virtual:6c81ad46755bd436c3abba45768de75731c4aa1f85c17b8bda14592f510b5621624990547f287cd6339d94d18bb44f1a9a12c06ab8224f348ecb91dcbf92b060#npm:8.8.0"],\
           ["esbuild", "npm:0.24.0"],\
+          ["esbuild-sass-plugin", "virtual:6c81ad46755bd436c3abba45768de75731c4aa1f85c17b8bda14592f510b5621624990547f287cd6339d94d18bb44f1a9a12c06ab8224f348ecb91dcbf92b060#npm:3.3.1"],\
           ["eslint-plugin-prettier", "virtual:6c81ad46755bd436c3abba45768de75731c4aa1f85c17b8bda14592f510b5621624990547f287cd6339d94d18bb44f1a9a12c06ab8224f348ecb91dcbf92b060#npm:5.2.1"],\
           ["eslint-plugin-react", "virtual:6c81ad46755bd436c3abba45768de75731c4aa1f85c17b8bda14592f510b5621624990547f287cd6339d94d18bb44f1a9a12c06ab8224f348ecb91dcbf92b060#npm:7.37.1"],\
           ["eslint-plugin-react-hooks", "virtual:6c81ad46755bd436c3abba45768de75731c4aa1f85c17b8bda14592f510b5621624990547f287cd6339d94d18bb44f1a9a12c06ab8224f348ecb91dcbf92b060#npm:4.6.2"],\
           ["react", "npm:18.3.1"],\
           ["react-dom", "virtual:6c81ad46755bd436c3abba45768de75731c4aa1f85c17b8bda14592f510b5621624990547f287cd6339d94d18bb44f1a9a12c06ab8224f348ecb91dcbf92b060#npm:18.3.1"],\
+          ["sass", "npm:1.79.4"],\
           ["typescript", "patch:typescript@npm%3A5.5.3#optional!builtin<compat/typescript>::version=5.5.3&hash=379a07"]\
         ],\
         "linkType": "SOFT"\
@@ -2373,6 +2387,35 @@ const RAW_RUNTIME_STATE =
           ["@esbuild/win32-arm64", "npm:0.24.0"],\
           ["@esbuild/win32-ia32", "npm:0.24.0"],\
           ["@esbuild/win32-x64", "npm:0.24.0"]\
+        ],\
+        "linkType": "HARD"\
+      }]\
+    ]],\
+    ["esbuild-sass-plugin", [\
+      ["npm:3.3.1", {\
+        "packageLocation": "../../AppData/Local/Yarn/Berry/cache/esbuild-sass-plugin-npm-3.3.1-b84a183462-10c0.zip/node_modules/esbuild-sass-plugin/",\
+        "packageDependencies": [\
+          ["esbuild-sass-plugin", "npm:3.3.1"]\
+        ],\
+        "linkType": "SOFT"\
+      }],\
+      ["virtual:6c81ad46755bd436c3abba45768de75731c4aa1f85c17b8bda14592f510b5621624990547f287cd6339d94d18bb44f1a9a12c06ab8224f348ecb91dcbf92b060#npm:3.3.1", {\
+        "packageLocation": "./.yarn/__virtual__/esbuild-sass-plugin-virtual-2a0bafeede/3/AppData/Local/Yarn/Berry/cache/esbuild-sass-plugin-npm-3.3.1-b84a183462-10c0.zip/node_modules/esbuild-sass-plugin/",\
+        "packageDependencies": [\
+          ["esbuild-sass-plugin", "virtual:6c81ad46755bd436c3abba45768de75731c4aa1f85c17b8bda14592f510b5621624990547f287cd6339d94d18bb44f1a9a12c06ab8224f348ecb91dcbf92b060#npm:3.3.1"],\
+          ["@types/esbuild", null],\
+          ["@types/sass-embedded", null],\
+          ["esbuild", "npm:0.24.0"],\
+          ["resolve", "patch:resolve@npm%3A1.22.8#optional!builtin<compat/resolve>::version=1.22.8&hash=c3c19d"],\
+          ["safe-identifier", "npm:0.4.2"],\
+          ["sass", "npm:1.79.4"],\
+          ["sass-embedded", null]\
+        ],\
+        "packagePeers": [\
+          "@types/esbuild",\
+          "@types/sass-embedded",\
+          "esbuild",\
+          "sass-embedded"\
         ],\
         "linkType": "HARD"\
       }]\
@@ -3124,6 +3167,15 @@ const RAW_RUNTIME_STATE =
         "packageLocation": "../../AppData/Local/Yarn/Berry/cache/ignore-npm-5.3.2-346d3ba017-10c0.zip/node_modules/ignore/",\
         "packageDependencies": [\
           ["ignore", "npm:5.3.2"]\
+        ],\
+        "linkType": "HARD"\
+      }]\
+    ]],\
+    ["immutable", [\
+      ["npm:4.3.7", {\
+        "packageLocation": "../../AppData/Local/Yarn/Berry/cache/immutable-npm-4.3.7-a76ac3621b-10c0.zip/node_modules/immutable/",\
+        "packageDependencies": [\
+          ["immutable", "npm:4.3.7"]\
         ],\
         "linkType": "HARD"\
       }]\
@@ -4290,6 +4342,15 @@ const RAW_RUNTIME_STATE =
         "linkType": "HARD"\
       }]\
     ]],\
+    ["readdirp", [\
+      ["npm:4.0.2", {\
+        "packageLocation": "../../AppData/Local/Yarn/Berry/cache/readdirp-npm-4.0.2-8001f0febc-10c0.zip/node_modules/readdirp/",\
+        "packageDependencies": [\
+          ["readdirp", "npm:4.0.2"]\
+        ],\
+        "linkType": "HARD"\
+      }]\
+    ]],\
     ["reflect.getprototypeof", [\
       ["npm:1.0.6", {\
         "packageLocation": "../../AppData/Local/Yarn/Berry/cache/reflect.getprototypeof-npm-1.0.6-b33819c756-10c0.zip/node_modules/reflect.getprototypeof/",\
@@ -4320,6 +4381,16 @@ const RAW_RUNTIME_STATE =
       }]\
     ]],\
     ["resolve", [\
+      ["patch:resolve@npm%3A1.22.8#optional!builtin<compat/resolve>::version=1.22.8&hash=c3c19d", {\
+        "packageLocation": "../../AppData/Local/Yarn/Berry/cache/resolve-patch-4254c24959-10c0.zip/node_modules/resolve/",\
+        "packageDependencies": [\
+          ["resolve", "patch:resolve@npm%3A1.22.8#optional!builtin<compat/resolve>::version=1.22.8&hash=c3c19d"],\
+          ["is-core-module", "npm:2.15.1"],\
+          ["path-parse", "npm:1.0.7"],\
+          ["supports-preserve-symlinks-flag", "npm:1.0.0"]\
+        ],\
+        "linkType": "HARD"\
+      }],\
       ["patch:resolve@npm%3A2.0.0-next.5#optional!builtin<compat/resolve>::version=2.0.0-next.5&hash=c3c19d", {\
         "packageLocation": "../../AppData/Local/Yarn/Berry/cache/resolve-patch-95f8f5d302-10c0.zip/node_modules/resolve/",\
         "packageDependencies": [\
@@ -4418,6 +4489,15 @@ const RAW_RUNTIME_STATE =
         "linkType": "HARD"\
       }]\
     ]],\
+    ["safe-identifier", [\
+      ["npm:0.4.2", {\
+        "packageLocation": "../../AppData/Local/Yarn/Berry/cache/safe-identifier-npm-0.4.2-57e7a2b138-10c0.zip/node_modules/safe-identifier/",\
+        "packageDependencies": [\
+          ["safe-identifier", "npm:0.4.2"]\
+        ],\
+        "linkType": "HARD"\
+      }]\
+    ]],\
     ["safe-regex-test", [\
       ["npm:1.0.3", {\
         "packageLocation": "../../AppData/Local/Yarn/Berry/cache/safe-regex-test-npm-1.0.3-97fe5cc608-10c0.zip/node_modules/safe-regex-test/",\
@@ -4435,6 +4515,18 @@ const RAW_RUNTIME_STATE =
         "packageLocation": "../../AppData/Local/Yarn/Berry/cache/safer-buffer-npm-2.1.2-8d5c0b705e-10c0.zip/node_modules/safer-buffer/",\
         "packageDependencies": [\
           ["safer-buffer", "npm:2.1.2"]\
+        ],\
+        "linkType": "HARD"\
+      }]\
+    ]],\
+    ["sass", [\
+      ["npm:1.79.4", {\
+        "packageLocation": "../../AppData/Local/Yarn/Berry/cache/sass-npm-1.79.4-fa344ddaab-10c0.zip/node_modules/sass/",\
+        "packageDependencies": [\
+          ["sass", "npm:1.79.4"],\
+          ["chokidar", "npm:4.0.1"],\
+          ["immutable", "npm:4.3.7"],\
+          ["source-map-js", "npm:1.2.1"]\
         ],\
         "linkType": "HARD"\
       }]\

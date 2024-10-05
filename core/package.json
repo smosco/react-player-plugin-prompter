@@ -14,11 +14,13 @@
     "@types/react-dom": "^18",
     "@typescript-eslint/eslint-plugin": "^8.8.0",
     "esbuild": "^0.24.0",
+    "esbuild-sass-plugin": "^3.3.1",
     "eslint-plugin-prettier": "^5.2.1",
     "eslint-plugin-react": "^7.37.1",
     "eslint-plugin-react-hooks": "^4.6.2",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
+    "sass": "^1.79.4",
     "typescript": "5.5.3"
   },
   "peerDependencies": {

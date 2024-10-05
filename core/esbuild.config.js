@@ -2,6 +2,8 @@
 const esbuild = require('esbuild');
 // eslint-disable-next-line @typescript-eslint/no-require-imports
 const { execSync } = require('child_process');
+// eslint-disable-next-line @typescript-eslint/no-require-imports
+const { sassPlugin } = require('esbuild-sass-plugin');
 
 const isWatchMode = process.argv.includes('--watch');
 const isProduction = process.env.NODE_ENV === 'production';
@@ -13,12 +15,15 @@ const buildOptions = {
   format: 'esm',
   target: ['es2018'],
   external: ['react', 'react-dom'],
-  loader: { '.ts': 'ts', '.tsx': 'tsx' },
+  loader: { '.ts': 'ts', '.tsx': 'tsx', '.svg': 'file' },
   sourcemap: !isProduction,
   minify: isProduction,
   tsconfig: 'tsconfig.json',
   logLevel: 'info',
   metafile: true, // 빌드 메타데이터 생성
+  plugins: [
+    sassPlugin(), // Sass 플러그인 추가
+  ],
 };
 
 const buildDts = () => {
