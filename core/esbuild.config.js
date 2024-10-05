@@ -24,7 +24,7 @@ const buildOptions = {
 const buildDts = () => {
   console.log('Generating type declaration files...');
   try {
-    execSync('tsc --emitDeclarationOnly --outDir dist/types', {
+    execSync('tsc --emitDeclarationOnly --outDir dist', {
       stdio: 'inherit',
     });
     console.log('Type declaration files generated successfully.');
