@@ -9,6 +9,6 @@
     "moduleResolution": "Node"
   },
   "include": ["src/**/*"],
-  "exclude": ["dist", "build"],
+  "exclude": ["dist", "node_modules"],
   "references": [{ "path": "../core" }]
 }

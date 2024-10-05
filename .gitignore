@@ -13,6 +13,10 @@ node_modules
 #!.yarn/cache
 .pnp.*
 
+# 빌드된 결과물(demo/dist 폴더) 무시
+# TODO(@smosco): core/dist도 무시해도 되는지 고민중
+demo/dist
+
 # TypeScript 빌드 캐시 파일 무시
 tsconfig.tsbuildinfo
 
