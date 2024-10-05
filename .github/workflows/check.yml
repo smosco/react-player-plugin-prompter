@@ -1,10 +1,10 @@
 name: Lint and Type Check
+
 on:
   push:
     branches:
       - main
       - develop
-
   pull_request:
     branches:
       - main
@@ -18,23 +18,30 @@ jobs:
         uses: actions/checkout@v3
 
       - name: Install Node.js
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
           node-version: 20
 
-      - name: Cache node modules
+      - name: Enable Corepack
+        run: corepack enable
+
+      - name: Get Yarn version
+        id: yarn-version
+        run: echo "YARN_VERSION=$(yarn --version)" >> $GITHUB_OUTPUT
+
+      - name: Cache Yarn dependencies
         uses: actions/cache@v3
         with:
-          path: ~/.npm
-          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          path: .yarn/cache
+          key: ${{ runner.os }}-yarn-${{ steps.yarn-version.outputs.YARN_VERSION }}-${{ hashFiles('**/yarn.lock') }}
           restore-keys: |
-            ${{ runner.os }}-node-
+            ${{ runner.os }}-yarn-${{ steps.yarn-version.outputs.YARN_VERSION }}-
 
       - name: Install dependencies
-        run: npm install
+        run: yarn install --immutable
 
       - name: Run TypeScript type check
-        run: npx tsc --noEmit
+        run: yarn typecheck
 
       - name: Run ESLint
-        run: npm run lint
+        run: yarn lint
