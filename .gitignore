@@ -13,6 +13,3 @@ node_modules
 #!.yarn/cache
 .pnp.*
 
-# Build artifacts
-build
-dist
