@@ -2,7 +2,7 @@ import React from 'react';
 import { LanguageCode, Subtitle } from '../interfaces/Scripts';
 import { useState } from 'react';
 import arrow_back from '../assets/icons/arrow_back.svg';
-import forward from '../assets/icons/arrow_back.svg';
+import arrow_forward from '../assets/icons/arrow_forward.svg';
 import { TextDisplay } from './TextDisplay';
 import styles from './ReactScriptPlayer.module.scss';
 
@@ -43,7 +43,7 @@ export function LineView({
           <img src={arrow_back} alt="Back Arrow" />
         </button>
         <button onClick={handleNext}>
-          <img src={forward} alt="Forward Arrow" />
+          <img src={arrow_forward} alt="Forward Arrow" />
         </button>
       </div>
 
