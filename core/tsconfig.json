@@ -9,6 +9,6 @@
     "emitDeclarationOnly": false, // .d.ts 파일과 .js 파일 모두 생성
     "rootDir": "./src" // 모든 소스 파일의 루트 경로를 명확히 설정
   },
-  "include": ["src/**/*"],
+  "include": ["src/**/*", "global.d.ts"],
   "exclude": ["dist", "node_modules"]
 }

@@ -1,7 +1,7 @@
 // scss 적용을 위한 타입 선언
-declare module '*.scss' {
-  const content: { [className: string]: string };
-  export default content;
+declare module '*.module.scss' {
+  const classes: { [key: string]: string };
+  export default classes;
 }
 
 // svg 사용을 위한 타입 선언
