@@ -1,0 +1,28 @@
+.optionContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+
+  .displayModeToggleContainer {
+    display: flex;
+    width: 12rem;
+    padding: 0.2rem;
+    background-color: #c7c7c7;
+    border-radius: 4px;
+
+    button {
+      width: 50%;
+      border: none;
+      cursor: pointer;
+      background: inherit;
+      padding: 0.5rem;
+      font-size: 0.8rem;
+      transition: background-color 0.3s ease-out;
+
+      &.active {
+        background-color: white;
+        border-radius: 4px;
+      }
+    }
+  }
+}
