@@ -1,11 +1,62 @@
+/* eslint-disable no-undef */
 // src/components/Button.tsx
 import { jsx } from "react/jsx-runtime";
 function Button({ label, onClick }) {
   return /* @__PURE__ */ jsx("button", { onClick, children: label });
 }
 
-// src/components/ReactScriptPlayer.module.scss
-var ReactScriptPlayer_module_default = {};
+// esbuild-scss-modules-plugin:./ReactScriptPlayer.module.scss
+var digest = "b76a105b8a0b6eeffc7bc8b1b704ee3826628f41851fcc5ed4e3cf129ccf28e4";
+var classes = { "subtitleContainer": "_subtitleContainer_1xoeq_1", "lineViewContainer": "_lineViewContainer_1xoeq_14", "skipButtonContainer": "_skipButtonContainer_1xoeq_19", "blockViewContainer": "_blockViewContainer_1xoeq_26" };
+var css = `._subtitleContainer_1xoeq_1 {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  width: 90%;
+  max-width: 590px;
+  height: 16rem;
+  padding: 1.5rem;
+  border: 2px solid #e3e3e3;
+  border-radius: 0.5rem;
+  overflow-y: auto;
+}
+
+._lineViewContainer_1xoeq_14 {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+._lineViewContainer_1xoeq_14 ._skipButtonContainer_1xoeq_19 {
+  align-self: end;
+}
+._lineViewContainer_1xoeq_14 ._skipButtonContainer_1xoeq_19 button {
+  cursor: pointer;
+}
+
+._blockViewContainer_1xoeq_26 {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+._blockViewContainer_1xoeq_26 button {
+  width: 5rem;
+  padding: 8px 12px;
+  border: none;
+  border-radius: 5rem;
+  background-color: #ececec;
+  cursor: pointer;
+  font-size: 0.8rem;
+  color: #5a5a5a;
+}`;
+(function() {
+  if (typeof document !== "undefined" && !document.getElementById(digest)) {
+    var ele = document.createElement("style");
+    ele.id = digest;
+    ele.textContent = css;
+    document.head.appendChild(ele);
+  }
+})();
+var ReactScriptPlayer_module_default = classes;
 
 // src/components/ReactScriptPlayer.tsx
 import { useEffect } from "react";
@@ -14,7 +65,10 @@ import { useEffect } from "react";
 import { useState } from "react";
 
 // src/assets/icons/arrow_back.svg
-var arrow_back_default = "./arrow_back-K4LLZI77.svg";
+var arrow_back_default = 'data:image/svg+xml,<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">%0A<g clip-path="url(%23clip0_17_4620)">%0A<path d="M17.5098 3.86998L15.7298 2.09998L5.83984 12L15.7398 21.9L17.5098 20.13L9.37984 12L17.5098 3.86998Z" fill="%23707070"/>%0A</g>%0A<defs>%0A<clipPath id="clip0_17_4620">%0A<rect width="24" height="24" fill="white"/>%0A</clipPath>%0A</defs>%0A</svg>%0A';
+
+// src/assets/icons/arrow_forward.svg
+var arrow_forward_default = 'data:image/svg+xml,<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">%0A<g clip-path="url(%23clip0_17_4639)">%0A<path d="M6.49023 20.13L8.26023 21.9L18.1602 12L8.26023 2.09998L6.49023 3.86998L14.6202 12L6.49023 20.13Z" fill="%23707070"/>%0A</g>%0A<defs>%0A<clipPath id="clip0_17_4639">%0A<rect width="24" height="24" fill="white"/>%0A</clipPath>%0A</defs>%0A</svg>%0A';
 
 // src/components/TextDisplay.tsx
 import { jsx as jsx2 } from "react/jsx-runtime";
@@ -68,7 +122,7 @@ function LineView({
   return /* @__PURE__ */ jsxs("div", { className: ReactScriptPlayer_module_default.lineViewContainer, children: [
     /* @__PURE__ */ jsxs("div", { className: ReactScriptPlayer_module_default.skipButtonContainer, children: [
       /* @__PURE__ */ jsx3("button", { onClick: handlePrevious, children: /* @__PURE__ */ jsx3("img", { src: arrow_back_default, alt: "Back Arrow" }) }),
-      /* @__PURE__ */ jsx3("button", { onClick: handleNext, children: /* @__PURE__ */ jsx3("img", { src: arrow_back_default, alt: "Forward Arrow" }) })
+      /* @__PURE__ */ jsx3("button", { onClick: handleNext, children: /* @__PURE__ */ jsx3("img", { src: arrow_forward_default, alt: "Forward Arrow" }) })
     ] }),
     /* @__PURE__ */ jsx3(
       TextDisplay,

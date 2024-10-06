@@ -1,7 +1,0 @@
-{
-  "version": 3,
-  "sources": ["../src/components/ReactScriptPlayer.module.scss"],
-  "sourcesContent": [".subtitleContainer {\n  display: flex;\n  flex-direction: column;\n  gap: 2rem;\n  width: 90%;\n  max-width: 590px;\n  height: 16rem;\n  padding: 1.5rem;\n  border: 2px solid #e3e3e3;\n  border-radius: 0.5rem;\n  overflow-y: auto;\n}\n\n.lineViewContainer {\n  display: flex;\n  flex-direction: column;\n  gap: 2rem;\n\n  .skipButtonContainer {\n    align-self: end;\n\n    button {\n      cursor: pointer;\n    }\n  }\n}\n\n.blockViewContainer {\n  display: flex;\n  flex-direction: column;\n  gap: 2rem;\n\n  button {\n    width: 5rem;\n    padding: 8px 12px;\n    border: none;\n    border-radius: 5rem;\n    background-color: #ececec;\n    cursor: pointer;\n    font-size: 0.8rem;\n    color: #5a5a5a;\n  }\n}\n"],
-  "mappings": ";AAAA,CAAA;AACE,WAAA;AACA,kBAAA;AACA,OAAA;AACA,SAAA;AACA,aAAA;AACA,UAAA;AACA,WAAA;AACA,UAAA,IAAA,MAAA;AACA,iBAAA;AACA,cAAA;;AAGF,CAAA;AACE,WAAA;AACA,kBAAA;AACA,OAAA;;AAEA,CALF,kBAKE,CAAA;AACE,cAAA;;AAEA,CARJ,kBAQI,CAHF,oBAGE;AACE,UAAA;;AAKN,CAAA;AACE,WAAA;AACA,kBAAA;AACA,OAAA;;AAEA,CALF,mBAKE;AACE,SAAA;AACA,WAAA,IAAA;AACA,UAAA;AACA,iBAAA;AACA,oBAAA;AACA,UAAA;AACA,aAAA;AACA,SAAA;;",
-  "names": []
-}
