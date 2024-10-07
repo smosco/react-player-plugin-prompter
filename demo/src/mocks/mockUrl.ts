@@ -1,1 +1,1 @@
-export const mockUrl = 'https://www.youtube.com/watch?v=xtc-1WbF9PE';
+export const mockUrl = 'https://www.youtube.com/watch?v=eIho2S0ZahI';
