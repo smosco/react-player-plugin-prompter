@@ -1,11 +1,20 @@
 .controlBar {
+  position: absolute;
+  bottom: 0; /* 비디오 바닥 부분에 고정 */
+  left: 0;
+  right: 0;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 10px;
-  width: 100%;
-  box-shadow: rgb(208, 205, 205) 0px 0px 10px 0px;
-  border-radius: 10px;
+  padding: 8px; /* ControlBar padding */
+  background-color: rgba(0, 0, 0, 0.5); /* 반투명한 배경색 */
+
+  color: white;
+  width: 100%; /* 부모 요소에 맞추어 전체 너비 */
+  max-width: 640px; /* 최대 너비 설정 */
+  // box-shadow: rgb(208, 205, 205) 0px 0px 10px 0px;
+  border-radius: 0 0 20px 20px; /* ControlBar의 하단 모서리 둥글게 */
+  box-sizing: border-box;
 }
 .leftControlBar {
   display: flex;
@@ -16,6 +25,15 @@
   flex-direction: row;
 }
 
+.volumeControl {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin-right: 10px;
+  input {
+    max-width: 50px;
+  }
+}
 button {
   background-color: transparent;
   border: none;

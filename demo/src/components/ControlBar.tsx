@@ -16,11 +16,11 @@ import {
 
 interface BasicControlBarProps {
   handlePlayPause: () => void;
-  handleVolumeChange: () => void;
   handleSeekBackward: () => void;
   handleSeekForward: () => void;
   isPlaying: boolean;
-  volume: boolean;
+  handleVolumeChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  volume: number;
 }
 
 interface ControlBarProps {
@@ -36,29 +36,31 @@ export default function ControlBar({
   // - 자막 on/off 컴포넌트 개발 필요
   // - 환경설정 컴포넌트 개발 필요
   // - useBooleanState로 모든 버튼 boolean 상태 관리 필요
-  // - 진행률 바 컴포넌트 개발 필요
   const [onCaption, setOnCaptin] = useBooleanState(true);
   const [currentTime, setCurrentTime] = useState<number | null>(null);
   const [totalTime, setTotalTime] = useState<number | null>(null);
+
   const {
     handlePlayPause,
-    handleVolumeChange,
     isPlaying,
     handleSeekBackward,
     handleSeekForward,
+    handleVolumeChange,
+    volume,
   } = BasicControlBarProps;
+
+  // 볼륨 조절 핸들러
 
   useEffect(() => {
     const interval = setInterval(() => {
       if (playerRef.current) {
         setCurrentTime(playerRef.current.getCurrentTime());
         setTotalTime(playerRef.current.getDuration());
-        console.log('controlBar', currentTime);
       }
     }, 1000); // 1초마다 업데이트
 
     return () => clearInterval(interval);
-  }, [playerRef, currentTime, totalTime]);
+  }, [playerRef]);
 
   return (
     <div className={S.controlBar}>
@@ -66,19 +68,26 @@ export default function ControlBar({
         <button onClick={handlePlayPause}>
           {isPlaying ? <Pause /> : <Play />}
         </button>
-        {/* 
-        // todo @godhyzzang
-        볼륨 0~1까지 막대로 조절 가능하게
-        현재 0, 1로만 토글 가능
- */}
-        <button onClick={handleVolumeChange}>
-          <Volume2 />
-        </button>
 
-        <span
-          className={S.timeDiv}
-        >{`${formatTime(currentTime)} / ${formatTime(totalTime)}`}</span>
+        {/* 볼륨 슬라이더 */}
+        <div className={S.volumeControl}>
+          <Volume2 />
+          <input
+            type="range"
+            min="0"
+            max="1"
+            step="0.01"
+            value={volume}
+            onChange={handleVolumeChange}
+            aria-label="Volume"
+          />
+        </div>
+
+        <span className={S.timeDiv}>
+          {`${formatTime(currentTime)} / ${formatTime(totalTime)}`}
+        </span>
       </div>
+
       <div className={S.rightControlBar}>
         <button onClick={handleSeekBackward}>
           <Rewind />
@@ -86,12 +95,10 @@ export default function ControlBar({
         <button onClick={handleSeekForward}>
           <FastForward />
         </button>
-        <button onClick={setOnCaptin}>
-          {onCaption ? <Captions /> : <CaptionsOff />}
-        </button>
-        <button>
+
+        {/* <button>
           <Settings />
-        </button>
+        </button> */}
       </div>
     </div>
   );
