@@ -19,15 +19,28 @@ function App() {
   const [selectedLanguages, setSelectedLanguages] =
     useState<LanguageCode[]>(availableLanguages);
 
+  const [currentTime, setCurrentTime] = useState(0);
+
   const seekTo = (timeInSeconds: number) => {
     if (playerRef.current) {
       playerRef.current.seekTo(timeInSeconds, 'seconds');
     }
   };
 
+  const handleProgress = (state: { playedSeconds: number }) => {
+    setCurrentTime(state.playedSeconds);
+  };
+
+  // console.log(currentTime);
+
   return (
     <div className="App">
-      <ReactPlayer ref={playerRef} url={mockUrl} playing />
+      <ReactPlayer
+        ref={playerRef}
+        url={mockUrl}
+        playing
+        onProgress={handleProgress}
+      />
 
       <SubtitleOption
         mode={mode}
@@ -42,6 +55,7 @@ function App() {
         subtitles={scriptsMockData}
         selectedLanguages={selectedLanguages}
         seekTo={seekTo}
+        currentTime={currentTime}
         onClickSubtitle={(subtitle, index) => {
           console.log(subtitle, index);
         }}
