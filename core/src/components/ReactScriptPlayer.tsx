@@ -1,6 +1,5 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import styles from './ReactScriptPlayer.module.scss';
-import { useEffect } from 'react';
 import { LanguageCode, Subtitle } from '../interfaces/Scripts';
 import { LineView } from './LineView';
 import { BlockView } from './BlockView';
@@ -10,6 +9,7 @@ export interface ReactScriptPlayerProps {
   subtitles: Subtitle[];
   selectedLanguages: LanguageCode[];
   seekTo: (timeInSeconds: number) => void;
+  currentTime: number;
   onClickSubtitle: (subtitle: Subtitle, index: number) => void;
   onSelectWord: (word: string, subtitle: Subtitle, index: number) => void;
 }
@@ -19,19 +19,30 @@ export function ReactScriptPlayer({
   subtitles,
   selectedLanguages,
   seekTo,
+  currentTime,
   onClickSubtitle,
   onSelectWord,
 }: ReactScriptPlayerProps) {
-  useEffect(() => {
-    // TODO(@smosco): 1초마다 재생 시간 받아오기 (onProgress or getCurrentTime)
-  }, []);
+  const reversedSubtitles = useMemo(
+    () => [...subtitles].reverse(),
+    [subtitles],
+  );
+  // TODO(@smosco): 현재 자막 인덱스 찾는 로직 리팩토링
+  const currentSubtitleIndex = useMemo(() => {
+    const index = reversedSubtitles.findIndex(
+      (subtitle) => subtitle.startTimeInSecond < currentTime,
+    );
+    return reversedSubtitles.length - 1 - index;
+  }, [reversedSubtitles, currentTime]);
 
   return (
     <div className={styles.subtitleContainer}>
       <div className={styles.displayContainer}>
+        {/* TODO(@smosco): line, block 뷰 props가 거의 동일하기 때문에 공통 props로 추출해서 관리 */}
         {mode === 'line' && (
           <LineView
             subtitles={subtitles}
+            currentSubtitleIndex={currentSubtitleIndex}
             selectedLanguages={selectedLanguages}
             seekTo={seekTo}
             onSelectWord={onSelectWord}
@@ -40,6 +51,7 @@ export function ReactScriptPlayer({
         {mode === 'block' && (
           <BlockView
             subtitles={subtitles}
+            currentSubtitleIndex={currentSubtitleIndex}
             selectedLanguages={selectedLanguages}
             seekTo={seekTo}
             onClickSubtitle={onClickSubtitle}
