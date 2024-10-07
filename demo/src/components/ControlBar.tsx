@@ -11,7 +11,6 @@ interface BasicControlBarProps {
   isPlaying: boolean;
   handleVolumeChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   volume: number;
-  handleProgressChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
 interface ControlBarProps {
@@ -25,6 +24,7 @@ export default function ControlBar({
 }: ControlBarProps) {
   const [currentTime, setCurrentTime] = useState<number | null>(null);
   const [totalTime, setTotalTime] = useState<number | null>(null);
+  const [isDragging, setIsDragging] = useState(false);
 
   const {
     handlePlayPause,
@@ -33,24 +33,51 @@ export default function ControlBar({
     handleSeekForward,
     handleVolumeChange,
     volume,
-    handleProgressChange,
   } = BasicControlBarProps;
 
   useEffect(() => {
     const interval = setInterval(() => {
-      if (playerRef.current) {
+      if (playerRef.current && !isDragging) {
         setCurrentTime(playerRef.current.getCurrentTime());
         setTotalTime(playerRef.current.getDuration());
       }
     }, 1000); // 1초마다 업데이트
 
     return () => clearInterval(interval);
-  }, [playerRef]);
+  }, [playerRef, isDragging]);
+
+  // 마우스 이벤트 핸들러
+  const handleMouseDown = () => {
+    setIsDragging(true);
+  };
+
+  const handleMouseUp = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (playerRef.current && totalTime) {
+      const progressBar = e.currentTarget; // progressBar 자체에서 좌표를 가져옴
+      const progressBarRect = progressBar.getBoundingClientRect();
+      const clickPosition = e.clientX - progressBarRect.left;
+      const newTime = (clickPosition / progressBarRect.width) * totalTime;
+      playerRef.current.seekTo(newTime);
+      setCurrentTime(newTime);
+    }
+    setIsDragging(false);
+  };
+
+  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (isDragging && playerRef.current && totalTime) {
+      const progressBar = e.currentTarget; // progressBar 자체에서 좌표를 가져옴
+      const progressBarRect = progressBar.getBoundingClientRect();
+      const dragPosition = e.clientX - progressBarRect.left;
+      const newTime = Math.min(
+        Math.max((dragPosition / progressBarRect.width) * totalTime, 0),
+        totalTime,
+      );
+      setCurrentTime(newTime);
+    }
+  };
 
   return (
     <div className={S.controlBarWrapper}>
-      {/* 진행률 바 추가 (제일 하단으로 이동) */}
-
       <div className={S.controlBar}>
         <div className={S.leftControlBar}>
           {/* 볼륨 슬라이더 */}
@@ -84,16 +111,24 @@ export default function ControlBar({
           </button>
         </div>
       </div>
-      <input
+
+      {/* 드래그 가능한 진행 바 */}
+      <div
         className={S.progressBar}
-        type="range"
-        min={0}
-        max={totalTime || 0}
-        step="0.01"
-        value={currentTime || 0}
-        onChange={handleProgressChange}
+        onMouseDown={handleMouseDown}
+        onMouseMove={handleMouseMove}
+        onMouseUp={handleMouseUp}
+        onMouseLeave={() => setIsDragging(false)} // 드래그 상태 해제
+        role="progressbar"
         aria-label="Progress"
-      />
+      >
+        <div
+          className={S.progressFill}
+          style={{
+            width: `${currentTime && totalTime ? (currentTime / totalTime) * 100 : 0}%`,
+          }}
+        ></div>
+      </div>
     </div>
   );
 }

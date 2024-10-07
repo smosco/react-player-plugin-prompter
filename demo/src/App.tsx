@@ -64,17 +64,6 @@ function App() {
     }
   };
 
-  const handleProgressChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const newTime = parseFloat(e.target.value);
-    if (playerRef.current) {
-      playerRef.current.seekTo(newTime); // 플레이어의 시간 조정
-      setCurrentTime(newTime);
-      // 슬라이더의 배경색 업데이트
-      const gradientValue = (100 / parseFloat(e.target.max)) * newTime;
-      e.target.style.background = `linear-gradient(to right, #FFE283 0%, #FFE283 ${gradientValue}%, #ececec ${gradientValue}%, #ececec 100%)`;
-    }
-  };
-
   const BasicControlBarProps = {
     handlePlayPause,
     handleVolumeChange,
@@ -82,7 +71,6 @@ function App() {
     handleSeekForward,
     isPlaying,
     volume,
-    handleProgressChange,
   };
   // ---
 
