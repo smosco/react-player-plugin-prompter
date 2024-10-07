@@ -14,7 +14,7 @@ import {
   Pause,
 } from 'lucide-react';
 
-interface BaseControlBarProps {
+interface BasicControlBarProps {
   handlePlayPause: () => void;
   handleVolumeChange: () => void;
   handleSeekBackward: () => void;
@@ -25,10 +25,13 @@ interface BaseControlBarProps {
 
 interface ControlBarProps {
   reactPlayerRef: RefObject<ReactPlayer>;
-  rest: BaseControlBarProps;
+  BasicControlBarProps: BasicControlBarProps;
 }
 
-export default function ControlBar({ reactPlayerRef, rest }: ControlBarProps) {
+export default function ControlBar({
+  reactPlayerRef,
+  BasicControlBarProps,
+}: ControlBarProps) {
   // todo @godhyzzang
   // - 자막 on/off 컴포넌트 개발 필요
   // - 환경설정 컴포넌트 개발 필요
@@ -43,7 +46,7 @@ export default function ControlBar({ reactPlayerRef, rest }: ControlBarProps) {
     isPlaying,
     handleSeekBackward,
     handleSeekForward,
-  } = rest;
+  } = BasicControlBarProps;
 
   useEffect(() => {
     const interval = setInterval(() => {
