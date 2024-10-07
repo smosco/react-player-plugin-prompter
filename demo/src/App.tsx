@@ -31,10 +31,9 @@ function App() {
     setCurrentTime(state.playedSeconds);
   };
 
-  // console.log(currentTime);
-
   return (
     <div className="App">
+      {/* TODO(@smosco): progressInterval을 더 짧게 주자 */}
       <ReactPlayer
         ref={playerRef}
         url={mockUrl}

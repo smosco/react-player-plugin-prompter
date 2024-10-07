@@ -27,6 +27,7 @@ export function ReactScriptPlayer({
     () => [...subtitles].reverse(),
     [subtitles],
   );
+  // TODO(@smosco): 현재 자막 인덱스 찾는 로직 리팩토링
   const currentSubtitleIndex = useMemo(() => {
     const index = reversedSubtitles.findIndex(
       (subtitle) => subtitle.startTimeInSecond < currentTime,
@@ -34,14 +35,10 @@ export function ReactScriptPlayer({
     return reversedSubtitles.length - 1 - index;
   }, [reversedSubtitles, currentTime]);
 
-  // console.log(
-  //   'index',
-  //   currentSubtitleIndex,
-  //   subtitles.length - 1 - currentSubtitleIndex,
-  // );
   return (
     <div className={styles.subtitleContainer}>
       <div className={styles.displayContainer}>
+        {/* TODO(@smosco): line, block 뷰 props가 거의 동일하기 때문에 공통 props로 추출해서 관리 */}
         {mode === 'line' && (
           <LineView
             subtitles={subtitles}

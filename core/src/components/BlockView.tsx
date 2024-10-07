@@ -12,7 +12,6 @@ interface BlockViewProps {
   onClickSubtitle: (subtitle: Subtitle, index: number) => void;
   onSelectWord: (word: string, subtitle: Subtitle, index: number) => void;
 }
-// TODO: 공통 PROPS 추출
 
 export function BlockView({
   subtitles,

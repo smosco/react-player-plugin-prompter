@@ -48,9 +48,10 @@ export function LineView({
           <img src={arrow_forward} alt="Forward Arrow" />
         </button>
       </div>
+
       {/* TextDisplay에서 현재 자막과 선택된 언어를 표시 */}
       {subtitles[currentSubtitleIndex] && (
-        // TODO:자막 프로그레스바
+        // TODO(@smosco):사용자가 자막이 언제 넘어갈지 알 수 있도록 progressbar 추가
         <TextDisplay
           subtitle={subtitles[currentSubtitleIndex]}
           selectedLanguages={selectedLanguages}
