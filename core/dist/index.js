@@ -1,9 +1,11 @@
-/* eslint-disable no-undef */
 // src/components/Button.tsx
 import { jsx } from "react/jsx-runtime";
 function Button({ label, onClick }) {
   return /* @__PURE__ */ jsx("button", { onClick, children: label });
 }
+
+// src/components/ReactScriptPlayer.tsx
+import { useMemo } from "react";
 
 // esbuild-scss-modules-plugin:./ReactScriptPlayer.module.scss
 var digest = "b76a105b8a0b6eeffc7bc8b1b704ee3826628f41851fcc5ed4e3cf129ccf28e4";
@@ -58,12 +60,6 @@ var css = `._subtitleContainer_1xoeq_1 {
 })();
 var ReactScriptPlayer_module_default = classes;
 
-// src/components/ReactScriptPlayer.tsx
-import { useEffect } from "react";
-
-// src/components/LineView.tsx
-import { useState } from "react";
-
 // src/assets/icons/arrow_back.svg
 var arrow_back_default = 'data:image/svg+xml,<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">%0A<g clip-path="url(%23clip0_17_4620)">%0A<path d="M17.5098 3.86998L15.7298 2.09998L5.83984 12L15.7398 21.9L17.5098 20.13L9.37984 12L17.5098 3.86998Z" fill="%23707070"/>%0A</g>%0A<defs>%0A<clipPath id="clip0_17_4620">%0A<rect width="24" height="24" fill="white"/>%0A</clipPath>%0A</defs>%0A</svg>%0A';
 
@@ -77,7 +73,6 @@ function TextDisplay({
   selectedLanguages,
   onSelectWord
 }) {
-  console.log(subtitle);
   return /* @__PURE__ */ jsx2("div", { className: ReactScriptPlayer_module_default.textView, children: selectedLanguages.map((language) => /* @__PURE__ */ jsx2(
     "p",
     {
@@ -102,21 +97,19 @@ import { jsx as jsx3, jsxs } from "react/jsx-runtime";
 function LineView({
   subtitles,
   selectedLanguages,
+  currentSubtitleIndex,
   seekTo,
   onSelectWord
 }) {
-  const [currentSubtitleIndex, setCurrentSubtitleIndex] = useState(0);
   const totalSubtitles = subtitles.length;
   const handlePrevious = () => {
     if (currentSubtitleIndex > 0) {
       seekTo(subtitles[currentSubtitleIndex - 1].startTimeInSecond);
-      setCurrentSubtitleIndex((prev) => prev - 1);
     }
   };
   const handleNext = () => {
     if (currentSubtitleIndex < totalSubtitles - 1) {
       seekTo(subtitles[currentSubtitleIndex + 1].startTimeInSecond);
-      setCurrentSubtitleIndex((prev) => prev + 1);
     }
   };
   return /* @__PURE__ */ jsxs("div", { className: ReactScriptPlayer_module_default.lineViewContainer, children: [
@@ -124,6 +117,7 @@ function LineView({
       /* @__PURE__ */ jsx3("button", { onClick: handlePrevious, children: /* @__PURE__ */ jsx3("img", { src: arrow_back_default, alt: "Back Arrow" }) }),
       /* @__PURE__ */ jsx3("button", { onClick: handleNext, children: /* @__PURE__ */ jsx3("img", { src: arrow_forward_default, alt: "Forward Arrow" }) })
     ] }),
+    subtitles[currentSubtitleIndex] && // TODO:자막 프로그레스바
     /* @__PURE__ */ jsx3(
       TextDisplay,
       {
@@ -134,6 +128,9 @@ function LineView({
     )
   ] });
 }
+
+// src/components/BlockView.tsx
+import { useRef, useEffect } from "react";
 
 // src/utils/convertTime.ts
 function convertTime(seconds) {
@@ -148,17 +145,37 @@ function convertTime(seconds) {
 import { jsx as jsx4, jsxs as jsxs2 } from "react/jsx-runtime";
 function BlockView({
   subtitles,
+  currentSubtitleIndex,
   selectedLanguages,
   seekTo,
   onClickSubtitle,
   onSelectWord
 }) {
-  return /* @__PURE__ */ jsx4("div", { className: ReactScriptPlayer_module_default.blockViewContainer, children: subtitles.map((subtitle, index) => /* @__PURE__ */ jsxs2(
+  const containerRef = useRef(null);
+  useEffect(() => {
+    if (containerRef.current) {
+      if (currentSubtitleIndex < containerRef.current.children.length - 1) {
+        containerRef.current.children[currentSubtitleIndex].scrollIntoView({
+          block: "center",
+          behavior: "smooth"
+        });
+      }
+    }
+  }, [currentSubtitleIndex]);
+  return /* @__PURE__ */ jsx4("div", { ref: containerRef, className: ReactScriptPlayer_module_default.blockViewContainer, children: subtitles.map((subtitle, index) => /* @__PURE__ */ jsxs2(
     "div",
     {
       onClick: () => {
         seekTo(subtitle.startTimeInSecond);
         onClickSubtitle(subtitle, index);
+      },
+      style: {
+        padding: "16px",
+        borderRadius: "12px",
+        transition: "background-color 0.5s ease-in-out",
+        ...index === currentSubtitleIndex && {
+          backgroundColor: "lightgray"
+        }
       },
       children: [
         /* @__PURE__ */ jsx4("button", { children: convertTime(subtitle.startTimeInSecond) }),
@@ -183,16 +200,26 @@ function ReactScriptPlayer({
   subtitles,
   selectedLanguages,
   seekTo,
+  currentTime,
   onClickSubtitle,
   onSelectWord
 }) {
-  useEffect(() => {
-  }, []);
+  const reversedSubtitles = useMemo(
+    () => [...subtitles].reverse(),
+    [subtitles]
+  );
+  const currentSubtitleIndex = useMemo(() => {
+    const index = reversedSubtitles.findIndex(
+      (subtitle) => subtitle.startTimeInSecond < currentTime
+    );
+    return reversedSubtitles.length - 1 - index;
+  }, [reversedSubtitles, currentTime]);
   return /* @__PURE__ */ jsx5("div", { className: ReactScriptPlayer_module_default.subtitleContainer, children: /* @__PURE__ */ jsxs3("div", { className: ReactScriptPlayer_module_default.displayContainer, children: [
     mode === "line" && /* @__PURE__ */ jsx5(
       LineView,
       {
         subtitles,
+        currentSubtitleIndex,
         selectedLanguages,
         seekTo,
         onSelectWord
@@ -202,6 +229,7 @@ function ReactScriptPlayer({
       BlockView,
       {
         subtitles,
+        currentSubtitleIndex,
         selectedLanguages,
         seekTo,
         onClickSubtitle,
