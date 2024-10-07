@@ -78,7 +78,7 @@ function App() {
       <ReactPlayer
         ref={playerRef}
         url={mockUrl}
-        playing
+        playing={isPlaying}
         onProgress={handleProgress}
       />
       <ControlBar
