@@ -11,7 +11,6 @@ export function TextDisplay({
   selectedLanguages: LanguageCode[]; // 선택된 언어 배열
   onSelectWord: (word: string, subtitle: Subtitle, index: number) => void;
 }) {
-  console.log(subtitle);
   return (
     <div className={styles.textView}>
       {selectedLanguages.map((language) => (

@@ -1,6 +1,5 @@
 import React from 'react';
 import styles from './ReactScriptPlayer.module.scss';
-import { useEffect } from 'react';
 import { LanguageCode, Subtitle } from '../interfaces/Scripts';
 import { LineView } from './LineView';
 import { BlockView } from './BlockView';
@@ -22,10 +21,6 @@ export function ReactScriptPlayer({
   onClickSubtitle,
   onSelectWord,
 }: ReactScriptPlayerProps) {
-  useEffect(() => {
-    // TODO(@smosco): 1초마다 재생 시간 받아오기 (onProgress or getCurrentTime)
-  }, []);
-
   return (
     <div className={styles.subtitleContainer}>
       <div className={styles.displayContainer}>
