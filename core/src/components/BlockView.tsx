@@ -25,6 +25,7 @@ export function BlockView({
 
   useEffect(() => {
     if (containerRef.current) {
+      // console.log(containerRef.current);
       if (currentSubtitleIndex < containerRef.current.children.length - 1) {
         containerRef.current.children[currentSubtitleIndex].scrollIntoView({
           block: 'center',
@@ -38,19 +39,12 @@ export function BlockView({
     <div ref={containerRef} className={styles.blockViewContainer}>
       {subtitles.map((subtitle, index) => (
         <div
+          className={`${styles.subtitleItem} ${index === currentSubtitleIndex ? styles.active : ''}`}
           key={index}
           onClick={() => {
             // TODO(@smosco): 자막 클릭 함수 구현
             seekTo(subtitle.startTimeInSecond);
             onClickSubtitle(subtitle, index);
-          }}
-          style={{
-            padding: '16px',
-            borderRadius: '12px',
-            transition: 'background-color 0.5s ease-in-out',
-            ...(index === currentSubtitleIndex && {
-              backgroundColor: 'lightgray',
-            }),
           }}
         >
           <button>{convertTime(subtitle.startTimeInSecond)}</button>

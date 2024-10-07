@@ -30,6 +30,16 @@
   flex-direction: column;
   gap: 2rem;
 
+  .subtitleItem {
+    padding: 16px;
+    border-radius: 12px;
+    transition: background-color 0.5s ease-in-out;
+
+    &.active {
+      background-color: lightgray;
+    }
+  }
+
   button {
     width: 5rem;
     padding: 8px 12px;
