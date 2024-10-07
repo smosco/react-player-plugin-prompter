@@ -1,4 +1,3 @@
-/* eslint-disable no-undef */
 // src/components/Button.tsx
 import { jsx } from "react/jsx-runtime";
 function Button({ label, onClick }) {
