@@ -24,12 +24,12 @@ interface BasicControlBarProps {
 }
 
 interface ControlBarProps {
-  reactPlayerRef: RefObject<ReactPlayer>;
+  playerRef: RefObject<ReactPlayer>;
   BasicControlBarProps: BasicControlBarProps;
 }
 
 export default function ControlBar({
-  reactPlayerRef,
+  playerRef,
   BasicControlBarProps,
 }: ControlBarProps) {
   // todo @godhyzzang
@@ -50,15 +50,15 @@ export default function ControlBar({
 
   useEffect(() => {
     const interval = setInterval(() => {
-      if (reactPlayerRef.current) {
-        setCurrentTime(reactPlayerRef.current.getCurrentTime());
-        setTotalTime(reactPlayerRef.current.getDuration());
+      if (playerRef.current) {
+        setCurrentTime(playerRef.current.getCurrentTime());
+        setTotalTime(playerRef.current.getDuration());
         console.log('controlBar', currentTime);
       }
     }, 1000); // 1초마다 업데이트
 
     return () => clearInterval(interval);
-  }, [reactPlayerRef, currentTime, totalTime]);
+  }, [playerRef, currentTime, totalTime]);
 
   return (
     <div className={S.controlBar}>
