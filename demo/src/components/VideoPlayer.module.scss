@@ -1,0 +1,92 @@
+.video {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  max-width: 640px;
+  border-radius: 20px; /* 바깥쪽 모서리 둥글게 */
+  overflow: hidden; /* 자식 요소가 부모 크기를 넘지 않도록 설정 */
+}
+
+.video iframe {
+  width: 100%;
+  height: 100%;
+  clip-path: inset(0 round 20px); /* 안쪽 모서리 둥글게 */
+}
+.controlBarWrapper {
+  position: absolute;
+  width: 100%;
+  bottom: -5px;
+  background: linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 0) 0%,
+    rgba(0, 0, 0, 1) 100%
+  );
+}
+
+.controlBar {
+  width: 100%;
+  height: 30px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: white;
+  padding: 0px 10px;
+}
+.progressBar {
+  width: 100%; /* 부모 요소에 맞춰 전체 너비 */
+  margin: 0px; /* ControlBar padding */
+  background: linear-gradient(
+    to right,
+
+    /* 기본 채우기 색상 */ #ececec 50%,
+    /* 남은 부분 색상 */ #ececec 100%
+  );
+  transition: background-color 450ms ease-in; /* 배경 변화 시 전환 효과 */
+  -webkit-appearance: none; /* 기본 슬라이더 스타일 제거 (크로스 브라우저 호환성) */
+  appearance: none; /* 기본 슬라이더 스타일 제거 */
+  accent-color: #ffca1d; /* 슬라이더 색상 설정 */
+}
+.leftControlBar {
+  display: flex;
+  flex-direction: row;
+}
+.centerControlBar {
+  position: absolute;
+  right: 50%;
+  transform: translateX(50%);
+  display: flex;
+  flex-direction: row;
+}
+
+.volumeSlideBar {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin-right: 10px;
+  input {
+    max-width: 50px;
+  }
+}
+
+button {
+  background-color: transparent;
+  border: none;
+  color: white;
+  margin: 0 10px;
+  font-size: 5px;
+  cursor: pointer;
+  margin: 0 10px;
+}
+
+.timeViewBox {
+  display: flex;
+  background-color: transparent;
+  align-items: center;
+  border: none;
+  color: white;
+  margin: 0 10px;
+  font-size: 0.8rem;
+
+  cursor: pointer;
+  margin: 0 10px;
+}
