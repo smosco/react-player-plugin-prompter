@@ -49,8 +49,13 @@
   flex-direction: row;
   align-items: center;
   margin-right: 10px;
-  input {
-    max-width: 50px;
+
+  input[type='range'] {
+    width: 60px;
+    height: 5px;
+    border-radius: 15px;
+    cursor: pointer;
+    accent-color: white; // 볼륨 조절기 색상
   }
 }
 
