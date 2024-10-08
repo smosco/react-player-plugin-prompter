@@ -55,7 +55,7 @@ export default function ControlBar({
     if (playerRef.current && totalTime) {
       const progressBar = e.currentTarget; // progressBar 자체에서 좌표를 가져옴
       const progressBarRect = progressBar.getBoundingClientRect();
-      const clickPosition = e.clientX - progressBarRect.left;
+      const clickPosition = e.clientX - progressBarRect.left; //전체 브라우저 기준 X좌표-프로그래스바의 X좌표
       const newTime = (clickPosition / progressBarRect.width) * totalTime;
       playerRef.current.seekTo(newTime);
       setCurrentTime(newTime);
@@ -67,7 +67,7 @@ export default function ControlBar({
     if (isDragging && playerRef.current && totalTime) {
       const progressBar = e.currentTarget; // progressBar 자체에서 좌표를 가져옴
       const progressBarRect = progressBar.getBoundingClientRect();
-      const dragPosition = e.clientX - progressBarRect.left;
+      const dragPosition = e.clientX - progressBarRect.left; //전체 브라우저 기준 X좌표-프로그래스바의 X좌표
       const newTime = Math.min(
         Math.max((dragPosition / progressBarRect.width) * totalTime, 0),
         totalTime,
