@@ -86,7 +86,7 @@ export default function ControlBar({
         <div className={S.leftControlBar}>
           {/* 볼륨 슬라이더 */}
           <div className={S.volumeSlideBar}>
-            <Volume2 />
+            <Volume2 fill="white" />
             <input
               type="range"
               min="0"
@@ -105,13 +105,13 @@ export default function ControlBar({
 
         <div className={S.centerControlBar}>
           <button onClick={handleSeekBackward}>
-            <Rewind />
+            <Rewind fill="white" />
           </button>
           <button onClick={handlePlayPause}>
-            {isPlaying ? <Pause /> : <Play />}
+            {isPlaying ? <Pause fill="white" /> : <Play fill="white" />}
           </button>
           <button onClick={handleSeekForward}>
-            <FastForward />
+            <FastForward fill="white" />
           </button>
         </div>
       </div>
