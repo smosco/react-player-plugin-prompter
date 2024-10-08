@@ -35,6 +35,10 @@
 .leftControlBar {
   display: flex;
   flex-direction: row;
+@media (max-width: 500px) {
+    // 화면 크기가 500px 이하일 때 볼륨, 시간 버튼 숨김
+    display: none;
+  }
 }
 .centerControlBar {
   position: absolute;
