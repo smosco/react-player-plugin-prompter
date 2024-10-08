@@ -16,7 +16,11 @@
   position: absolute;
   width: 100%;
   bottom: -5px;
-  background: linear-gradient(to bottom, rgba(0, 0, 0, 0) 0%, rg#cf6df3 100%);
+  background: linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 0) 0%,
+    rgba(0, 0, 0, 0.9) 100%
+  );
 }
 
 .controlBar {
@@ -85,7 +89,11 @@ button {
 
 .progressFill {
   height: 100%;
-  background-color: hwb(218 0% 0%); /* 진행된 부분의 색상 */
+  background-color: rgb(
+    186,
+    133,
+    186
+  ); /* 진행된 부분의 색상, 반투명하게 설정 */
   border-radius: 5px 0 0 5px;
   transition: width 0.25s ease; /* 진행바 변화 시 전환 효과 */
 }
