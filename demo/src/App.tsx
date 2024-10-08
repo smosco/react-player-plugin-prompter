@@ -83,6 +83,10 @@ function App() {
           ref={playerRef}
           url={mockUrl}
           playing={isPlaying}
+          width={'100%'}
+          onPlay={() => setIsPlaying(true)}
+          onStart={() => setIsPlaying(true)}
+          onPause={() => setIsPlaying(false)}
           onProgress={handleProgress}
           volume={volume}
           controls={false} // 유튜브 자체 컨트롤러 안 뜨게
