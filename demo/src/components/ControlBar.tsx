@@ -39,6 +39,7 @@ export default function ControlBar({
   } = BasicControlBarProps;
 
   useEffect(() => {
+    // todo : 리팩토링-> getCurrentTime setInterval로 1초마다 업데이트하는 방식 대신 ReactPlayer에서 onProgress 콜백 함수를 사용해서 currentTime을 받아오는 값을 ControlBar에 넘기는 방식 고려해보기
     const interval = setInterval(() => {
       if (playerRef.current && !isDragging) {
         setCurrentTime(playerRef.current.getCurrentTime());
@@ -49,7 +50,7 @@ export default function ControlBar({
     return () => clearInterval(interval);
   }, [playerRef, isDragging]);
 
-  // 마우스 이벤트 핸들러
+  // todo : 마우스 이벤트 핸들러 -> mouseDown, mouseUp, 공통함수로 만들기
   const handleMouseDown = () => {
     setIsDragging(true);
   };
@@ -65,7 +66,7 @@ export default function ControlBar({
     }
     setIsDragging(false);
   };
-
+  // todo : 이벤트 호출 최적화 필요 -> 디바운싱?
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
     if (isDragging && playerRef.current && totalTime) {
       const progressBar = e.currentTarget; // progressBar 자체에서 좌표를 가져옴

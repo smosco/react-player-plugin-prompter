@@ -45,13 +45,14 @@ function App() {
     const newVolume = parseFloat(e.target.value);
     setVolume(newVolume);
   };
+  //  todo : 리팩토링 -> handleSeekForward, handleSeekBackward 공통함수로 빼기
+
   const handleSeekForward = () => {
     if (playerRef.current) {
       playerRef.current.seekTo(
         (playerRef.current.getCurrentTime() || 0) + 10,
         'seconds',
       );
-      console.log(playerRef.current.getCurrentTime());
     }
   };
 
@@ -84,7 +85,7 @@ function App() {
           playing={isPlaying}
           onProgress={handleProgress}
           volume={volume}
-          controls={false}
+          controls={false} // 유튜브 자체 컨트롤러 안 뜨게
         />
         <ControlBar
           playerRef={playerRef}
