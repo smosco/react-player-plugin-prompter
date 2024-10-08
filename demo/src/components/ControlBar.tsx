@@ -3,6 +3,9 @@ import ReactPlayer from 'react-player';
 import S from './VideoPlayer.module.scss';
 import formatTime from '../utils/formatTime';
 import { Volume2, Play, Rewind, FastForward, Pause } from 'lucide-react';
+// todo :
+// 1. 기능 : pause버튼 완전 연동 필요
+// 2. 디자인 : progressBar 색깔 변경 필요
 
 interface BasicControlBarProps {
   handlePlayPause: () => void;
