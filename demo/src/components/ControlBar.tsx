@@ -26,8 +26,6 @@ export default function ControlBar({
   playerRef,
   BasicControlBarProps,
 }: ControlBarProps) {
-  const [currentTime, setCurrentTime] = useState<number | null>(null);
-  const [totalTime, setTotalTime] = useState<number | null>(null);
   const [isDragging, setIsDragging] = useState(false);
 
   const {
@@ -102,52 +100,17 @@ export default function ControlBar({
           </button>
           {showPlaybackRate && (
             <div className={S.playbackRateButton}>
-              <label className={S.playbackRateLabel}>
+              {[0.5, 0.75, 1, 1.2, 1.5].map((rate) => (
+                <label key={rate} className={S.playbackRateLabel}>
                 <input
                   type="radio"
                   name="playbackRate"
-                  value="0.5"
-                  onClick={() => setPlayBackRate(0.5)}
+                    value={rate}
+                    onClick={() => setPlayBackRate(rate)}
                 />
-                0.5x
+                  {rate}x
               </label>
-              <label className={S.playbackRateLabel}>
-                <input
-                  type="radio"
-                  name="playbackRate"
-                  value="0.75"
-                  defaultChecked
-                  onClick={() => setPlayBackRate(0.75)}
-                />
-                0.75x
-              </label>
-              <label className={S.playbackRateLabel}>
-                <input
-                  type="radio"
-                  name="playbackRate"
-                  value="1"
-                  onClick={() => setPlayBackRate(1)}
-                />
-                1x
-              </label>
-              <label className={S.playbackRateLabel}>
-                <input
-                  type="radio"
-                  name="playbackRate"
-                  value="1.2"
-                  onClick={() => setPlayBackRate(1.2)}
-                />
-                1.2x
-              </label>
-              <label className={S.playbackRateLabel}>
-                <input
-                  type="radio"
-                  name="playbackRate"
-                  value="1.5"
-                  onClick={() => setPlayBackRate(1.5)}
-                />
-                1.5x
-              </label>
+              ))}
             </div>
           )}
         </div>
