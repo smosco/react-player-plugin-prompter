@@ -29,10 +29,6 @@ function App() {
     }
   };
 
-  const handleProgress = (state: { playedSeconds: number }) => {
-    setCurrentTime(state.playedSeconds);
-  };
-
   // --- todo : ControlBar에서만 쓰이는 속성 ControlBar로 내부로 이동
   const [isPlaying, setIsPlaying] = useState(false);
   const [volume, setVolume] = useState(0.5);
@@ -47,19 +43,10 @@ function App() {
   };
   //  todo : 리팩토링 -> handleSeekForward, handleSeekBackward 공통함수로 빼기
 
-  const handleSeekForward = () => {
+  const handleSeek = (seconds: number) => {
     if (playerRef.current) {
       playerRef.current.seekTo(
-        (playerRef.current.getCurrentTime() || 0) + 10,
-        'seconds',
-      );
-    }
-  };
-
-  const handleSeekBackward = () => {
-    if (playerRef.current) {
-      playerRef.current.seekTo(
-        (playerRef.current.getCurrentTime() || 0) - 10,
+        (playerRef.current.getCurrentTime() || 0) + seconds,
         'seconds',
       );
     }
@@ -68,8 +55,8 @@ function App() {
   const BasicControlBarProps = {
     handlePlayPause,
     handleVolumeChange,
-    handleSeekBackward,
-    handleSeekForward,
+    handleSeekForward: () => handleSeek(10),
+    handleSeekBackward: () => handleSeek(-10),
     isPlaying,
     volume,
     setPlayBackRate,
@@ -88,7 +75,7 @@ function App() {
           onPlay={() => setIsPlaying(true)}
           onStart={() => setIsPlaying(true)}
           onPause={() => setIsPlaying(false)}
-          onProgress={handleProgress}
+          onProgress={({ playedSeconds }) => setCurrentTime(playedSeconds)}
           volume={volume}
           controls={false} // 유튜브 자체 컨트롤러 안 뜨게
           playbackRate={playbackRate}

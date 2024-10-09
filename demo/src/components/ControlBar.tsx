@@ -40,45 +40,20 @@ export default function ControlBar({
     setPlayBackRate,
   } = BasicControlBarProps;
 
-  useEffect(() => {
-    // todo : 리팩토링-> getCurrentTime setInterval로 1초마다 업데이트하는 방식 대신 ReactPlayer에서 onProgress 콜백 함수를 사용해서 currentTime을 받아오는 값을 ControlBar에 넘기는 방식 고려해보기
-    const interval = setInterval(() => {
-      if (playerRef.current && !isDragging) {
-        setCurrentTime(playerRef.current.getCurrentTime());
-        setTotalTime(playerRef.current.getDuration());
-      }
-    }, 1000); // 1초마다 업데이트
-
-    return () => clearInterval(interval);
-  }, [playerRef, isDragging]);
-
-  // todo : 마우스 이벤트 핸들러 -> mouseDown, mouseUp, 공통함수로 만들기
-  const handleMouseDown = () => {
+  const handleMouseEvent = (
+    e: React.MouseEvent<HTMLDivElement>,
+    action: 'down' | 'up' | 'move',
+  ) => {
+    if (!playerRef.current || action === 'down') {
     setIsDragging(true);
-  };
-
-  const handleMouseUp = (e: React.MouseEvent<HTMLDivElement>) => {
-    if (playerRef.current && totalTime) {
-      const progressBar = e.currentTarget; // progressBar 자체에서 좌표를 가져옴
+    } else if (action === 'up') {
+      setIsDragging(false);
+      const progressBar = e.currentTarget;
       const progressBarRect = progressBar.getBoundingClientRect();
-      const clickPosition = e.clientX - progressBarRect.left; //전체 브라우저 기준 X좌표-프로그래스바의 X좌표
-      const newTime = (clickPosition / progressBarRect.width) * totalTime;
+      const newTime =
+        ((e.clientX - progressBarRect.left) / progressBarRect.width) *
+        playerRef.current.getDuration();
       playerRef.current.seekTo(newTime);
-      setCurrentTime(newTime);
-    }
-    setIsDragging(false);
-  };
-  // todo : 이벤트 호출 최적화 필요 -> 디바운싱?
-  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    if (isDragging && playerRef.current && totalTime) {
-      const progressBar = e.currentTarget; // progressBar 자체에서 좌표를 가져옴
-      const progressBarRect = progressBar.getBoundingClientRect();
-      const dragPosition = e.clientX - progressBarRect.left; //전체 브라우저 기준 X좌표-프로그래스바의 X좌표
-      const newTime = Math.min(
-        Math.max((dragPosition / progressBarRect.width) * totalTime, 0),
-        totalTime,
-      );
-      setCurrentTime(newTime);
     }
   };
   const [showPlaybackRate, setShowPlaybackRate] = useState(false);
