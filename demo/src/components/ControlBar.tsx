@@ -81,10 +81,10 @@ export default function ControlBar({
       setCurrentTime(newTime);
     }
   };
-  const [showSubtitles, setShowSubtitles] = useState(false);
+  const [showPlaybackRate, setShowPlaybackRate] = useState(false);
 
-  const handleShowSubtitles = () => {
-    setShowSubtitles(!showSubtitles); // 버튼을 누를 때마다 상태를 변경
+  const handleShowPlaybackRate = () => {
+    setShowPlaybackRate(!showPlaybackRate); // 버튼을 누를 때마다 상태를 변경
   };
 
   return (
@@ -122,11 +122,11 @@ export default function ControlBar({
           </button>
         </div>
         <div className={S.rightControlBar}>
-          <button onClick={handleShowSubtitles}>
+          <button onClick={handleShowPlaybackRate}>
             <Gauge />
           </button>
-          {showSubtitles && (
-            <div className={S.hiddenSubtitleButton}>
+          {showPlaybackRate && (
+            <div className={S.playbackRateButton}>
               <label className={S.playbackRateLabel}>
                 <input
                   type="radio"
