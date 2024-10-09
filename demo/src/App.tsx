@@ -20,7 +20,7 @@ function App() {
 
   const [selectedLanguages, setSelectedLanguages] =
     useState<LanguageCode[]>(availableLanguages);
-
+  // 쓸모없다고 생각한 reactPlayer의 onProgress 구문을 삭제하면 controlbar의 progressbar업데이트가 느려지는 문제 발생.따라서 onProgress에 쓰이는 currentTime을 삭제하지 않음
   const [currentTime, setCurrentTime] = useState(0);
 
   const seekTo = (timeInSeconds: number) => {
@@ -41,7 +41,6 @@ function App() {
     const newVolume = parseFloat(e.target.value);
     setVolume(newVolume);
   };
-  //  todo : 리팩토링 -> handleSeekForward, handleSeekBackward 공통함수로 빼기
 
   const handleSeek = (seconds: number) => {
     if (playerRef.current) {
@@ -65,7 +64,6 @@ function App() {
 
   return (
     <>
-      {/* TODO(@smosco): progressInterval을 더 짧게 주자 */}
       <div className={Style.video}>
         <ReactPlayer
           ref={playerRef}
@@ -75,7 +73,7 @@ function App() {
           onPlay={() => setIsPlaying(true)}
           onStart={() => setIsPlaying(true)}
           onPause={() => setIsPlaying(false)}
-          onProgress={({ playedSeconds }) => setCurrentTime(playedSeconds)}
+          onProgress={({ playedSeconds }) => setCurrentTime(playedSeconds)} // 쓸모없다고 생각한 이 onProgress 구문을 삭제하면 controlbar의 progressbar업데이트가 느려지는 문제 발생.따라서 안 지움.
           volume={volume}
           controls={false} // 유튜브 자체 컨트롤러 안 뜨게
           playbackRate={playbackRate}

@@ -54,7 +54,7 @@ export default function ControlBar({
   const [showPlaybackRate, setShowPlaybackRate] = useState(false);
 
   const handleShowPlaybackRate = () => {
-    setShowPlaybackRate(!showPlaybackRate); // 버튼을 누를 때마다 상태를 변경
+    setShowPlaybackRate(!showPlaybackRate);
   };
 
   return (
@@ -74,12 +74,12 @@ export default function ControlBar({
               aria-label="Volume"
             />
           </div>
-
+          {/* 진행시간 박스 */}
           <span className={S.timeViewBox}>
             {`${formatTime(playerRef.current?.getCurrentTime() ?? 0)} / ${formatTime(playerRef.current?.getDuration() ?? 0)}`}
           </span>
         </div>
-
+        {/* 재생 조절 버튼 */}
         <div className={S.centerControlBar}>
           <Rewind fill="white" onClick={handleSeekBackward} />
           {isPlaying ? (
@@ -89,7 +89,9 @@ export default function ControlBar({
           )}
           <FastForward fill="white" onClick={handleSeekForward} />
         </div>
+
         <div className={S.rightControlBar}>
+          {/* 배속조절버튼 */}
           <Gauge onClick={handleShowPlaybackRate} />
           {showPlaybackRate && (
             <div className={S.playbackRateButton}>
@@ -109,7 +111,7 @@ export default function ControlBar({
         </div>
       </div>
 
-      {/* 드래그 가능한 진행 바 */}
+      {/* progressBar */}
       <div
         className={S.progressBar}
         onMouseDown={(e) => handleMouseEvent(e, 'down')}
