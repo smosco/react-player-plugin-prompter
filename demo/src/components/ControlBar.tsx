@@ -79,7 +79,7 @@ export default function ControlBar({
           </div>
 
           <span className={S.timeViewBox}>
-            {`${formatTime(currentTime)} / ${formatTime(totalTime)}`}
+            {`${formatTime(playerRef.current?.getCurrentTime() ?? 0)} / ${formatTime(playerRef.current?.getDuration() ?? 0)}`}
           </span>
         </div>
 
@@ -125,7 +125,7 @@ export default function ControlBar({
         <div
           className={S.progressFill}
           style={{
-            width: `${currentTime && totalTime ? (currentTime / totalTime) * 100 : 0}%`,
+            width: `${playerRef.current?.getCurrentTime() && playerRef.current?.getDuration() ? (playerRef.current?.getCurrentTime() / playerRef.current.getDuration()) * 100 : 0}%`,
           }}
         ></div>
       </div>
