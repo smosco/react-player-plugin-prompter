@@ -79,6 +79,7 @@ function App() {
           volume={volume}
           controls={false} // 유튜브 자체 컨트롤러 안 뜨게
           playbackRate={playbackRate}
+          progressInterval={100} // 기존 progress 업데이트 1초에서 0.1초로 변경 -> controlBar 클릭반응 느린문제 개선
         />
         <ControlBar
           playerRef={playerRef}
