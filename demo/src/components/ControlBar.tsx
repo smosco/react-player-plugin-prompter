@@ -2,7 +2,7 @@ import React, { RefObject, useEffect, useState } from 'react';
 import ReactPlayer from 'react-player';
 import S from './VideoPlayer.module.scss';
 import formatTime from '../utils/formatTime';
-import { Volume2, Play, Rewind, FastForward, Pause } from 'lucide-react';
+import { Volume2, Play, Rewind, FastForward, Pause, Gauge } from 'lucide-react';
 // todo :
 // 1. 기능 : pause버튼 완전 연동 필요
 // 2. 디자인 : progressBar 색깔 변경 필요
@@ -14,6 +14,7 @@ interface BasicControlBarProps {
   isPlaying: boolean;
   handleVolumeChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   volume: number;
+  setPlayBackRate: (rate: number) => void;
 }
 
 interface ControlBarProps {
@@ -36,6 +37,7 @@ export default function ControlBar({
     handleSeekForward,
     handleVolumeChange,
     volume,
+    setPlayBackRate,
   } = BasicControlBarProps;
 
   useEffect(() => {
@@ -79,6 +81,11 @@ export default function ControlBar({
       setCurrentTime(newTime);
     }
   };
+  const [showPlaybackRate, setShowPlaybackRate] = useState(false);
+
+  const handleShowPlaybackRate = () => {
+    setShowPlaybackRate(!showPlaybackRate); // 버튼을 누를 때마다 상태를 변경
+  };
 
   return (
     <div className={S.controlBarWrapper}>
@@ -86,7 +93,7 @@ export default function ControlBar({
         <div className={S.leftControlBar}>
           {/* 볼륨 슬라이더 */}
           <div className={S.volumeSlideBar}>
-            <Volume2 />
+            <Volume2 fill="white" />
             <input
               type="range"
               min="0"
@@ -105,14 +112,69 @@ export default function ControlBar({
 
         <div className={S.centerControlBar}>
           <button onClick={handleSeekBackward}>
-            <Rewind />
+            <Rewind fill="white" />
           </button>
           <button onClick={handlePlayPause}>
-            {isPlaying ? <Pause /> : <Play />}
+            {isPlaying ? <Pause fill="white" /> : <Play fill="white" />}
           </button>
           <button onClick={handleSeekForward}>
-            <FastForward />
+            <FastForward fill="white" />
           </button>
+        </div>
+        <div className={S.rightControlBar}>
+          <button onClick={handleShowPlaybackRate}>
+            <Gauge />
+          </button>
+          {showPlaybackRate && (
+            <div className={S.playbackRateButton}>
+              <label className={S.playbackRateLabel}>
+                <input
+                  type="radio"
+                  name="playbackRate"
+                  value="0.5"
+                  onClick={() => setPlayBackRate(0.5)}
+                />
+                0.5x
+              </label>
+              <label className={S.playbackRateLabel}>
+                <input
+                  type="radio"
+                  name="playbackRate"
+                  value="0.75"
+                  defaultChecked
+                  onClick={() => setPlayBackRate(0.75)}
+                />
+                0.75x
+              </label>
+              <label className={S.playbackRateLabel}>
+                <input
+                  type="radio"
+                  name="playbackRate"
+                  value="1"
+                  onClick={() => setPlayBackRate(1)}
+                />
+                1x
+              </label>
+              <label className={S.playbackRateLabel}>
+                <input
+                  type="radio"
+                  name="playbackRate"
+                  value="1.2"
+                  onClick={() => setPlayBackRate(1.2)}
+                />
+                1.2x
+              </label>
+              <label className={S.playbackRateLabel}>
+                <input
+                  type="radio"
+                  name="playbackRate"
+                  value="1.5"
+                  onClick={() => setPlayBackRate(1.5)}
+                />
+                1.5x
+              </label>
+            </div>
+          )}
         </div>
       </div>
 

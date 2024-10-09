@@ -5,7 +5,6 @@
   max-width: 640px;
   border-radius: 20px; /* 바깥쪽 모서리 둥글게 */
   overflow: hidden; /* 자식 요소가 부모 크기를 넘지 않도록 설정 */
-
   & iframe {
     width: 100%;
     height: 100%;
@@ -16,26 +15,39 @@
   position: absolute;
   width: 100%;
   bottom: -5px;
-  background: linear-gradient(to bottom, rgba(0, 0, 0, 0) 0%, rg#cf6df3 100%);
+  background: linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 0) 0%,
+    rgba(0, 0, 0, 0.9) 100%
+  );
 }
 
 .controlBar {
   width: 100%;
-  height: 30px;
+  height: 50px;
   display: flex;
   justify-content: space-between;
   align-items: center;
   color: white;
   padding: 0px 10px;
+  box-sizing: border-box;
 }
 .leftControlBar {
   display: flex;
   flex-direction: row;
+  @media (max-width: 500px) {
+    // 화면 크기가 500px 이하일 때 볼륨, 시간 버튼 숨김
+    display: none;
+  }
 }
 .centerControlBar {
   position: absolute;
   right: 50%;
   transform: translateX(50%);
+  display: flex;
+  flex-direction: row;
+}
+.rightControlBar {
   display: flex;
   flex-direction: row;
 }
@@ -45,8 +57,13 @@
   flex-direction: row;
   align-items: center;
   margin-right: 10px;
-  input {
-    max-width: 50px;
+
+  input[type='range'] {
+    width: 60px;
+    height: 5px;
+    border-radius: 15px;
+    cursor: pointer;
+    accent-color: white; // 볼륨 조절기 색상
   }
 }
 
@@ -66,18 +83,14 @@ button {
   align-items: center;
   border: none;
   color: white;
-  margin: 0 10px;
   font-size: 0.8rem;
   cursor: pointer;
-  margin: 0 10px;
 }
 
-/* 드래그 가능한 진행 바 */
 .progressBar {
   position: relative;
   width: 100%;
   height: 20px;
-  // margin: 10px 0;
   background: rgba(255, 255, 255, 0.3); /* 기본 채우기 색상 */
   border-radius: 5px;
   cursor: pointer;
@@ -85,7 +98,43 @@ button {
 
 .progressFill {
   height: 100%;
-  background-color: hwb(218 0% 0%); /* 진행된 부분의 색상 */
+  background-color: rgb(
+    186,
+    133,
+    186
+  ); /* 진행된 부분의 색상, 반투명하게 설정 */
   border-radius: 5px 0 0 5px;
   transition: width 0.25s ease; /* 진행바 변화 시 전환 효과 */
+}
+
+.rightControlBar {
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+
+.playbackRateButton {
+  position: absolute;
+  width: 100%;
+  bottom: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  color: white;
+  border-radius: 4px;
+}
+.playbackRateLabel {
+  display: block;
+  padding: 8px 12px;
+  font-size: 14px;
+  color: #ffffff;
+  cursor: pointer;
+  border-radius: inherit;
+  transition:
+    background-color 0.2s ease,
+    color 0.2s ease;
+  &:hover {
+    background-color: #000000;
+  }
+  input {
+    display: none; /* Hide the default radio button */
+  }
 }

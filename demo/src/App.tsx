@@ -36,7 +36,7 @@ function App() {
   // --- todo : ControlBar에서만 쓰이는 속성 ControlBar로 내부로 이동
   const [isPlaying, setIsPlaying] = useState(false);
   const [volume, setVolume] = useState(0.5);
-
+  const [playbackRate, setPlayBackRate] = useState(1);
   const handlePlayPause = () => {
     setIsPlaying((prev) => !prev);
   };
@@ -72,6 +72,7 @@ function App() {
     handleSeekForward,
     isPlaying,
     volume,
+    setPlayBackRate,
   };
   // ---
 
@@ -83,9 +84,14 @@ function App() {
           ref={playerRef}
           url={mockUrl}
           playing={isPlaying}
+          width={'100%'}
+          onPlay={() => setIsPlaying(true)}
+          onStart={() => setIsPlaying(true)}
+          onPause={() => setIsPlaying(false)}
           onProgress={handleProgress}
           volume={volume}
           controls={false} // 유튜브 자체 컨트롤러 안 뜨게
+          playbackRate={playbackRate}
         />
         <ControlBar
           playerRef={playerRef}
