@@ -1,4 +1,4 @@
-import React, { RefObject, useEffect, useState } from 'react';
+import React, { RefObject, useState } from 'react';
 import ReactPlayer from 'react-player';
 import S from './VideoPlayer.module.scss';
 import formatTime from '../utils/formatTime';
@@ -84,20 +84,16 @@ export default function ControlBar({
         </div>
 
         <div className={S.centerControlBar}>
-          <button onClick={handleSeekBackward}>
-            <Rewind fill="white" />
-          </button>
-          <button onClick={handlePlayPause}>
-            {isPlaying ? <Pause fill="white" /> : <Play fill="white" />}
-          </button>
-          <button onClick={handleSeekForward}>
-            <FastForward fill="white" />
-          </button>
+          <Rewind fill="white" onClick={handleSeekBackward} />
+          {isPlaying ? (
+            <Pause fill="white" onClick={handlePlayPause} />
+          ) : (
+            <Play fill="white" onClick={handlePlayPause} />
+          )}
+          <FastForward fill="white" onClick={handleSeekForward} />
         </div>
         <div className={S.rightControlBar}>
-          <button onClick={handleShowPlaybackRate}>
-            <Gauge />
-          </button>
+          <Gauge onClick={handleShowPlaybackRate} />
           {showPlaybackRate && (
             <div className={S.playbackRateButton}>
               {[0.5, 0.75, 1, 1.2, 1.5].map((rate) => (
@@ -119,9 +115,9 @@ export default function ControlBar({
       {/* 드래그 가능한 진행 바 */}
       <div
         className={S.progressBar}
-        onMouseDown={handleMouseDown}
-        onMouseMove={handleMouseMove}
-        onMouseUp={handleMouseUp}
+        onMouseDown={(e) => handleMouseEvent(e, 'down')}
+        onMouseMove={(e) => isDragging && handleMouseEvent(e, 'move')}
+        onMouseUp={(e) => handleMouseEvent(e, 'up')}
         onMouseLeave={() => setIsDragging(false)} // 드래그 상태 해제
         role="progressbar"
         aria-label="Progress"
