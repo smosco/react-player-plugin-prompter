@@ -3,9 +3,6 @@ import ReactPlayer from 'react-player';
 import S from './VideoPlayer.module.scss';
 import formatTime from '../utils/formatTime';
 import { Volume2, Play, Rewind, FastForward, Pause, Gauge } from 'lucide-react';
-// todo :
-// 1. 기능 : pause버튼 완전 연동 필요
-// 2. 디자인 : progressBar 색깔 변경 필요
 
 interface BasicControlBarProps {
   handlePlayPause: () => void;
@@ -43,7 +40,7 @@ export default function ControlBar({
     action: 'down' | 'up' | 'move',
   ) => {
     if (!playerRef.current || action === 'down') {
-    setIsDragging(true);
+      setIsDragging(true);
     } else if (action === 'up') {
       setIsDragging(false);
       const progressBar = e.currentTarget;
@@ -98,14 +95,14 @@ export default function ControlBar({
             <div className={S.playbackRateButton}>
               {[0.5, 0.75, 1, 1.2, 1.5].map((rate) => (
                 <label key={rate} className={S.playbackRateLabel}>
-                <input
-                  type="radio"
-                  name="playbackRate"
+                  <input
+                    type="radio"
+                    name="playbackRate"
                     value={rate}
                     onClick={() => setPlayBackRate(rate)}
-                />
+                  />
                   {rate}x
-              </label>
+                </label>
               ))}
             </div>
           )}
