@@ -28,8 +28,8 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  padding: 0 30px;
   color: white;
-  padding: 0px 10px;
   box-sizing: border-box;
 }
 .leftControlBar {
@@ -45,7 +45,9 @@
   right: 50%;
   transform: translateX(50%);
   display: flex;
+  gap: 10px;
   flex-direction: row;
+  cursor: pointer;
 }
 .rightControlBar {
   display: flex;
@@ -67,16 +69,6 @@
   }
 }
 
-button {
-  background-color: transparent;
-  border: none;
-  color: white;
-  margin: 0 10px;
-  font-size: 5px;
-  cursor: pointer;
-  margin: 0 10px;
-}
-
 .timeViewBox {
   display: flex;
   background-color: transparent;
@@ -84,7 +76,6 @@ button {
   border: none;
   color: white;
   font-size: 0.8rem;
-  cursor: pointer;
 }
 
 .progressBar {
@@ -104,18 +95,18 @@ button {
     186
   ); /* 진행된 부분의 색상, 반투명하게 설정 */
   border-radius: 5px 0 0 5px;
-  transition: width 0.25s ease; /* 진행바 변화 시 전환 효과 */
+  transition: width 0.25s ease;
 }
 
 .rightControlBar {
   display: flex;
   align-items: center;
   position: relative;
+  cursor: pointer;
 }
 
 .playbackRateButton {
   position: absolute;
-  width: 100%;
   bottom: 100%;
   background-color: rgba(0, 0, 0, 0.5);
   color: white;
@@ -135,6 +126,6 @@ button {
     background-color: #000000;
   }
   input {
-    display: none; /* Hide the default radio button */
+    display: none;
   }
 }

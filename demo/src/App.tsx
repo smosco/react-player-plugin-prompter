@@ -20,17 +20,13 @@ function App() {
 
   const [selectedLanguages, setSelectedLanguages] =
     useState<LanguageCode[]>(availableLanguages);
-
+  // 쓸모없다고 생각한 reactPlayer의 onProgress 구문을 삭제하면 controlbar의 progressbar업데이트가 느려지는 문제 발생.따라서 onProgress에 쓰이는 currentTime을 삭제하지 않음
   const [currentTime, setCurrentTime] = useState(0);
 
   const seekTo = (timeInSeconds: number) => {
     if (playerRef.current) {
       playerRef.current.seekTo(timeInSeconds, 'seconds');
     }
-  };
-
-  const handleProgress = (state: { playedSeconds: number }) => {
-    setCurrentTime(state.playedSeconds);
   };
 
   // --- todo : ControlBar에서만 쓰이는 속성 ControlBar로 내부로 이동
@@ -45,21 +41,11 @@ function App() {
     const newVolume = parseFloat(e.target.value);
     setVolume(newVolume);
   };
-  //  todo : 리팩토링 -> handleSeekForward, handleSeekBackward 공통함수로 빼기
 
-  const handleSeekForward = () => {
+  const handleSeek = (seconds: number) => {
     if (playerRef.current) {
       playerRef.current.seekTo(
-        (playerRef.current.getCurrentTime() || 0) + 10,
-        'seconds',
-      );
-    }
-  };
-
-  const handleSeekBackward = () => {
-    if (playerRef.current) {
-      playerRef.current.seekTo(
-        (playerRef.current.getCurrentTime() || 0) - 10,
+        (playerRef.current.getCurrentTime() || 0) + seconds,
         'seconds',
       );
     }
@@ -68,8 +54,8 @@ function App() {
   const BasicControlBarProps = {
     handlePlayPause,
     handleVolumeChange,
-    handleSeekBackward,
-    handleSeekForward,
+    handleSeekForward: () => handleSeek(10),
+    handleSeekBackward: () => handleSeek(-10),
     isPlaying,
     volume,
     setPlayBackRate,
@@ -78,7 +64,6 @@ function App() {
 
   return (
     <>
-      {/* TODO(@smosco): progressInterval을 더 짧게 주자 */}
       <div className={Style.video}>
         <ReactPlayer
           ref={playerRef}
@@ -88,10 +73,11 @@ function App() {
           onPlay={() => setIsPlaying(true)}
           onStart={() => setIsPlaying(true)}
           onPause={() => setIsPlaying(false)}
-          onProgress={handleProgress}
+          onProgress={({ playedSeconds }) => setCurrentTime(playedSeconds)} // 쓸모없다고 생각한 이 onProgress 구문을 삭제하면 controlbar의 progressbar업데이트가 느려지는 문제 발생.따라서 안 지움.
           volume={volume}
           controls={false} // 유튜브 자체 컨트롤러 안 뜨게
           playbackRate={playbackRate}
+          progressInterval={100} // 기존 progress 업데이트 1초에서 0.1초로 변경 -> controlBar 클릭반응 느린문제 개선
         />
         <ControlBar
           playerRef={playerRef}

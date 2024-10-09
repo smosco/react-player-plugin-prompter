@@ -1,11 +1,8 @@
-import React, { RefObject, useEffect, useState } from 'react';
+import React, { RefObject, useState } from 'react';
 import ReactPlayer from 'react-player';
 import S from './VideoPlayer.module.scss';
 import formatTime from '../utils/formatTime';
 import { Volume2, Play, Rewind, FastForward, Pause, Gauge } from 'lucide-react';
-// todo :
-// 1. 기능 : pause버튼 완전 연동 필요
-// 2. 디자인 : progressBar 색깔 변경 필요
 
 interface BasicControlBarProps {
   handlePlayPause: () => void;
@@ -26,8 +23,6 @@ export default function ControlBar({
   playerRef,
   BasicControlBarProps,
 }: ControlBarProps) {
-  const [currentTime, setCurrentTime] = useState<number | null>(null);
-  const [totalTime, setTotalTime] = useState<number | null>(null);
   const [isDragging, setIsDragging] = useState(false);
 
   const {
@@ -40,51 +35,26 @@ export default function ControlBar({
     setPlayBackRate,
   } = BasicControlBarProps;
 
-  useEffect(() => {
-    // todo : 리팩토링-> getCurrentTime setInterval로 1초마다 업데이트하는 방식 대신 ReactPlayer에서 onProgress 콜백 함수를 사용해서 currentTime을 받아오는 값을 ControlBar에 넘기는 방식 고려해보기
-    const interval = setInterval(() => {
-      if (playerRef.current && !isDragging) {
-        setCurrentTime(playerRef.current.getCurrentTime());
-        setTotalTime(playerRef.current.getDuration());
-      }
-    }, 1000); // 1초마다 업데이트
-
-    return () => clearInterval(interval);
-  }, [playerRef, isDragging]);
-
-  // todo : 마우스 이벤트 핸들러 -> mouseDown, mouseUp, 공통함수로 만들기
-  const handleMouseDown = () => {
-    setIsDragging(true);
-  };
-
-  const handleMouseUp = (e: React.MouseEvent<HTMLDivElement>) => {
-    if (playerRef.current && totalTime) {
-      const progressBar = e.currentTarget; // progressBar 자체에서 좌표를 가져옴
+  const handleMouseEvent = (
+    e: React.MouseEvent<HTMLDivElement>,
+    action: 'down' | 'up' | 'move',
+  ) => {
+    if (!playerRef.current || action === 'down') {
+      setIsDragging(true);
+    } else if (action === 'up') {
+      setIsDragging(false);
+      const progressBar = e.currentTarget;
       const progressBarRect = progressBar.getBoundingClientRect();
-      const clickPosition = e.clientX - progressBarRect.left; //전체 브라우저 기준 X좌표-프로그래스바의 X좌표
-      const newTime = (clickPosition / progressBarRect.width) * totalTime;
+      const newTime =
+        ((e.clientX - progressBarRect.left) / progressBarRect.width) *
+        playerRef.current.getDuration();
       playerRef.current.seekTo(newTime);
-      setCurrentTime(newTime);
-    }
-    setIsDragging(false);
-  };
-  // todo : 이벤트 호출 최적화 필요 -> 디바운싱?
-  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    if (isDragging && playerRef.current && totalTime) {
-      const progressBar = e.currentTarget; // progressBar 자체에서 좌표를 가져옴
-      const progressBarRect = progressBar.getBoundingClientRect();
-      const dragPosition = e.clientX - progressBarRect.left; //전체 브라우저 기준 X좌표-프로그래스바의 X좌표
-      const newTime = Math.min(
-        Math.max((dragPosition / progressBarRect.width) * totalTime, 0),
-        totalTime,
-      );
-      setCurrentTime(newTime);
     }
   };
   const [showPlaybackRate, setShowPlaybackRate] = useState(false);
 
   const handleShowPlaybackRate = () => {
-    setShowPlaybackRate(!showPlaybackRate); // 버튼을 누를 때마다 상태를 변경
+    setShowPlaybackRate(!showPlaybackRate);
   };
 
   return (
@@ -104,86 +74,49 @@ export default function ControlBar({
               aria-label="Volume"
             />
           </div>
-
+          {/* 진행시간 박스 */}
           <span className={S.timeViewBox}>
-            {`${formatTime(currentTime)} / ${formatTime(totalTime)}`}
+            {`${formatTime(playerRef.current?.getCurrentTime() ?? 0)} / ${formatTime(playerRef.current?.getDuration() ?? 0)}`}
           </span>
         </div>
-
+        {/* 재생 조절 버튼 */}
         <div className={S.centerControlBar}>
-          <button onClick={handleSeekBackward}>
-            <Rewind fill="white" />
-          </button>
-          <button onClick={handlePlayPause}>
-            {isPlaying ? <Pause fill="white" /> : <Play fill="white" />}
-          </button>
-          <button onClick={handleSeekForward}>
-            <FastForward fill="white" />
-          </button>
+          <Rewind fill="white" onClick={handleSeekBackward} />
+          {isPlaying ? (
+            <Pause fill="white" onClick={handlePlayPause} />
+          ) : (
+            <Play fill="white" onClick={handlePlayPause} />
+          )}
+          <FastForward fill="white" onClick={handleSeekForward} />
         </div>
+
         <div className={S.rightControlBar}>
-          <button onClick={handleShowPlaybackRate}>
-            <Gauge />
-          </button>
+          {/* 배속조절버튼 */}
+          <Gauge onClick={handleShowPlaybackRate} />
           {showPlaybackRate && (
             <div className={S.playbackRateButton}>
-              <label className={S.playbackRateLabel}>
-                <input
-                  type="radio"
-                  name="playbackRate"
-                  value="0.5"
-                  onClick={() => setPlayBackRate(0.5)}
-                />
-                0.5x
-              </label>
-              <label className={S.playbackRateLabel}>
-                <input
-                  type="radio"
-                  name="playbackRate"
-                  value="0.75"
-                  defaultChecked
-                  onClick={() => setPlayBackRate(0.75)}
-                />
-                0.75x
-              </label>
-              <label className={S.playbackRateLabel}>
-                <input
-                  type="radio"
-                  name="playbackRate"
-                  value="1"
-                  onClick={() => setPlayBackRate(1)}
-                />
-                1x
-              </label>
-              <label className={S.playbackRateLabel}>
-                <input
-                  type="radio"
-                  name="playbackRate"
-                  value="1.2"
-                  onClick={() => setPlayBackRate(1.2)}
-                />
-                1.2x
-              </label>
-              <label className={S.playbackRateLabel}>
-                <input
-                  type="radio"
-                  name="playbackRate"
-                  value="1.5"
-                  onClick={() => setPlayBackRate(1.5)}
-                />
-                1.5x
-              </label>
+              {[0.5, 0.75, 1, 1.2, 1.5].map((rate) => (
+                <label key={rate} className={S.playbackRateLabel}>
+                  <input
+                    type="radio"
+                    name="playbackRate"
+                    value={rate}
+                    onClick={() => setPlayBackRate(rate)}
+                  />
+                  {rate}x
+                </label>
+              ))}
             </div>
           )}
         </div>
       </div>
 
-      {/* 드래그 가능한 진행 바 */}
+      {/* progressBar */}
       <div
         className={S.progressBar}
-        onMouseDown={handleMouseDown}
-        onMouseMove={handleMouseMove}
-        onMouseUp={handleMouseUp}
+        onMouseDown={(e) => handleMouseEvent(e, 'down')}
+        onMouseMove={(e) => isDragging && handleMouseEvent(e, 'move')}
+        onMouseUp={(e) => handleMouseEvent(e, 'up')}
         onMouseLeave={() => setIsDragging(false)} // 드래그 상태 해제
         role="progressbar"
         aria-label="Progress"
@@ -191,7 +124,7 @@ export default function ControlBar({
         <div
           className={S.progressFill}
           style={{
-            width: `${currentTime && totalTime ? (currentTime / totalTime) * 100 : 0}%`,
+            width: `${playerRef.current?.getCurrentTime() && playerRef.current?.getDuration() ? (playerRef.current?.getCurrentTime() / playerRef.current.getDuration()) * 100 : 0}%`,
           }}
         ></div>
       </div>
