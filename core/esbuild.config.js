@@ -1,9 +1,6 @@
-// eslint-disable-next-line @typescript-eslint/no-require-imports
-const esbuild = require('esbuild');
-// eslint-disable-next-line @typescript-eslint/no-require-imports
-const { execSync } = require('child_process');
-// eslint-disable-next-line @typescript-eslint/no-require-imports
-const { ScssModulesPlugin } = require('esbuild-scss-modules-plugin');
+import esbuild from 'esbuild';
+import { execSync } from 'child_process';
+import { ScssModulesPlugin } from 'esbuild-scss-modules-plugin';
 
 const isWatchMode = process.argv.includes('--watch');
 const isProduction = process.env.NODE_ENV === 'production';

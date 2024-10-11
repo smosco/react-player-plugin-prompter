@@ -20,10 +20,10 @@
     "vite": "^5.4.8"
   },
   "dependencies": {
-    "core": "workspace:*",
     "lucide-react": "^0.447.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
-    "react-player": "^2.16.0"
+    "react-player": "^2.16.0",
+    "react-player-plugin-prompter": "workspace:*"
   }
 }

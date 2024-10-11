@@ -1,8 +1,31 @@
 {
-  "name": "core",
+  "name": "react-player-plugin-prompter",
+  "description": "A React Player plugin specialized for subtitle handling",
+  "version": "0.0.1",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "packageManager": "yarn@4.3.1",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/smosco/react-player-plugin-prompter"
+  },
+  "keywords": [
+    "react",
+    "react-player",
+    "subtitle",
+    "video",
+    "plugin"
+  ],
+  "contributors": [
+    "smosco",
+    "godhyzzang"
+  ],
+  "type": "module",
+  "license": "MIT",
+  "files": [
+    "dist",
+    "README.md"
+  ],
   "scripts": {
     "build": "node ./esbuild.config.js",
     "build:dts": "tsc --emitDeclarationOnly --outDir dist",

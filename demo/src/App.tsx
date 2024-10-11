@@ -1,5 +1,5 @@
 import React from 'react';
-import { ReactScriptPlayer } from 'core';
+import { ReactScriptPlayer } from 'react-player-plugin-prompter';
 import ReactPlayer from 'react-player';
 import { useState, useRef } from 'react';
 import SubtitleOption from './components/SubtitleOption';
