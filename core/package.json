@@ -20,9 +20,11 @@
     "smosco",
     "godhyzzang"
   ],
+  "type": "module",
   "license": "MIT",
   "files": [
-    "dist"
+    "dist",
+    "README.md"
   ],
   "scripts": {
     "build": "node ./esbuild.config.js",
