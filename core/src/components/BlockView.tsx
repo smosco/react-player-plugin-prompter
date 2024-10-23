@@ -11,6 +11,13 @@ interface BlockViewProps {
   seekTo: (timeInSeconds: number) => void;
   onClickSubtitle: (subtitle: Subtitle, index: number) => void;
   onSelectWord: (word: string, subtitle: Subtitle, index: number) => void;
+
+  // 시간 관련 스타일
+  timeColor?: string;
+  timeFontSize?: string;
+  timeBackgroundColor?: string;
+  timeBorderRadius?: string;
+  timePadding?: string;
 }
 
 export function BlockView({
@@ -20,6 +27,13 @@ export function BlockView({
   seekTo,
   onClickSubtitle,
   onSelectWord,
+
+  // 시간 관련 스타일
+  timeColor,
+  timeFontSize,
+  timeBackgroundColor,
+  timeBorderRadius,
+  timePadding,
 }: BlockViewProps) {
   const containerRef = useRef<HTMLDivElement>(null);
 
@@ -47,7 +61,18 @@ export function BlockView({
             onClickSubtitle(subtitle, index);
           }}
         >
-          <button>{convertTime(subtitle.startTimeInSecond)}</button>
+          <button
+            className={styles.timeButton}
+            style={{
+              color: timeColor,
+              fontSize: timeFontSize,
+              backgroundColor: timeBackgroundColor,
+              borderRadius: timeBorderRadius,
+              padding: timePadding,
+            }}
+          >
+            {convertTime(subtitle.startTimeInSecond)}
+          </button>
 
           <TextDisplay
             subtitle={subtitles[index]}

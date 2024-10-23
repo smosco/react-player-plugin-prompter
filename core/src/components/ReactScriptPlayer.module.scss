@@ -1,14 +1,22 @@
+* {
+  box-sizing: border-box;
+}
+
 .subtitleContainer {
   display: flex;
   flex-direction: column;
   gap: 2rem;
-  width: 90%;
-  max-width: 590px;
-  height: 16rem;
+  width: 100%;
+  height: auto;
   padding: 1.5rem;
-  border: 2px solid #e3e3e3;
-  border-radius: 0.5rem;
+  border: 2px solid #ececec;
+  border-radius: 0.75rem;
   overflow-y: auto;
+}
+
+.title {
+  font-size: 1.25rem;
+  font-weight: 700;
 }
 
 .lineViewContainer {
@@ -38,16 +46,18 @@
     &.active {
       background-color: lightgray;
     }
-  }
 
-  button {
-    width: 5rem;
-    padding: 8px 12px;
-    border: none;
-    border-radius: 5rem;
-    background-color: #ececec;
-    cursor: pointer;
-    font-size: 0.8rem;
-    color: #5a5a5a;
+    .timeButton {
+      width: 5rem;
+      padding-inline: 0.75rem;
+      padding-block: 0.5rem;
+      margin-bottom: 0.5rem;
+      border: none;
+      border-radius: 9999px;
+      background-color: gray;
+      cursor: pointer;
+      font-size: 0.75rem;
+      color: white;
+    }
   }
 }

@@ -13,6 +13,20 @@ export interface ReactScriptPlayerProps {
   currentTime: number;
   onClickSubtitle: (subtitle: Subtitle, index: number) => void;
   onSelectWord: (word: string, subtitle: Subtitle, index: number) => void;
+
+  // 자막 컨테이너 스타일링
+  containerWidth?: string;
+  containerHeight?: string;
+  containerPadding?: string;
+  containerBackgroundColor?: string;
+  containerBorderColor?: string;
+
+  // 시간 표시 스타일링
+  timeColor?: string;
+  timeFontSize?: string;
+  timeBackgroundColor?: string;
+  timeBorderRadius?: string;
+  timePadding?: string;
 }
 
 export function ReactScriptPlayer({
@@ -23,13 +37,38 @@ export function ReactScriptPlayer({
   currentTime,
   onClickSubtitle,
   onSelectWord,
+
+  // 기본 스타일
+  containerWidth,
+  containerHeight,
+  containerPadding,
+  containerBackgroundColor,
+  containerBorderColor,
+
+  // 시간 표시 스타일링
+  timeColor,
+  timeFontSize,
+  timeBackgroundColor,
+  timeBorderRadius,
+  timePadding,
 }: ReactScriptPlayerProps) {
   const currentSubtitleIndex =
     findCurrentSubtitleIndex(subtitles, currentTime) ?? 0;
 
   return (
-    <div className={styles.subtitleContainer}>
+    <div
+      className={styles.subtitleContainer}
+      style={{
+        width: containerWidth,
+        height: containerHeight,
+        padding: containerPadding,
+        backgroundColor: containerBackgroundColor,
+        borderColor: containerBorderColor,
+      }}
+    >
       <div className={styles.displayContainer}>
+        <p className={styles.title}>Transcript</p>
+
         {/* TODO(@smosco): line, block 뷰 props가 거의 동일하기 때문에 공통 props로 추출해서 관리 */}
         {mode === 'line' && (
           <LineView
@@ -48,6 +87,12 @@ export function ReactScriptPlayer({
             seekTo={seekTo}
             onClickSubtitle={onClickSubtitle}
             onSelectWord={onSelectWord}
+            // 시간 관련 스타일을 BlockView에 전달
+            timeColor={timeColor}
+            timeFontSize={timeFontSize}
+            timeBackgroundColor={timeBackgroundColor}
+            timeBorderRadius={timeBorderRadius}
+            timePadding={timePadding}
           />
         )}
       </div>
