@@ -63,7 +63,7 @@ function App() {
   // ---
 
   return (
-    <>
+    <div className={Style.container}>
       <div className={Style.video}>
         <ReactPlayer
           ref={playerRef}
@@ -105,8 +105,10 @@ function App() {
         onSelectWord={(word, subtitle, index) => {
           console.log(word, subtitle, index);
         }}
+        // containerBorderColor="#ede9fe"
+        // timeBackgroundColor="purple"
       />
-    </>
+    </div>
   );
 }
 
