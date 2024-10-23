@@ -21,20 +21,17 @@ export function LineView({
   seekTo,
   onSelectWord,
 }: LineViewProps) {
-  // const [currentSubtitleIndex, setCurrentSubtitleIndex] = useState(0);
   const totalSubtitles = subtitles.length;
 
   const handlePrevious = () => {
     if (currentSubtitleIndex > 0) {
       seekTo(subtitles[currentSubtitleIndex - 1].startTimeInSecond);
-      // setCurrentSubtitleIndex((prev) => prev - 1);
     }
   };
 
   const handleNext = () => {
     if (currentSubtitleIndex < totalSubtitles - 1) {
       seekTo(subtitles[currentSubtitleIndex + 1].startTimeInSecond);
-      // setCurrentSubtitleIndex((prev) => prev + 1);
     }
   };
 

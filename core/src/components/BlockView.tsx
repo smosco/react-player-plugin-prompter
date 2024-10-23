@@ -7,7 +7,7 @@ import { TextDisplay } from './TextDisplay';
 interface BlockViewProps {
   subtitles: Subtitle[];
   currentSubtitleIndex: number;
-  selectedLanguages: LanguageCode[]; // 선택된 언어 배열
+  selectedLanguages: LanguageCode[];
   seekTo: (timeInSeconds: number) => void;
   onClickSubtitle: (subtitle: Subtitle, index: number) => void;
   onSelectWord: (word: string, subtitle: Subtitle, index: number) => void;
