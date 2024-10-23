@@ -1,8 +1,9 @@
-import React, { useMemo } from 'react';
+import React from 'react';
 import styles from './ReactScriptPlayer.module.scss';
 import { LanguageCode, Subtitle } from '../interfaces/Scripts';
 import { LineView } from './LineView';
 import { BlockView } from './BlockView';
+import { findCurrentSubtitleIndex } from 'utils/findCurrentSubtitleIndex';
 
 export interface ReactScriptPlayerProps {
   mode: 'line' | 'block';
@@ -23,17 +24,8 @@ export function ReactScriptPlayer({
   onClickSubtitle,
   onSelectWord,
 }: ReactScriptPlayerProps) {
-  const reversedSubtitles = useMemo(
-    () => [...subtitles].reverse(),
-    [subtitles],
-  );
-  // TODO(@smosco): 현재 자막 인덱스 찾는 로직 리팩토링
-  const currentSubtitleIndex = useMemo(() => {
-    const index = reversedSubtitles.findIndex(
-      (subtitle) => subtitle.startTimeInSecond < currentTime,
-    );
-    return reversedSubtitles.length - 1 - index;
-  }, [reversedSubtitles, currentTime]);
+  const currentSubtitleIndex =
+    findCurrentSubtitleIndex(subtitles, currentTime) ?? 0;
 
   return (
     <div className={styles.subtitleContainer}>
