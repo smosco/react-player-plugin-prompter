@@ -6,17 +6,34 @@ export function TextDisplay({
   subtitle,
   selectedLanguages,
   onSelectWord,
+  // 자막 텍스트 스타일링
+  textColor,
+  textFontSize,
+  textFontWeight,
+  textLineHeight,
 }: {
   subtitle: Subtitle;
   selectedLanguages: LanguageCode[]; // 선택된 언어 배열
   onSelectWord: (word: string, subtitle: Subtitle, index: number) => void;
+  // 자막 텍스트 스타일링
+  textColor?: string;
+  textFontSize?: string;
+  textFontWeight?: string;
+  textLineHeight?: string;
 }) {
   return (
     <div className={styles.textView}>
       {selectedLanguages.map((language) => (
         <p
           key={language}
+          // TODO(@smosco): 동적 className이 적용 안됨
           className={styles[`text${language.toUpperCase()}`]}
+          style={{
+            color: textColor,
+            fontSize: textFontSize,
+            fontWeight: textFontWeight,
+            lineHeight: textLineHeight,
+          }}
           onMouseUp={() => {
             const selection = window.getSelection();
             if (selection && selection.toString()) {

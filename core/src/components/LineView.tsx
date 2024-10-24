@@ -12,6 +12,11 @@ interface LineViewProps {
   currentSubtitleIndex: number;
   seekTo: (timeInSeconds: number) => void;
   onSelectWord: (word: string, subtitle: Subtitle, index: number) => void;
+  // 자막 텍스트 스타일링
+  textColor?: string;
+  textFontSize?: string;
+  textFontWeight?: string;
+  textLineHeight?: string;
 }
 
 export function LineView({
@@ -20,6 +25,12 @@ export function LineView({
   currentSubtitleIndex,
   seekTo,
   onSelectWord,
+
+  // 자막 텍스트 스타일링
+  textColor,
+  textFontSize,
+  textFontWeight,
+  textLineHeight,
 }: LineViewProps) {
   const totalSubtitles = subtitles.length;
 
@@ -53,6 +64,11 @@ export function LineView({
           subtitle={subtitles[currentSubtitleIndex]}
           selectedLanguages={selectedLanguages}
           onSelectWord={onSelectWord}
+          // 자막 텍스트 스타일링
+          textColor={textColor}
+          textFontSize={textFontSize}
+          textFontWeight={textFontWeight}
+          textLineHeight={textLineHeight}
         />
       )}
     </div>

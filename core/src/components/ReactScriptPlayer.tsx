@@ -21,6 +21,13 @@ export interface ReactScriptPlayerProps {
   containerBackgroundColor?: string;
   containerBorderColor?: string;
 
+  // 자막 텍스트 스타일링
+  textColor?: string;
+  textFontSize?: string;
+  textFontWeight?: string;
+  textLineHeight?: string;
+  activeTextColor?: string;
+
   // 시간 표시 스타일링
   timeColor?: string;
   timeFontSize?: string;
@@ -44,6 +51,13 @@ export function ReactScriptPlayer({
   containerPadding,
   containerBackgroundColor,
   containerBorderColor,
+
+  // 자막 텍스트 스타일링
+  textColor,
+  textFontSize,
+  textFontWeight,
+  textLineHeight,
+  activeTextColor,
 
   // 시간 표시 스타일링
   timeColor,
@@ -77,6 +91,11 @@ export function ReactScriptPlayer({
             selectedLanguages={selectedLanguages}
             seekTo={seekTo}
             onSelectWord={onSelectWord}
+            // 자막 텍스트 스타일을 LineView에 전달
+            textColor={textColor}
+            textFontSize={textFontSize}
+            textFontWeight={textFontWeight}
+            textLineHeight={textLineHeight}
           />
         )}
         {mode === 'block' && (
@@ -93,6 +112,12 @@ export function ReactScriptPlayer({
             timeBackgroundColor={timeBackgroundColor}
             timeBorderRadius={timeBorderRadius}
             timePadding={timePadding}
+            // 자막 텍스트 스타일링
+            textColor={textColor}
+            textFontSize={textFontSize}
+            textFontWeight={textFontWeight}
+            textLineHeight={textLineHeight}
+            activeTextColor={activeTextColor}
           />
         )}
       </div>

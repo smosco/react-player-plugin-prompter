@@ -18,6 +18,13 @@ interface BlockViewProps {
   timeBackgroundColor?: string;
   timeBorderRadius?: string;
   timePadding?: string;
+
+  // 텍스트 관련 스타일
+  textColor?: string;
+  textFontSize?: string;
+  textFontWeight?: string;
+  textLineHeight?: string;
+  activeTextColor?: string;
 }
 
 export function BlockView({
@@ -34,6 +41,13 @@ export function BlockView({
   timeBackgroundColor,
   timeBorderRadius,
   timePadding,
+
+  // 텍스트 관련 스타일
+  textColor,
+  textFontSize,
+  textFontWeight,
+  textLineHeight,
+  activeTextColor,
 }: BlockViewProps) {
   const containerRef = useRef<HTMLDivElement>(null);
 
@@ -53,12 +67,18 @@ export function BlockView({
     <div ref={containerRef} className={styles.blockViewContainer}>
       {subtitles.map((subtitle, index) => (
         <div
-          className={`${styles.subtitleItem} ${index === currentSubtitleIndex ? styles.active : ''}`}
+          className={styles.subtitleItem}
           key={index}
           onClick={() => {
             // TODO(@smosco): 자막 클릭 함수 구현
             seekTo(subtitle.startTimeInSecond);
             onClickSubtitle(subtitle, index);
+          }}
+          style={{
+            backgroundColor:
+              index === currentSubtitleIndex
+                ? activeTextColor || 'lightgray'
+                : 'transparent',
           }}
         >
           <button
@@ -78,6 +98,10 @@ export function BlockView({
             subtitle={subtitles[index]}
             selectedLanguages={selectedLanguages}
             onSelectWord={onSelectWord}
+            textColor={textColor}
+            textFontSize={textFontSize}
+            textFontWeight={textFontWeight}
+            textLineHeight={textLineHeight}
           />
         </div>
       ))}
