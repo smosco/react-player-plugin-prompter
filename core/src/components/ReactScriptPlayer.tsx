@@ -34,6 +34,10 @@ export interface ReactScriptPlayerProps {
   timeBackgroundColor?: string;
   timeBorderRadius?: string;
   timePadding?: string;
+
+  // 자막 넘기기 버튼
+  PrevButton?: ({ onClick }: { onClick: () => void }) => JSX.Element;
+  NextButton?: ({ onClick }: { onClick: () => void }) => JSX.Element;
 }
 
 export function ReactScriptPlayer({
@@ -65,6 +69,10 @@ export function ReactScriptPlayer({
   timeBackgroundColor,
   timeBorderRadius,
   timePadding,
+
+  // 자막 넘기기 버튼
+  PrevButton,
+  NextButton,
 }: ReactScriptPlayerProps) {
   const currentSubtitleIndex =
     findCurrentSubtitleIndex(subtitles, currentTime) ?? 0;
@@ -96,6 +104,9 @@ export function ReactScriptPlayer({
             textFontSize={textFontSize}
             textFontWeight={textFontWeight}
             textLineHeight={textLineHeight}
+            // 자막 넘기기 버튼
+            PrevButton={PrevButton}
+            NextButton={NextButton}
           />
         )}
         {mode === 'block' && (

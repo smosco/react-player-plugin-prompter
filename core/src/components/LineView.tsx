@@ -1,6 +1,6 @@
 import React from 'react';
 import { LanguageCode, Subtitle } from '../interfaces/Scripts';
-// import { useState } from 'react';
+import useThrottling from 'hooks/useThrottling';
 import arrow_back from '../assets/icons/arrow_back.svg';
 import arrow_forward from '../assets/icons/arrow_forward.svg';
 import { TextDisplay } from './TextDisplay';
@@ -17,6 +17,9 @@ interface LineViewProps {
   textFontSize?: string;
   textFontWeight?: string;
   textLineHeight?: string;
+  // 자막 넘기기 버튼
+  PrevButton?: ({ onClick }: { onClick: () => void }) => JSX.Element;
+  NextButton?: ({ onClick }: { onClick: () => void }) => JSX.Element;
 }
 
 export function LineView({
@@ -31,6 +34,10 @@ export function LineView({
   textFontSize,
   textFontWeight,
   textLineHeight,
+
+  // 자막 넘기기 버튼
+  PrevButton,
+  NextButton,
 }: LineViewProps) {
   const totalSubtitles = subtitles.length;
 
@@ -46,15 +53,30 @@ export function LineView({
     }
   };
 
+  const throttledHandlePrevious = useThrottling({
+    buttonClicked: handlePrevious,
+  });
+  const throttledHandleNext = useThrottling({
+    buttonClicked: handleNext,
+  });
+
   return (
     <div className={styles.lineViewContainer}>
       <div className={styles.skipButtonContainer}>
-        <button onClick={handlePrevious}>
-          <img src={arrow_back} alt="Back Arrow" />
-        </button>
-        <button onClick={handleNext}>
-          <img src={arrow_forward} alt="Forward Arrow" />
-        </button>
+        {PrevButton ? (
+          <PrevButton onClick={throttledHandlePrevious} />
+        ) : (
+          <button onClick={throttledHandlePrevious}>
+            <img src={arrow_back} alt="Back Arrow" />
+          </button>
+        )}
+        {NextButton ? (
+          <NextButton onClick={throttledHandleNext} />
+        ) : (
+          <button onClick={throttledHandleNext}>
+            <img src={arrow_forward} alt="Forward Arrow" />
+          </button>
+        )}
       </div>
 
       {/* TextDisplay에서 현재 자막과 선택된 언어를 표시 */}
