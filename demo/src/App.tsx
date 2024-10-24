@@ -8,6 +8,7 @@ import scriptsMockData from './mocks/subtitleMockData';
 import { mockUrl } from './mocks/mockUrl';
 import ControlBar from './components/ControlBar';
 import Style from './components/VideoPlayer.module.scss';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
 
 type Mode = 'line' | 'block';
 
@@ -29,7 +30,6 @@ function App() {
     }
   };
 
-  // --- todo : ControlBar에서만 쓰이는 속성 ControlBar로 내부로 이동
   const [isPlaying, setIsPlaying] = useState(false);
   const [volume, setVolume] = useState(0.5);
   const [playbackRate, setPlayBackRate] = useState(1);
@@ -60,10 +60,21 @@ function App() {
     volume,
     setPlayBackRate,
   };
-  // ---
+
+  const PrevButton = ({ onClick }: { onClick: () => void }) => (
+    <button onClick={onClick} className={Style.customButton}>
+      <ChevronLeft color="#a78bfa" />
+    </button>
+  );
+
+  const NextButton = ({ onClick }: { onClick: () => void }) => (
+    <button onClick={onClick} className={Style.customButton}>
+      <ChevronRight color="#a78bfa" />
+    </button>
+  );
 
   return (
-    <>
+    <div className={Style.container}>
       <div className={Style.video}>
         <ReactPlayer
           ref={playerRef}
@@ -105,8 +116,29 @@ function App() {
         onSelectWord={(word, subtitle, index) => {
           console.log(word, subtitle, index);
         }}
+        // 기본 스타일
+        containerWidth=""
+        containerHeight=""
+        containerPadding=""
+        containerBackgroundColor=""
+        containerBorderColor="#ede9fe"
+        // 자막 텍스트 스타일링
+        textColor=""
+        textFontSize=""
+        textFontWeight=""
+        textLineHeight=""
+        activeTextColor="#f5f3ff"
+        // 시간 표시 스타일링
+        timeColor="#5a5a5a"
+        timeFontSize=""
+        timeBackgroundColor="#ddd6fe"
+        timeBorderRadius=""
+        timePadding=""
+        // 자막 넘기기 버튼
+        PrevButton={PrevButton}
+        NextButton={NextButton}
       />
-    </>
+    </div>
   );
 }
 
