@@ -105,8 +105,24 @@ function App() {
         onSelectWord={(word, subtitle, index) => {
           console.log(word, subtitle, index);
         }}
-        // containerBorderColor="#ede9fe"
-        // timeBackgroundColor="purple"
+        // 기본 스타일
+        containerWidth=""
+        containerHeight=""
+        containerPadding=""
+        containerBackgroundColor=""
+        containerBorderColor="#ede9fe"
+        // 자막 텍스트 스타일링
+        textColor=""
+        textFontSize=""
+        textFontWeight=""
+        textLineHeight=""
+        activeTextColor="#f5f3ff"
+        // 시간 표시 스타일링
+        timeColor="#5a5a5a"
+        timeFontSize=""
+        timeBackgroundColor="#ddd6fe"
+        timeBorderRadius=""
+        timePadding=""
       />
     </div>
   );
