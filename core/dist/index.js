@@ -1,4 +1,3 @@
-/* eslint-disable no-undef */
 // esbuild-scss-modules-plugin:./ReactScriptPlayer.module.scss
 var digest = "e43dd2dcd17a6df0f76a4acecb4fc455d13a542ff476cd474e6b61011f1bfcd7";
 var classes = { "subtitleContainer": "_subtitleContainer_1shar_7", "title": "_title_1shar_19", "lineViewContainer": "_lineViewContainer_1shar_24", "skipButtonContainer": "_skipButtonContainer_1shar_29", "blockViewContainer": "_blockViewContainer_1shar_36", "subtitleItem": "_subtitleItem_1shar_42", "timeButton": "_timeButton_1shar_47", "textView": "_textView_1shar_60", "textEn": "_textEN_1shar_65" };
@@ -94,7 +93,7 @@ function useThrottling({
         setIsThrottled(false);
       }, delay);
     }
-  }, [buttonClicked, delay]);
+  }, [isThrottled, buttonClicked, delay]);
   return throttledCallback;
 }
 
