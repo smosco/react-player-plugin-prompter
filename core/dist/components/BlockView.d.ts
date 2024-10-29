@@ -1,4 +1,4 @@
-import { LanguageCode, Subtitle } from 'interfaces/Scripts';
+import { LanguageCode, Subtitle, TimeStyle, TextStyle } from 'interfaces/Scripts';
 interface BlockViewProps {
     subtitles: Subtitle[];
     currentSubtitleIndex: number;
@@ -6,17 +6,9 @@ interface BlockViewProps {
     seekTo: (timeInSeconds: number) => void;
     onClickSubtitle: (subtitle: Subtitle, index: number) => void;
     onSelectWord: (word: string, subtitle: Subtitle, index: number) => void;
-    timeColor?: string;
-    timeFontSize?: string;
-    timeBackgroundColor?: string;
-    timeBorderRadius?: string;
-    timePadding?: string;
-    textColor?: string;
-    textFontSize?: string;
-    textFontWeight?: string;
-    textLineHeight?: string;
-    activeTextColor?: string;
+    timeStyle?: TimeStyle;
+    textStyle?: TextStyle;
 }
-export declare function BlockView({ subtitles, currentSubtitleIndex, selectedLanguages, seekTo, onClickSubtitle, onSelectWord, timeColor, timeFontSize, timeBackgroundColor, timeBorderRadius, timePadding, textColor, textFontSize, textFontWeight, textLineHeight, activeTextColor, }: BlockViewProps): import("react/jsx-runtime").JSX.Element;
+export declare function BlockView({ subtitles, currentSubtitleIndex, selectedLanguages, seekTo, onClickSubtitle, onSelectWord, timeStyle, textStyle, }: BlockViewProps): import("react/jsx-runtime").JSX.Element;
 export {};
 //# sourceMappingURL=BlockView.d.ts.map

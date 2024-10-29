@@ -1,4 +1,3 @@
-/* eslint-disable no-undef */
 // esbuild-scss-modules-plugin:./ReactScriptPlayer.module.scss
 var digest = "e43dd2dcd17a6df0f76a4acecb4fc455d13a542ff476cd474e6b61011f1bfcd7";
 var classes = { "subtitleContainer": "_subtitleContainer_1shar_7", "title": "_title_1shar_19", "lineViewContainer": "_lineViewContainer_1shar_24", "skipButtonContainer": "_skipButtonContainer_1shar_29", "blockViewContainer": "_blockViewContainer_1shar_36", "subtitleItem": "_subtitleItem_1shar_42", "timeButton": "_timeButton_1shar_47", "textView": "_textView_1shar_60", "textEn": "_textEN_1shar_65" };
@@ -110,22 +109,13 @@ function TextDisplay({
   subtitle,
   selectedLanguages,
   onSelectWord,
-  // 자막 텍스트 스타일링
-  textColor,
-  textFontSize,
-  textFontWeight,
-  textLineHeight
+  textStyle
 }) {
   return /* @__PURE__ */ jsx("div", { className: ReactScriptPlayer_module_default.textView, children: selectedLanguages.map((language) => /* @__PURE__ */ jsx(
     "p",
     {
-      className: ReactScriptPlayer_module_default[`text${language.toUpperCase()}`],
-      style: {
-        color: textColor,
-        fontSize: textFontSize,
-        fontWeight: textFontWeight,
-        lineHeight: textLineHeight
-      },
+      className: ReactScriptPlayer_module_default.text,
+      style: textStyle,
       onMouseUp: () => {
         const selection = window.getSelection();
         if (selection && selection.toString()) {
@@ -150,10 +140,7 @@ function LineView({
   seekTo,
   onSelectWord,
   // 자막 텍스트 스타일링
-  textColor,
-  textFontSize,
-  textFontWeight,
-  textLineHeight,
+  textStyle,
   // 자막 넘기기 버튼
   PrevButton,
   NextButton
@@ -180,17 +167,14 @@ function LineView({
       PrevButton ? /* @__PURE__ */ jsx2(PrevButton, { onClick: throttledHandlePrevious }) : /* @__PURE__ */ jsx2("button", { onClick: throttledHandlePrevious, children: /* @__PURE__ */ jsx2("img", { src: arrow_back_default, alt: "Back Arrow" }) }),
       NextButton ? /* @__PURE__ */ jsx2(NextButton, { onClick: throttledHandleNext }) : /* @__PURE__ */ jsx2("button", { onClick: throttledHandleNext, children: /* @__PURE__ */ jsx2("img", { src: arrow_forward_default, alt: "Forward Arrow" }) })
     ] }),
-    subtitles[currentSubtitleIndex] && // TODO(@smosco):사용자가 자막이 언제 넘어갈지 알 수 있도록 progressbar 추가
+    subtitles[currentSubtitleIndex] && // TODO(@smosco): 사용자가 자막이 언제 넘어갈지 알 수 있도록 progressbar 추가
     /* @__PURE__ */ jsx2(
       TextDisplay,
       {
         subtitle: subtitles[currentSubtitleIndex],
         selectedLanguages,
         onSelectWord,
-        textColor,
-        textFontSize,
-        textFontWeight,
-        textLineHeight
+        textStyle
       }
     )
   ] });
@@ -217,28 +201,16 @@ function BlockView({
   seekTo,
   onClickSubtitle,
   onSelectWord,
-  // 시간 관련 스타일
-  timeColor,
-  timeFontSize,
-  timeBackgroundColor,
-  timeBorderRadius,
-  timePadding,
-  // 텍스트 관련 스타일
-  textColor,
-  textFontSize,
-  textFontWeight,
-  textLineHeight,
-  activeTextColor
+  timeStyle,
+  textStyle
 }) {
   const containerRef = useRef(null);
   useEffect(() => {
-    if (containerRef.current) {
-      if (currentSubtitleIndex < containerRef.current.children.length - 1) {
-        containerRef.current.children[currentSubtitleIndex].scrollIntoView({
-          block: "center",
-          behavior: "smooth"
-        });
-      }
+    if (containerRef.current && currentSubtitleIndex < containerRef.current.children.length - 1) {
+      containerRef.current.children[currentSubtitleIndex].scrollIntoView({
+        block: "center",
+        behavior: "smooth"
+      });
     }
   }, [currentSubtitleIndex]);
   return /* @__PURE__ */ jsx3("div", { ref: containerRef, className: ReactScriptPlayer_module_default.blockViewContainer, children: subtitles.map((subtitle, index) => /* @__PURE__ */ jsxs2(
@@ -250,7 +222,7 @@ function BlockView({
         onClickSubtitle(subtitle, index);
       },
       style: {
-        backgroundColor: index === currentSubtitleIndex ? activeTextColor || "lightgray" : "transparent"
+        backgroundColor: index === currentSubtitleIndex ? (textStyle == null ? void 0 : textStyle.activeColor) || "lightgray" : "transparent"
       },
       children: [
         /* @__PURE__ */ jsx3(
@@ -258,11 +230,11 @@ function BlockView({
           {
             className: ReactScriptPlayer_module_default.timeButton,
             style: {
-              color: timeColor,
-              fontSize: timeFontSize,
-              backgroundColor: timeBackgroundColor,
-              borderRadius: timeBorderRadius,
-              padding: timePadding
+              color: timeStyle == null ? void 0 : timeStyle.color,
+              fontSize: timeStyle == null ? void 0 : timeStyle.fontSize,
+              backgroundColor: timeStyle == null ? void 0 : timeStyle.backgroundColor,
+              borderRadius: timeStyle == null ? void 0 : timeStyle.borderRadius,
+              padding: timeStyle == null ? void 0 : timeStyle.padding
             },
             children: convertTime(subtitle.startTimeInSecond)
           }
@@ -273,10 +245,7 @@ function BlockView({
             subtitle: subtitles[index],
             selectedLanguages,
             onSelectWord,
-            textColor,
-            textFontSize,
-            textFontWeight,
-            textLineHeight
+            textStyle
           }
         )
       ]
@@ -312,83 +281,36 @@ function ReactScriptPlayer({
   currentTime,
   onClickSubtitle,
   onSelectWord,
-  // 기본 스타일
-  containerWidth,
-  containerHeight,
-  containerPadding,
-  containerBackgroundColor,
-  containerBorderColor,
-  // 자막 텍스트 스타일링
-  textColor,
-  textFontSize,
-  textFontWeight,
-  textLineHeight,
-  activeTextColor,
-  // 시간 표시 스타일링
-  timeColor,
-  timeFontSize,
-  timeBackgroundColor,
-  timeBorderRadius,
-  timePadding,
-  // 자막 넘기기 버튼
+  containerStyle,
+  textStyle,
+  timeStyle,
   PrevButton,
   NextButton
 }) {
   var _a;
   const currentSubtitleIndex = (_a = findCurrentSubtitleIndex(subtitles, currentTime)) != null ? _a : 0;
-  return /* @__PURE__ */ jsx4(
-    "div",
-    {
-      className: ReactScriptPlayer_module_default.subtitleContainer,
-      style: {
-        width: containerWidth,
-        height: containerHeight,
-        padding: containerPadding,
-        backgroundColor: containerBackgroundColor,
-        borderColor: containerBorderColor
-      },
-      children: /* @__PURE__ */ jsxs3("div", { className: ReactScriptPlayer_module_default.displayContainer, children: [
-        /* @__PURE__ */ jsx4("p", { className: ReactScriptPlayer_module_default.title, children: "Transcript" }),
-        mode === "line" && /* @__PURE__ */ jsx4(
-          LineView,
-          {
-            subtitles,
-            currentSubtitleIndex,
-            selectedLanguages,
-            seekTo,
-            onSelectWord,
-            textColor,
-            textFontSize,
-            textFontWeight,
-            textLineHeight,
-            PrevButton,
-            NextButton
-          }
-        ),
-        mode === "block" && /* @__PURE__ */ jsx4(
-          BlockView,
-          {
-            subtitles,
-            currentSubtitleIndex,
-            selectedLanguages,
-            seekTo,
-            onClickSubtitle,
-            onSelectWord,
-            timeColor,
-            timeFontSize,
-            timeBackgroundColor,
-            timeBorderRadius,
-            timePadding,
-            textColor,
-            textFontSize,
-            textFontWeight,
-            textLineHeight,
-            activeTextColor
-          }
-        )
-      ] })
-    }
-  );
+  const scriptPlayerProps = {
+    subtitles,
+    currentSubtitleIndex,
+    selectedLanguages,
+    seekTo,
+    onSelectWord,
+    textStyle,
+    PrevButton,
+    NextButton
+  };
+  return /* @__PURE__ */ jsx4("div", { className: ReactScriptPlayer_module_default.subtitleContainer, style: { ...containerStyle }, children: /* @__PURE__ */ jsxs3("div", { className: ReactScriptPlayer_module_default.displayContainer, children: [
+    /* @__PURE__ */ jsx4("p", { className: ReactScriptPlayer_module_default.title, children: "Transcript" }),
+    mode === "line" ? /* @__PURE__ */ jsx4(LineView, { ...scriptPlayerProps, textStyle }) : /* @__PURE__ */ jsx4(
+      BlockView,
+      {
+        ...scriptPlayerProps,
+        onClickSubtitle,
+        timeStyle,
+        textStyle
+      }
+    )
+  ] }) });
 }
 export {
   ReactScriptPlayer
