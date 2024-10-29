@@ -6,7 +6,6 @@ export interface Subtitle extends Partial<Record<LanguageCode, string>> {
   highlightedText?: string;
 }
 
-
 export interface ContainerStyle {
   width?: string;
   height?: string;

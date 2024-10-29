@@ -1,6 +1,7 @@
 import React from 'react';
 import { ReactScriptPlayer } from 'react-player-plugin-prompter';
 import ReactPlayer from 'react-player';
+import { LanguageCode } from './interfaces/Scripts';
 import { useState, useRef } from 'react';
 import SubtitleOption from './components/SubtitleOption';
 import scriptsMockData from './mocks/subtitleMockData';

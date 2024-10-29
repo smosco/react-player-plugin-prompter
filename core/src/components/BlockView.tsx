@@ -16,7 +16,6 @@ interface BlockViewProps {
   seekTo: (timeInSeconds: number) => void;
   onClickSubtitle: (subtitle: Subtitle, index: number) => void;
   onSelectWord: (word: string, subtitle: Subtitle, index: number) => void;
-
   // 시간 및 텍스트 관련 스타일
   timeStyle?: TimeStyle;
   textStyle?: TextStyle;
