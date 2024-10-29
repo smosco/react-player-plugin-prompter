@@ -6,7 +6,7 @@
     "core",
     "demo",
     "docs"
-  ],
+  ], 
   "scripts": {
     "core": "yarn workspace react-player-plugin-prompter",
     "demo": "yarn workspace demo",

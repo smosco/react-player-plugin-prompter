@@ -1,6 +1,12 @@
 import React from 'react';
 import styles from './ReactScriptPlayer.module.scss';
-import { LanguageCode, Subtitle } from '../interfaces/Scripts';
+import {
+  LanguageCode,
+  Subtitle,
+  ContainerStyle,
+  TextStyle,
+  TimeStyle,
+} from '../interfaces/Scripts';
 import { LineView } from './LineView';
 import { BlockView } from './BlockView';
 import { findCurrentSubtitleIndex } from 'utils/findCurrentSubtitleIndex';
@@ -13,29 +19,9 @@ export interface ReactScriptPlayerProps {
   currentTime: number;
   onClickSubtitle: (subtitle: Subtitle, index: number) => void;
   onSelectWord: (word: string, subtitle: Subtitle, index: number) => void;
-
-  // 자막 컨테이너 스타일링
-  containerWidth?: string;
-  containerHeight?: string;
-  containerPadding?: string;
-  containerBackgroundColor?: string;
-  containerBorderColor?: string;
-
-  // 자막 텍스트 스타일링
-  textColor?: string;
-  textFontSize?: string;
-  textFontWeight?: string;
-  textLineHeight?: string;
-  activeTextColor?: string;
-
-  // 시간 표시 스타일링
-  timeColor?: string;
-  timeFontSize?: string;
-  timeBackgroundColor?: string;
-  timeBorderRadius?: string;
-  timePadding?: string;
-
-  // 자막 넘기기 버튼
+  containerStyle?: ContainerStyle;
+  textStyle?: TextStyle;
+  timeStyle?: TimeStyle;
   PrevButton?: ({ onClick }: { onClick: () => void }) => JSX.Element;
   NextButton?: ({ onClick }: { onClick: () => void }) => JSX.Element;
 }
@@ -48,87 +34,38 @@ export function ReactScriptPlayer({
   currentTime,
   onClickSubtitle,
   onSelectWord,
-
-  // 기본 스타일
-  containerWidth,
-  containerHeight,
-  containerPadding,
-  containerBackgroundColor,
-  containerBorderColor,
-
-  // 자막 텍스트 스타일링
-  textColor,
-  textFontSize,
-  textFontWeight,
-  textLineHeight,
-  activeTextColor,
-
-  // 시간 표시 스타일링
-  timeColor,
-  timeFontSize,
-  timeBackgroundColor,
-  timeBorderRadius,
-  timePadding,
-
-  // 자막 넘기기 버튼
+  containerStyle,
+  textStyle,
+  timeStyle,
   PrevButton,
   NextButton,
 }: ReactScriptPlayerProps) {
   const currentSubtitleIndex =
     findCurrentSubtitleIndex(subtitles, currentTime) ?? 0;
 
+  const scriptPlayerProps = {
+    subtitles,
+    currentSubtitleIndex,
+    selectedLanguages,
+    seekTo,
+    onSelectWord,
+    textStyle,
+    PrevButton,
+    NextButton,
+  };
+
   return (
-    <div
-      className={styles.subtitleContainer}
-      style={{
-        width: containerWidth,
-        height: containerHeight,
-        padding: containerPadding,
-        backgroundColor: containerBackgroundColor,
-        borderColor: containerBorderColor,
-      }}
-    >
+    <div className={styles.subtitleContainer} style={{ ...containerStyle }}>
       <div className={styles.displayContainer}>
         <p className={styles.title}>Transcript</p>
-
-        {/* TODO(@smosco): line, block 뷰 props가 거의 동일하기 때문에 공통 props로 추출해서 관리 */}
-        {mode === 'line' && (
-          <LineView
-            subtitles={subtitles}
-            currentSubtitleIndex={currentSubtitleIndex}
-            selectedLanguages={selectedLanguages}
-            seekTo={seekTo}
-            onSelectWord={onSelectWord}
-            // 자막 텍스트 스타일을 LineView에 전달
-            textColor={textColor}
-            textFontSize={textFontSize}
-            textFontWeight={textFontWeight}
-            textLineHeight={textLineHeight}
-            // 자막 넘기기 버튼
-            PrevButton={PrevButton}
-            NextButton={NextButton}
-          />
-        )}
-        {mode === 'block' && (
+        {mode === 'line' ? (
+          <LineView {...scriptPlayerProps} textStyle={textStyle} />
+        ) : (
           <BlockView
-            subtitles={subtitles}
-            currentSubtitleIndex={currentSubtitleIndex}
-            selectedLanguages={selectedLanguages}
-            seekTo={seekTo}
+            {...scriptPlayerProps}
             onClickSubtitle={onClickSubtitle}
-            onSelectWord={onSelectWord}
-            // 시간 관련 스타일을 BlockView에 전달
-            timeColor={timeColor}
-            timeFontSize={timeFontSize}
-            timeBackgroundColor={timeBackgroundColor}
-            timeBorderRadius={timeBorderRadius}
-            timePadding={timePadding}
-            // 자막 텍스트 스타일링
-            textColor={textColor}
-            textFontSize={textFontSize}
-            textFontWeight={textFontWeight}
-            textLineHeight={textLineHeight}
-            activeTextColor={activeTextColor}
+            timeStyle={timeStyle}
+            textStyle={textStyle}
           />
         )}
       </div>
