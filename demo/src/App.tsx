@@ -3,7 +3,6 @@ import { ReactScriptPlayer } from 'react-player-plugin-prompter';
 import ReactPlayer from 'react-player';
 import { useState, useRef } from 'react';
 import SubtitleOption from './components/SubtitleOption';
-import { LanguageCode } from './interfaces/Scripts';
 import scriptsMockData from './mocks/subtitleMockData';
 import { mockUrl } from './mocks/mockUrl';
 import ControlBar from './components/ControlBar';
