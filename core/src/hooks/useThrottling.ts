@@ -19,7 +19,7 @@ export default function useThrottling({
         setIsThrottled(false);
       }, delay);
     }
-  }, [buttonClicked, delay]);
+  }, [isThrottled, buttonClicked, delay]);
 
   return throttledCallback;
 }
