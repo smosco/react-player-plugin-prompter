@@ -1,5 +1,10 @@
 import React, { useRef, useEffect } from 'react';
-import { LanguageCode, Subtitle } from 'interfaces/Scripts';
+import {
+  LanguageCode,
+  Subtitle,
+  TimeStyle,
+  TextStyle,
+} from 'interfaces/Scripts';
 import styles from './ReactScriptPlayer.module.scss';
 import { convertTime } from 'utils/convertTime';
 import { TextDisplay } from './TextDisplay';
@@ -11,20 +16,9 @@ interface BlockViewProps {
   seekTo: (timeInSeconds: number) => void;
   onClickSubtitle: (subtitle: Subtitle, index: number) => void;
   onSelectWord: (word: string, subtitle: Subtitle, index: number) => void;
-
-  // 시간 관련 스타일
-  timeColor?: string;
-  timeFontSize?: string;
-  timeBackgroundColor?: string;
-  timeBorderRadius?: string;
-  timePadding?: string;
-
-  // 텍스트 관련 스타일
-  textColor?: string;
-  textFontSize?: string;
-  textFontWeight?: string;
-  textLineHeight?: string;
-  activeTextColor?: string;
+  // 시간 및 텍스트 관련 스타일
+  timeStyle?: TimeStyle;
+  textStyle?: TextStyle;
 }
 
 export function BlockView({
@@ -34,32 +28,20 @@ export function BlockView({
   seekTo,
   onClickSubtitle,
   onSelectWord,
-
-  // 시간 관련 스타일
-  timeColor,
-  timeFontSize,
-  timeBackgroundColor,
-  timeBorderRadius,
-  timePadding,
-
-  // 텍스트 관련 스타일
-  textColor,
-  textFontSize,
-  textFontWeight,
-  textLineHeight,
-  activeTextColor,
+  timeStyle,
+  textStyle,
 }: BlockViewProps) {
   const containerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    if (containerRef.current) {
-      // console.log(containerRef.current);
-      if (currentSubtitleIndex < containerRef.current.children.length - 1) {
-        containerRef.current.children[currentSubtitleIndex].scrollIntoView({
-          block: 'center',
-          behavior: 'smooth',
-        });
-      }
+    if (
+      containerRef.current &&
+      currentSubtitleIndex < containerRef.current.children.length - 1
+    ) {
+      containerRef.current.children[currentSubtitleIndex].scrollIntoView({
+        block: 'center',
+        behavior: 'smooth',
+      });
     }
   }, [currentSubtitleIndex]);
 
@@ -70,25 +52,24 @@ export function BlockView({
           className={styles.subtitleItem}
           key={index}
           onClick={() => {
-            // TODO(@smosco): 자막 클릭 함수 구현
             seekTo(subtitle.startTimeInSecond);
             onClickSubtitle(subtitle, index);
           }}
           style={{
             backgroundColor:
               index === currentSubtitleIndex
-                ? activeTextColor || 'lightgray'
+                ? textStyle?.activeColor || 'lightgray'
                 : 'transparent',
           }}
         >
           <button
             className={styles.timeButton}
             style={{
-              color: timeColor,
-              fontSize: timeFontSize,
-              backgroundColor: timeBackgroundColor,
-              borderRadius: timeBorderRadius,
-              padding: timePadding,
+              color: timeStyle?.color,
+              fontSize: timeStyle?.fontSize,
+              backgroundColor: timeStyle?.backgroundColor,
+              borderRadius: timeStyle?.borderRadius,
+              padding: timeStyle?.padding,
             }}
           >
             {convertTime(subtitle.startTimeInSecond)}
@@ -98,10 +79,7 @@ export function BlockView({
             subtitle={subtitles[index]}
             selectedLanguages={selectedLanguages}
             onSelectWord={onSelectWord}
-            textColor={textColor}
-            textFontSize={textFontSize}
-            textFontWeight={textFontWeight}
-            textLineHeight={textLineHeight}
+            textStyle={textStyle}
           />
         </div>
       ))}
