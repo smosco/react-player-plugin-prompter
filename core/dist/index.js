@@ -1,13 +1,13 @@
 // esbuild-scss-modules-plugin:./ReactScriptPlayer.module.scss
-var digest = "e43dd2dcd17a6df0f76a4acecb4fc455d13a542ff476cd474e6b61011f1bfcd7";
-var classes = { "subtitleContainer": "_subtitleContainer_1shar_7", "title": "_title_1shar_19", "lineViewContainer": "_lineViewContainer_1shar_24", "skipButtonContainer": "_skipButtonContainer_1shar_29", "blockViewContainer": "_blockViewContainer_1shar_36", "subtitleItem": "_subtitleItem_1shar_42", "timeButton": "_timeButton_1shar_47", "textView": "_textView_1shar_60", "textEn": "_textEN_1shar_65" };
+var digest = "2769d0b368fc200e34262e46f80253cd378caf0e916b15db6f288694ff9041e5";
+var classes = { "subtitleContainer": "_subtitleContainer_ikp7v_7", "title": "_title_ikp7v_19", "lineViewContainer": "_lineViewContainer_ikp7v_24", "skipButtonContainer": "_skipButtonContainer_ikp7v_29", "blockViewContainer": "_blockViewContainer_ikp7v_36", "subtitleItem": "_subtitleItem_ikp7v_42", "timeButton": "_timeButton_ikp7v_47", "textView": "_textView_ikp7v_60", "highlighted": "_highlighted_ikp7v_65" };
 var css = `* {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
 }
 
-._subtitleContainer_1shar_7 {
+._subtitleContainer_ikp7v_7 {
   display: flex;
   flex-direction: column;
   gap: 2rem;
@@ -19,35 +19,35 @@ var css = `* {
   overflow-y: auto;
 }
 
-._title_1shar_19 {
+._title_ikp7v_19 {
   font-size: 1.25rem;
   font-weight: 700;
 }
 
-._lineViewContainer_1shar_24 {
+._lineViewContainer_ikp7v_24 {
   display: flex;
   flex-direction: column;
   gap: 2rem;
 }
-._lineViewContainer_1shar_24 ._skipButtonContainer_1shar_29 {
+._lineViewContainer_ikp7v_24 ._skipButtonContainer_ikp7v_29 {
   align-self: end;
 }
-._lineViewContainer_1shar_24 ._skipButtonContainer_1shar_29 button {
+._lineViewContainer_ikp7v_24 ._skipButtonContainer_ikp7v_29 button {
   cursor: pointer;
 }
 
-._blockViewContainer_1shar_36 {
+._blockViewContainer_ikp7v_36 {
   display: flex;
   flex-direction: column;
   gap: 2rem;
   height: 16rem;
 }
-._blockViewContainer_1shar_36 ._subtitleItem_1shar_42 {
+._blockViewContainer_ikp7v_36 ._subtitleItem_ikp7v_42 {
   padding: 16px;
   border-radius: 12px;
   transition: background-color 0.5s ease-in-out;
 }
-._blockViewContainer_1shar_36 ._subtitleItem_1shar_42 ._timeButton_1shar_47 {
+._blockViewContainer_ikp7v_36 ._subtitleItem_ikp7v_42 ._timeButton_ikp7v_47 {
   width: 5rem;
   padding-inline: 0.75rem;
   padding-block: 0.5rem;
@@ -60,13 +60,13 @@ var css = `* {
   color: white;
 }
 
-._textView_1shar_60 {
+._textView_ikp7v_60 {
   display: flex;
   flex-direction: column;
   gap: 1rem;
 }
-._textView_1shar_60 ._textEN_1shar_65 {
-  font-weight: bold;
+._textView_ikp7v_60._highlighted_ikp7v_65 {
+  background-color: #fef08a;
 }`;
 (function() {
   if (typeof document !== "undefined" && !document.getElementById(digest)) {
@@ -111,24 +111,30 @@ function TextDisplay({
   onSelectWord,
   textStyle
 }) {
-  return /* @__PURE__ */ jsx("div", { className: ReactScriptPlayer_module_default.textView, children: selectedLanguages.map((language) => /* @__PURE__ */ jsx(
-    "p",
+  return /* @__PURE__ */ jsx(
+    "div",
     {
-      className: ReactScriptPlayer_module_default.text,
-      style: textStyle,
-      onMouseUp: () => {
-        const selection = window.getSelection();
-        if (selection && selection.toString()) {
-          const selectedWord = selection.toString().trim();
-          if (selectedWord) {
-            onSelectWord(selectedWord, subtitle, 0);
-          }
-        }
-      },
-      children: subtitle[language] || `(${language} \uC790\uB9C9\uC774 \uC5C6\uC5B4\uC694!)`
-    },
-    language
-  )) });
+      className: `${ReactScriptPlayer_module_default.textView} ${subtitle.isHighlighted ? ReactScriptPlayer_module_default.highlighted : ""}`,
+      children: selectedLanguages.map((language) => /* @__PURE__ */ jsx(
+        "p",
+        {
+          className: ReactScriptPlayer_module_default.text,
+          style: textStyle,
+          onMouseUp: () => {
+            const selection = window.getSelection();
+            if (selection && selection.toString()) {
+              const selectedWord = selection.toString().trim();
+              if (selectedWord) {
+                onSelectWord(selectedWord, subtitle, 0);
+              }
+            }
+          },
+          children: subtitle[language] || `(${language} \uC790\uB9C9\uC774 \uC5C6\uC5B4\uC694!)`
+        },
+        language
+      ))
+    }
+  );
 }
 
 // src/components/LineView.tsx

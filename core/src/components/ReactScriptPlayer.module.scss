@@ -67,7 +67,7 @@
   flex-direction: column;
   gap: 1rem;
 
-  .textEN {
-    font-weight: bold;
+  &.highlighted {
+    background-color: #fef08a;
   }
 }
