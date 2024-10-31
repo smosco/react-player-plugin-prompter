@@ -16,7 +16,9 @@ export function TextDisplay({
   textStyle,
 }: TextDisplayProps) {
   return (
-    <div className={styles.textView}>
+    <div
+      className={`${styles.textView} ${subtitle.isHighlighted ? styles.highlighted : ''}`}
+    >
       {selectedLanguages.map((language) => (
         <p
           key={language}

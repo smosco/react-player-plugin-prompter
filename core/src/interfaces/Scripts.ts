@@ -3,7 +3,7 @@ export type LanguageCode = 'en' | 'ko' | 'ja' | 'de' | 'fr' | 'es';
 export interface Subtitle extends Partial<Record<LanguageCode, string>> {
   startTimeInSecond: number;
   durationInSecond: number;
-  highlightedText?: string;
+  isHighlighted: boolean;
 }
 
 export interface ContainerStyle {
