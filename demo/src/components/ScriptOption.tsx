@@ -1,26 +1,26 @@
 import React from 'react';
-import styles from './SubtitleOption.module.scss';
+import styles from './ScriptOption.module.scss';
 import { Dispatch, SetStateAction } from 'react';
-import { LanguageCode } from '../interfaces/Scripts';
+import { CustomScriptLanguageCode } from '../interfaces/Scripts';
 
 type Mode = 'line' | 'block';
 
-interface SubtitleOptionProps {
+interface ScriptOptionProps {
   mode: Mode;
-  availableLanguages: LanguageCode[]; // 전체 가능한 언어 옵션
-  selectedLanguages: LanguageCode[]; // 다중 선택 가능한 언어 배열
-  setSelectedLanguages: Dispatch<SetStateAction<LanguageCode[]>>;
+  availableLanguages: CustomScriptLanguageCode[]; // 전체 가능한 언어 옵션
+  selectedLanguages: CustomScriptLanguageCode[]; // 다중 선택 가능한 언어 배열
+  setSelectedLanguages: Dispatch<SetStateAction<CustomScriptLanguageCode[]>>;
   setMode: Dispatch<SetStateAction<Mode>>;
 }
 
-export default function SubtitleOption({
+export default function ScriptOption({
   mode,
   availableLanguages,
   selectedLanguages,
   setSelectedLanguages,
   setMode,
-}: SubtitleOptionProps) {
-  const handleLanguageChange = (language: LanguageCode) => {
+}: ScriptOptionProps) {
+  const handleLanguageChange = (language: CustomScriptLanguageCode) => {
     if (selectedLanguages.includes(language)) {
       setSelectedLanguages(
         selectedLanguages.filter((lang) => lang !== language),
