@@ -1,14 +1,14 @@
-import { LanguageCode, Subtitle, TimeStyle, TextStyle } from 'interfaces/Scripts';
+import { LanguageCode, Script, TimeStyle, TextStyle } from 'interfaces/Scripts';
 interface BlockViewProps {
-    subtitles: Subtitle[];
-    currentSubtitleIndex: number;
+    scripts: Script[];
+    currentScriptIndex: number;
     selectedLanguages: LanguageCode[];
     seekTo: (timeInSeconds: number) => void;
-    onClickSubtitle: (subtitle: Subtitle, index: number) => void;
-    onSelectWord: (word: string, subtitle: Subtitle, index: number) => void;
+    onClickScript: (script: Script, index: number) => void;
+    onSelectWord: (word: string, script: Script, index: number) => void;
     timeStyle?: TimeStyle;
     textStyle?: TextStyle;
 }
-export declare function BlockView({ subtitles, currentSubtitleIndex, selectedLanguages, seekTo, onClickSubtitle, onSelectWord, timeStyle, textStyle, }: BlockViewProps): import("react/jsx-runtime").JSX.Element;
+export declare function BlockView({ scripts, currentScriptIndex, selectedLanguages, seekTo, onClickScript, onSelectWord, timeStyle, textStyle, }: BlockViewProps): import("react/jsx-runtime").JSX.Element;
 export {};
 //# sourceMappingURL=BlockView.d.ts.map

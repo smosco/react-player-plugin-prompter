@@ -1,28 +1,29 @@
-export type LanguageCode = 'en' | 'ko' | 'ja' | 'de' | 'fr' | 'es';
-export interface Subtitle extends Partial<Record<LanguageCode, string>> {
+type LanguageCode = 'en' | 'ko' | 'ja' | 'de' | 'fr' | 'es';
+type Script<T extends string = LanguageCode> = Partial<Record<T, string>> & {
     startTimeInSecond: number;
     durationInSecond: number;
     isHighlighted: boolean;
-}
-export interface ContainerStyle {
+};
+interface ContainerStyle {
     width?: string;
     height?: string;
     padding?: string;
     backgroundColor?: string;
     borderColor?: string;
 }
-export interface TextStyle {
+interface TextStyle {
     color?: string;
     fontSize?: string;
     fontWeight?: string;
     lineHeight?: string;
     activeColor?: string;
 }
-export interface TimeStyle {
+interface TimeStyle {
     color?: string;
     fontSize?: string;
     backgroundColor?: string;
     borderRadius?: string;
     padding?: string;
 }
+export type { LanguageCode, Script, ContainerStyle, TextStyle, TimeStyle };
 //# sourceMappingURL=Scripts.d.ts.map

@@ -1,10 +1,10 @@
-import { Subtitle, LanguageCode, TextStyle } from '../interfaces/Scripts';
+import { Script, LanguageCode, TextStyle } from '../interfaces/Scripts';
 interface TextDisplayProps {
-    subtitle: Subtitle;
+    script: Script;
     selectedLanguages: LanguageCode[];
-    onSelectWord: (word: string, subtitle: Subtitle, index: number) => void;
+    onSelectWord: (word: string, script: Script, index: number) => void;
     textStyle?: TextStyle;
 }
-export declare function TextDisplay({ subtitle, selectedLanguages, onSelectWord, textStyle, }: TextDisplayProps): import("react/jsx-runtime").JSX.Element;
+export declare function TextDisplay({ script, selectedLanguages, onSelectWord, textStyle, }: TextDisplayProps): import("react/jsx-runtime").JSX.Element;
 export {};
 //# sourceMappingURL=TextDisplay.d.ts.map

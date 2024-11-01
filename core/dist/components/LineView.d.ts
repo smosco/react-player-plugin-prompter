@@ -1,10 +1,10 @@
-import { LanguageCode, Subtitle, TextStyle } from '../interfaces/Scripts';
+import { LanguageCode, Script, TextStyle } from '../interfaces/Scripts';
 interface LineViewProps {
-    subtitles: Subtitle[];
+    scripts: Script[];
     selectedLanguages: LanguageCode[];
-    currentSubtitleIndex: number;
+    currentScriptIndex: number;
     seekTo: (timeInSeconds: number) => void;
-    onSelectWord: (word: string, subtitle: Subtitle, index: number) => void;
+    onSelectWord: (word: string, script: Script, index: number) => void;
     textStyle?: TextStyle;
     PrevButton?: ({ onClick }: {
         onClick: () => void;
@@ -13,6 +13,6 @@ interface LineViewProps {
         onClick: () => void;
     }) => JSX.Element;
 }
-export declare function LineView({ subtitles, selectedLanguages, currentSubtitleIndex, seekTo, onSelectWord, textStyle, PrevButton, NextButton, }: LineViewProps): import("react/jsx-runtime").JSX.Element;
+export declare function LineView({ scripts, selectedLanguages, currentScriptIndex, seekTo, onSelectWord, textStyle, PrevButton, NextButton, }: LineViewProps): import("react/jsx-runtime").JSX.Element;
 export {};
 //# sourceMappingURL=LineView.d.ts.map
