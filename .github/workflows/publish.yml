@@ -24,10 +24,14 @@ jobs:
       - name: Install dependencies
         run: yarn install --immutable
 
-      - name: Build project
-        run: yarn build
+      # core 디렉토리로 이동하여 빌드 및 배포 작업 수행
+      - name: Change directory to core
+        working-directory: ./core
+        run: |
+          yarn build
 
-      - name: Publish to npm
+      - name: Publish core to npm
+        working-directory: ./core
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-        run: yarn publish --non-interactive
+        run: npm publish --access public
