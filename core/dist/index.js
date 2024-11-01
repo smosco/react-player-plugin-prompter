@@ -1,13 +1,13 @@
 // esbuild-scss-modules-plugin:./ReactScriptPlayer.module.scss
-var digest = "d9be461180321c88c68e52d9044bc68d261c5362afa1cb316e3f2820b55f8dab";
-var classes = { "scriptsContainer": "_scriptsContainer_1ryx0_7", "title": "_title_1ryx0_19", "lineViewContainer": "_lineViewContainer_1ryx0_24", "skipButtonContainer": "_skipButtonContainer_1ryx0_29", "blockViewContainer": "_blockViewContainer_1ryx0_36", "scriptItem": "_scriptItem_1ryx0_42", "timeButton": "_timeButton_1ryx0_47", "textView": "_textView_1ryx0_60", "highlighted": "_highlighted_1ryx0_65" };
+var digest = "9b88b24bc5ba973e3b88f2c5f7446f6da86e199e8003f6a24f080d5601160c50";
+var classes = { "scriptsContainer": "_scriptsContainer_1tyea_7", "title": "_title_1tyea_18", "lineViewContainer": "_lineViewContainer_1tyea_23", "skipButtonContainer": "_skipButtonContainer_1tyea_28", "blockViewContainer": "_blockViewContainer_1tyea_35", "scriptItem": "_scriptItem_1tyea_42", "timeButton": "_timeButton_1tyea_47", "textView": "_textView_1tyea_60", "highlighted": "_highlighted_1tyea_65" };
 var css = `* {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
 }
 
-._scriptsContainer_1ryx0_7 {
+._scriptsContainer_1tyea_7 {
   display: flex;
   flex-direction: column;
   gap: 2rem;
@@ -16,38 +16,38 @@ var css = `* {
   padding: 1.5rem;
   border: 2px solid #ececec;
   border-radius: 0.75rem;
-  overflow-y: auto;
 }
 
-._title_1ryx0_19 {
+._title_1tyea_18 {
   font-size: 1.25rem;
   font-weight: 700;
 }
 
-._lineViewContainer_1ryx0_24 {
+._lineViewContainer_1tyea_23 {
   display: flex;
   flex-direction: column;
   gap: 2rem;
 }
-._lineViewContainer_1ryx0_24 ._skipButtonContainer_1ryx0_29 {
+._lineViewContainer_1tyea_23 ._skipButtonContainer_1tyea_28 {
   align-self: end;
 }
-._lineViewContainer_1ryx0_24 ._skipButtonContainer_1ryx0_29 button {
+._lineViewContainer_1tyea_23 ._skipButtonContainer_1tyea_28 button {
   cursor: pointer;
 }
 
-._blockViewContainer_1ryx0_36 {
+._blockViewContainer_1tyea_35 {
   display: flex;
   flex-direction: column;
   gap: 2rem;
   height: 16rem;
+  overflow-y: auto;
 }
-._blockViewContainer_1ryx0_36 ._scriptItem_1ryx0_42 {
+._blockViewContainer_1tyea_35 ._scriptItem_1tyea_42 {
   padding: 16px;
   border-radius: 12px;
   transition: background-color 0.5s ease-in-out;
 }
-._blockViewContainer_1ryx0_36 ._scriptItem_1ryx0_42 ._timeButton_1ryx0_47 {
+._blockViewContainer_1tyea_35 ._scriptItem_1tyea_42 ._timeButton_1tyea_47 {
   width: 5rem;
   padding-inline: 0.75rem;
   padding-block: 0.5rem;
@@ -60,12 +60,12 @@ var css = `* {
   color: white;
 }
 
-._textView_1ryx0_60 {
+._textView_1tyea_60 {
   display: flex;
   flex-direction: column;
   gap: 1rem;
 }
-._textView_1ryx0_60._highlighted_1ryx0_65 {
+._textView_1tyea_60._highlighted_1tyea_65 {
   background-color: #fef08a;
 }`;
 (function() {
@@ -209,11 +209,18 @@ function BlockView({
 }) {
   const containerRef = useRef(null);
   useEffect(() => {
-    if (containerRef.current && currentScriptIndex < containerRef.current.children.length - 1) {
-      containerRef.current.children[currentScriptIndex].scrollIntoView({
-        block: "center",
-        behavior: "smooth"
-      });
+    if (containerRef.current) {
+      if (currentScriptIndex < containerRef.current.children.length - 1) {
+        const container = containerRef.current;
+        const target = container.children[currentScriptIndex];
+        const targetTop = target.getBoundingClientRect().top;
+        const containerTop = container.getBoundingClientRect().top;
+        const relativeTop = targetTop - containerTop;
+        container.scrollBy({
+          top: relativeTop - 20,
+          behavior: "smooth"
+        });
+      }
     }
   }, [currentScriptIndex]);
   return /* @__PURE__ */ jsx3("div", { ref: containerRef, className: ReactScriptPlayer_module_default.blockViewContainer, children: scripts.map((script, index) => /* @__PURE__ */ jsxs2(

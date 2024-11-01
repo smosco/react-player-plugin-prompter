@@ -30,14 +30,21 @@ export function BlockView<T extends string = LanguageCode>({
   const containerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    if (
-      containerRef.current &&
-      currentScriptIndex < containerRef.current.children.length - 1
-    ) {
-      containerRef.current.children[currentScriptIndex].scrollIntoView({
-        block: 'center',
-        behavior: 'smooth',
-      });
+    if (containerRef.current) {
+      if (currentScriptIndex < containerRef.current.children.length - 1) {
+        const container = containerRef.current;
+        const target = container.children[currentScriptIndex];
+
+        // 컨테이너의 상단에서부터 타겟까지의 거리 계산
+        const targetTop = target.getBoundingClientRect().top;
+        const containerTop = container.getBoundingClientRect().top;
+        const relativeTop = targetTop - containerTop;
+
+        container.scrollBy({
+          top: relativeTop - 20,
+          behavior: 'smooth',
+        });
+      }
     }
   }, [currentScriptIndex]);
 

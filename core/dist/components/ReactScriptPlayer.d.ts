@@ -17,5 +17,5 @@ export interface ReactScriptPlayerProps<T extends string = LanguageCode> {
         onClick: () => void;
     }) => JSX.Element;
 }
-export declare function ReactScriptPlayer({ mode, scripts, selectedLanguages, seekTo, currentTime, onClickScript, onSelectWord, containerStyle, textStyle, timeStyle, PrevButton, NextButton, }: ReactScriptPlayerProps): import("react/jsx-runtime").JSX.Element;
+export declare function ReactScriptPlayer<T extends string = LanguageCode>({ mode, scripts, selectedLanguages, seekTo, currentTime, onClickScript, onSelectWord, containerStyle, textStyle, timeStyle, PrevButton, NextButton, }: ReactScriptPlayerProps<T>): import("react/jsx-runtime").JSX.Element;
 //# sourceMappingURL=ReactScriptPlayer.d.ts.map

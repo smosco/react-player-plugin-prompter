@@ -1,10 +1,10 @@
 import { Script, LanguageCode, TextStyle } from '../interfaces/Scripts';
-interface TextDisplayProps {
-    script: Script;
-    selectedLanguages: LanguageCode[];
-    onSelectWord: (word: string, script: Script, index: number) => void;
+interface TextDisplayProps<T extends string = LanguageCode> {
+    script: Script<T>;
+    selectedLanguages: T[];
+    onSelectWord: (word: string, script: Script<T>, index: number) => void;
     textStyle?: TextStyle;
 }
-export declare function TextDisplay({ script, selectedLanguages, onSelectWord, textStyle, }: TextDisplayProps): import("react/jsx-runtime").JSX.Element;
+export declare function TextDisplay<T extends string = LanguageCode>({ script, selectedLanguages, onSelectWord, textStyle, }: TextDisplayProps<T>): import("react/jsx-runtime").JSX.Element;
 export {};
 //# sourceMappingURL=TextDisplay.d.ts.map
