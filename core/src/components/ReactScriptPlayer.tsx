@@ -2,23 +2,23 @@ import React from 'react';
 import styles from './ReactScriptPlayer.module.scss';
 import {
   LanguageCode,
-  Subtitle,
+  Script,
   ContainerStyle,
   TextStyle,
   TimeStyle,
 } from '../interfaces/Scripts';
 import { LineView } from './LineView';
 import { BlockView } from './BlockView';
-import { findCurrentSubtitleIndex } from 'utils/findCurrentSubtitleIndex';
+import { findCurrentScriptIndex } from 'utils/findCurrentScriptIndex';
 
-export interface ReactScriptPlayerProps {
+export interface ReactScriptPlayerProps<T extends string = LanguageCode> {
   mode: 'line' | 'block';
-  subtitles: Subtitle[];
-  selectedLanguages: LanguageCode[];
+  scripts: Script<T>[];
+  selectedLanguages: T[];
   seekTo: (timeInSeconds: number) => void;
   currentTime: number;
-  onClickSubtitle: (subtitle: Subtitle, index: number) => void;
-  onSelectWord: (word: string, subtitle: Subtitle, index: number) => void;
+  onClickScript: (script: Script<T>, index: number) => void;
+  onSelectWord: (word: string, script: Script<T>, index: number) => void;
   containerStyle?: ContainerStyle;
   textStyle?: TextStyle;
   timeStyle?: TimeStyle;
@@ -26,26 +26,25 @@ export interface ReactScriptPlayerProps {
   NextButton?: ({ onClick }: { onClick: () => void }) => JSX.Element;
 }
 
-export function ReactScriptPlayer({
+export function ReactScriptPlayer<T extends string = LanguageCode>({
   mode,
-  subtitles,
+  scripts,
   selectedLanguages,
   seekTo,
   currentTime,
-  onClickSubtitle,
+  onClickScript,
   onSelectWord,
   containerStyle,
   textStyle,
   timeStyle,
   PrevButton,
   NextButton,
-}: ReactScriptPlayerProps) {
-  const currentSubtitleIndex =
-    findCurrentSubtitleIndex(subtitles, currentTime) ?? 0;
+}: ReactScriptPlayerProps<T>) {
+  const currentScriptIndex = findCurrentScriptIndex(scripts, currentTime) ?? 0;
 
   const scriptPlayerProps = {
-    subtitles,
-    currentSubtitleIndex,
+    scripts,
+    currentScriptIndex,
     selectedLanguages,
     seekTo,
     onSelectWord,
@@ -55,7 +54,7 @@ export function ReactScriptPlayer({
   };
 
   return (
-    <div className={styles.subtitleContainer} style={{ ...containerStyle }}>
+    <div className={styles.scriptsContainer} style={{ ...containerStyle }}>
       <div className={styles.displayContainer}>
         <p className={styles.title}>Transcript</p>
         {mode === 'line' ? (
@@ -63,7 +62,7 @@ export function ReactScriptPlayer({
         ) : (
           <BlockView
             {...scriptPlayerProps}
-            onClickSubtitle={onClickSubtitle}
+            onClickScript={onClickScript}
             timeStyle={timeStyle}
             textStyle={textStyle}
           />

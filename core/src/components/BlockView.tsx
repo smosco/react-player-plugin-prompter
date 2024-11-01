@@ -1,63 +1,59 @@
 import React, { useRef, useEffect } from 'react';
-import {
-  LanguageCode,
-  Subtitle,
-  TimeStyle,
-  TextStyle,
-} from 'interfaces/Scripts';
+import { LanguageCode, Script, TimeStyle, TextStyle } from 'interfaces/Scripts';
 import styles from './ReactScriptPlayer.module.scss';
 import { convertTime } from 'utils/convertTime';
 import { TextDisplay } from './TextDisplay';
 
-interface BlockViewProps {
-  subtitles: Subtitle[];
-  currentSubtitleIndex: number;
-  selectedLanguages: LanguageCode[];
+// BlockView에 제네릭 T 추가
+interface BlockViewProps<T extends string = LanguageCode> {
+  scripts: Script<T>[];
+  currentScriptIndex: number;
+  selectedLanguages: T[];
   seekTo: (timeInSeconds: number) => void;
-  onClickSubtitle: (subtitle: Subtitle, index: number) => void;
-  onSelectWord: (word: string, subtitle: Subtitle, index: number) => void;
-  // 시간 및 텍스트 관련 스타일
+  onClickScript: (script: Script<T>, index: number) => void;
+  onSelectWord: (word: string, script: Script<T>, index: number) => void;
   timeStyle?: TimeStyle;
   textStyle?: TextStyle;
 }
 
-export function BlockView({
-  subtitles,
-  currentSubtitleIndex,
+// BlockView에 제네릭 T를 적용
+export function BlockView<T extends string = LanguageCode>({
+  scripts,
+  currentScriptIndex,
   selectedLanguages,
   seekTo,
-  onClickSubtitle,
+  onClickScript,
   onSelectWord,
   timeStyle,
   textStyle,
-}: BlockViewProps) {
+}: BlockViewProps<T>) {
   const containerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     if (
       containerRef.current &&
-      currentSubtitleIndex < containerRef.current.children.length - 1
+      currentScriptIndex < containerRef.current.children.length - 1
     ) {
-      containerRef.current.children[currentSubtitleIndex].scrollIntoView({
+      containerRef.current.children[currentScriptIndex].scrollIntoView({
         block: 'center',
         behavior: 'smooth',
       });
     }
-  }, [currentSubtitleIndex]);
+  }, [currentScriptIndex]);
 
   return (
     <div ref={containerRef} className={styles.blockViewContainer}>
-      {subtitles.map((subtitle, index) => (
+      {scripts.map((script, index) => (
         <div
-          className={styles.subtitleItem}
+          className={styles.scriptItem}
           key={index}
           onClick={() => {
-            seekTo(subtitle.startTimeInSecond);
-            onClickSubtitle(subtitle, index);
+            seekTo(script.startTimeInSecond);
+            onClickScript(script, index);
           }}
           style={{
             backgroundColor:
-              index === currentSubtitleIndex
+              index === currentScriptIndex
                 ? textStyle?.activeColor || 'lightgray'
                 : 'transparent',
           }}
@@ -72,11 +68,11 @@ export function BlockView({
               padding: timeStyle?.padding,
             }}
           >
-            {convertTime(subtitle.startTimeInSecond)}
+            {convertTime(script.startTimeInSecond)}
           </button>
 
           <TextDisplay
-            subtitle={subtitles[index]}
+            script={scripts[index]}
             selectedLanguages={selectedLanguages}
             onSelectWord={onSelectWord}
             textStyle={textStyle}
