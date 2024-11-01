@@ -1,13 +1,13 @@
 // esbuild-scss-modules-plugin:./ReactScriptPlayer.module.scss
-var digest = "2769d0b368fc200e34262e46f80253cd378caf0e916b15db6f288694ff9041e5";
-var classes = { "subtitleContainer": "_subtitleContainer_ikp7v_7", "title": "_title_ikp7v_19", "lineViewContainer": "_lineViewContainer_ikp7v_24", "skipButtonContainer": "_skipButtonContainer_ikp7v_29", "blockViewContainer": "_blockViewContainer_ikp7v_36", "subtitleItem": "_subtitleItem_ikp7v_42", "timeButton": "_timeButton_ikp7v_47", "textView": "_textView_ikp7v_60", "highlighted": "_highlighted_ikp7v_65" };
+var digest = "9b88b24bc5ba973e3b88f2c5f7446f6da86e199e8003f6a24f080d5601160c50";
+var classes = { "scriptsContainer": "_scriptsContainer_1tyea_7", "title": "_title_1tyea_18", "lineViewContainer": "_lineViewContainer_1tyea_23", "skipButtonContainer": "_skipButtonContainer_1tyea_28", "blockViewContainer": "_blockViewContainer_1tyea_35", "scriptItem": "_scriptItem_1tyea_42", "timeButton": "_timeButton_1tyea_47", "textView": "_textView_1tyea_60", "highlighted": "_highlighted_1tyea_65" };
 var css = `* {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
 }
 
-._subtitleContainer_ikp7v_7 {
+._scriptsContainer_1tyea_7 {
   display: flex;
   flex-direction: column;
   gap: 2rem;
@@ -16,38 +16,38 @@ var css = `* {
   padding: 1.5rem;
   border: 2px solid #ececec;
   border-radius: 0.75rem;
-  overflow-y: auto;
 }
 
-._title_ikp7v_19 {
+._title_1tyea_18 {
   font-size: 1.25rem;
   font-weight: 700;
 }
 
-._lineViewContainer_ikp7v_24 {
+._lineViewContainer_1tyea_23 {
   display: flex;
   flex-direction: column;
   gap: 2rem;
 }
-._lineViewContainer_ikp7v_24 ._skipButtonContainer_ikp7v_29 {
+._lineViewContainer_1tyea_23 ._skipButtonContainer_1tyea_28 {
   align-self: end;
 }
-._lineViewContainer_ikp7v_24 ._skipButtonContainer_ikp7v_29 button {
+._lineViewContainer_1tyea_23 ._skipButtonContainer_1tyea_28 button {
   cursor: pointer;
 }
 
-._blockViewContainer_ikp7v_36 {
+._blockViewContainer_1tyea_35 {
   display: flex;
   flex-direction: column;
   gap: 2rem;
   height: 16rem;
+  overflow-y: auto;
 }
-._blockViewContainer_ikp7v_36 ._subtitleItem_ikp7v_42 {
+._blockViewContainer_1tyea_35 ._scriptItem_1tyea_42 {
   padding: 16px;
   border-radius: 12px;
   transition: background-color 0.5s ease-in-out;
 }
-._blockViewContainer_ikp7v_36 ._subtitleItem_ikp7v_42 ._timeButton_ikp7v_47 {
+._blockViewContainer_1tyea_35 ._scriptItem_1tyea_42 ._timeButton_1tyea_47 {
   width: 5rem;
   padding-inline: 0.75rem;
   padding-block: 0.5rem;
@@ -60,12 +60,12 @@ var css = `* {
   color: white;
 }
 
-._textView_ikp7v_60 {
+._textView_1tyea_60 {
   display: flex;
   flex-direction: column;
   gap: 1rem;
 }
-._textView_ikp7v_60._highlighted_ikp7v_65 {
+._textView_1tyea_60._highlighted_1tyea_65 {
   background-color: #fef08a;
 }`;
 (function() {
@@ -106,7 +106,7 @@ var arrow_forward_default = 'data:image/svg+xml,<svg width="24" height="24" view
 // src/components/TextDisplay.tsx
 import { jsx } from "react/jsx-runtime";
 function TextDisplay({
-  subtitle,
+  script,
   selectedLanguages,
   onSelectWord,
   textStyle
@@ -114,7 +114,7 @@ function TextDisplay({
   return /* @__PURE__ */ jsx(
     "div",
     {
-      className: `${ReactScriptPlayer_module_default.textView} ${subtitle.isHighlighted ? ReactScriptPlayer_module_default.highlighted : ""}`,
+      className: `${ReactScriptPlayer_module_default.textView} ${script.isHighlighted ? ReactScriptPlayer_module_default.highlighted : ""}`,
       children: selectedLanguages.map((language) => /* @__PURE__ */ jsx(
         "p",
         {
@@ -125,11 +125,11 @@ function TextDisplay({
             if (selection && selection.toString()) {
               const selectedWord = selection.toString().trim();
               if (selectedWord) {
-                onSelectWord(selectedWord, subtitle, 0);
+                onSelectWord(selectedWord, script, 0);
               }
             }
           },
-          children: subtitle[language] || `(${language} \uC790\uB9C9\uC774 \uC5C6\uC5B4\uC694!)`
+          children: script[language] || `(${language} \uC790\uB9C9\uC774 \uC5C6\uC5B4\uC694!)`
         },
         language
       ))
@@ -140,26 +140,24 @@ function TextDisplay({
 // src/components/LineView.tsx
 import { jsx as jsx2, jsxs } from "react/jsx-runtime";
 function LineView({
-  subtitles,
+  scripts,
   selectedLanguages,
-  currentSubtitleIndex,
+  currentScriptIndex,
   seekTo,
   onSelectWord,
-  // 자막 텍스트 스타일링
   textStyle,
-  // 자막 넘기기 버튼
   PrevButton,
   NextButton
 }) {
-  const totalSubtitles = subtitles.length;
+  const totalScripts = scripts.length;
   const handlePrevious = () => {
-    if (currentSubtitleIndex > 0) {
-      seekTo(subtitles[currentSubtitleIndex - 1].startTimeInSecond);
+    if (currentScriptIndex > 0) {
+      seekTo(scripts[currentScriptIndex - 1].startTimeInSecond);
     }
   };
   const handleNext = () => {
-    if (currentSubtitleIndex < totalSubtitles - 1) {
-      seekTo(subtitles[currentSubtitleIndex + 1].startTimeInSecond);
+    if (currentScriptIndex < totalScripts - 1) {
+      seekTo(scripts[currentScriptIndex + 1].startTimeInSecond);
     }
   };
   const throttledHandlePrevious = useThrottling({
@@ -173,11 +171,10 @@ function LineView({
       PrevButton ? /* @__PURE__ */ jsx2(PrevButton, { onClick: throttledHandlePrevious }) : /* @__PURE__ */ jsx2("button", { onClick: throttledHandlePrevious, children: /* @__PURE__ */ jsx2("img", { src: arrow_back_default, alt: "Back Arrow" }) }),
       NextButton ? /* @__PURE__ */ jsx2(NextButton, { onClick: throttledHandleNext }) : /* @__PURE__ */ jsx2("button", { onClick: throttledHandleNext, children: /* @__PURE__ */ jsx2("img", { src: arrow_forward_default, alt: "Forward Arrow" }) })
     ] }),
-    subtitles[currentSubtitleIndex] && // TODO(@smosco): 사용자가 자막이 언제 넘어갈지 알 수 있도록 progressbar 추가
-    /* @__PURE__ */ jsx2(
+    scripts[currentScriptIndex] && /* @__PURE__ */ jsx2(
       TextDisplay,
       {
-        subtitle: subtitles[currentSubtitleIndex],
+        script: scripts[currentScriptIndex],
         selectedLanguages,
         onSelectWord,
         textStyle
@@ -201,34 +198,41 @@ function convertTime(seconds) {
 // src/components/BlockView.tsx
 import { jsx as jsx3, jsxs as jsxs2 } from "react/jsx-runtime";
 function BlockView({
-  subtitles,
-  currentSubtitleIndex,
+  scripts,
+  currentScriptIndex,
   selectedLanguages,
   seekTo,
-  onClickSubtitle,
+  onClickScript,
   onSelectWord,
   timeStyle,
   textStyle
 }) {
   const containerRef = useRef(null);
   useEffect(() => {
-    if (containerRef.current && currentSubtitleIndex < containerRef.current.children.length - 1) {
-      containerRef.current.children[currentSubtitleIndex].scrollIntoView({
-        block: "center",
-        behavior: "smooth"
-      });
+    if (containerRef.current) {
+      if (currentScriptIndex < containerRef.current.children.length - 1) {
+        const container = containerRef.current;
+        const target = container.children[currentScriptIndex];
+        const targetTop = target.getBoundingClientRect().top;
+        const containerTop = container.getBoundingClientRect().top;
+        const relativeTop = targetTop - containerTop;
+        container.scrollBy({
+          top: relativeTop - 20,
+          behavior: "smooth"
+        });
+      }
     }
-  }, [currentSubtitleIndex]);
-  return /* @__PURE__ */ jsx3("div", { ref: containerRef, className: ReactScriptPlayer_module_default.blockViewContainer, children: subtitles.map((subtitle, index) => /* @__PURE__ */ jsxs2(
+  }, [currentScriptIndex]);
+  return /* @__PURE__ */ jsx3("div", { ref: containerRef, className: ReactScriptPlayer_module_default.blockViewContainer, children: scripts.map((script, index) => /* @__PURE__ */ jsxs2(
     "div",
     {
-      className: ReactScriptPlayer_module_default.subtitleItem,
+      className: ReactScriptPlayer_module_default.scriptItem,
       onClick: () => {
-        seekTo(subtitle.startTimeInSecond);
-        onClickSubtitle(subtitle, index);
+        seekTo(script.startTimeInSecond);
+        onClickScript(script, index);
       },
       style: {
-        backgroundColor: index === currentSubtitleIndex ? (textStyle == null ? void 0 : textStyle.activeColor) || "lightgray" : "transparent"
+        backgroundColor: index === currentScriptIndex ? (textStyle == null ? void 0 : textStyle.activeColor) || "lightgray" : "transparent"
       },
       children: [
         /* @__PURE__ */ jsx3(
@@ -242,13 +246,13 @@ function BlockView({
               borderRadius: timeStyle == null ? void 0 : timeStyle.borderRadius,
               padding: timeStyle == null ? void 0 : timeStyle.padding
             },
-            children: convertTime(subtitle.startTimeInSecond)
+            children: convertTime(script.startTimeInSecond)
           }
         ),
         /* @__PURE__ */ jsx3(
           TextDisplay,
           {
-            subtitle: subtitles[index],
+            script: scripts[index],
             selectedLanguages,
             onSelectWord,
             textStyle
@@ -260,32 +264,32 @@ function BlockView({
   )) });
 }
 
-// src/utils/findCurrentSubtitleIndex.ts
-var findCurrentSubtitleIndex = (subtitles, currentTime, adjustmentTime = 0.05, extendedTime = 0.05) => {
-  if (!subtitles || subtitles.length === 0) return null;
-  const middleIndex = Math.floor(subtitles.length / 2);
-  if (currentTime < subtitles[middleIndex].startTimeInSecond) {
-    const index2 = subtitles.findIndex(
-      (subtitle) => subtitle.startTimeInSecond - adjustmentTime <= currentTime && subtitle.startTimeInSecond + subtitle.durationInSecond + extendedTime >= currentTime
+// src/utils/findCurrentScriptIndex.ts
+var findCurrentScriptIndex = (scripts, currentTime, adjustmentTime = 0.05, extendedTime = 0.05) => {
+  if (!scripts || scripts.length === 0) return null;
+  const middleIndex = Math.floor(scripts.length / 2);
+  if (currentTime < scripts[middleIndex].startTimeInSecond) {
+    const index2 = scripts.findIndex(
+      (script) => script.startTimeInSecond - adjustmentTime <= currentTime && script.startTimeInSecond + script.durationInSecond + extendedTime >= currentTime
     );
     return index2 !== -1 ? index2 : null;
   }
-  const reversedSubtitles = [...subtitles].reverse();
-  const index = reversedSubtitles.findIndex(
-    (subtitle) => subtitle.startTimeInSecond - adjustmentTime <= currentTime && subtitle.startTimeInSecond + subtitle.durationInSecond + extendedTime >= currentTime
+  const reversedScripts = [...scripts].reverse();
+  const index = reversedScripts.findIndex(
+    (script) => script.startTimeInSecond - adjustmentTime <= currentTime && script.startTimeInSecond + script.durationInSecond + extendedTime >= currentTime
   );
-  return index !== -1 ? subtitles.length - 1 - index : null;
+  return index !== -1 ? scripts.length - 1 - index : null;
 };
 
 // src/components/ReactScriptPlayer.tsx
 import { jsx as jsx4, jsxs as jsxs3 } from "react/jsx-runtime";
 function ReactScriptPlayer({
   mode,
-  subtitles,
+  scripts,
   selectedLanguages,
   seekTo,
   currentTime,
-  onClickSubtitle,
+  onClickScript,
   onSelectWord,
   containerStyle,
   textStyle,
@@ -294,10 +298,10 @@ function ReactScriptPlayer({
   NextButton
 }) {
   var _a;
-  const currentSubtitleIndex = (_a = findCurrentSubtitleIndex(subtitles, currentTime)) != null ? _a : 0;
+  const currentScriptIndex = (_a = findCurrentScriptIndex(scripts, currentTime)) != null ? _a : 0;
   const scriptPlayerProps = {
-    subtitles,
-    currentSubtitleIndex,
+    scripts,
+    currentScriptIndex,
     selectedLanguages,
     seekTo,
     onSelectWord,
@@ -305,13 +309,13 @@ function ReactScriptPlayer({
     PrevButton,
     NextButton
   };
-  return /* @__PURE__ */ jsx4("div", { className: ReactScriptPlayer_module_default.subtitleContainer, style: { ...containerStyle }, children: /* @__PURE__ */ jsxs3("div", { className: ReactScriptPlayer_module_default.displayContainer, children: [
+  return /* @__PURE__ */ jsx4("div", { className: ReactScriptPlayer_module_default.scriptsContainer, style: { ...containerStyle }, children: /* @__PURE__ */ jsxs3("div", { className: ReactScriptPlayer_module_default.displayContainer, children: [
     /* @__PURE__ */ jsx4("p", { className: ReactScriptPlayer_module_default.title, children: "Transcript" }),
     mode === "line" ? /* @__PURE__ */ jsx4(LineView, { ...scriptPlayerProps, textStyle }) : /* @__PURE__ */ jsx4(
       BlockView,
       {
         ...scriptPlayerProps,
-        onClickSubtitle,
+        onClickScript,
         timeStyle,
         textStyle
       }

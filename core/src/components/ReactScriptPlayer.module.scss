@@ -4,7 +4,7 @@
   padding: 0;
 }
 
-.subtitleContainer {
+.scriptsContainer {
   display: flex;
   flex-direction: column;
   gap: 2rem;
@@ -13,7 +13,6 @@
   padding: 1.5rem;
   border: 2px solid #ececec;
   border-radius: 0.75rem;
-  overflow-y: auto;
 }
 
 .title {
@@ -41,8 +40,9 @@
   gap: 2rem;
   // TODO(@smosco): 블록뷰에만 height 따로 줌
   height: 16rem;
+  overflow-y: auto;
 
-  .subtitleItem {
+  .scriptItem {
     padding: 16px;
     border-radius: 12px;
     transition: background-color 0.5s ease-in-out;

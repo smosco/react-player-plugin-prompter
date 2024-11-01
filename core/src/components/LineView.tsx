@@ -1,17 +1,18 @@
 import React from 'react';
-import { LanguageCode, Subtitle, TextStyle } from '../interfaces/Scripts';
+import { LanguageCode, Script, TextStyle } from '../interfaces/Scripts';
 import useThrottling from 'hooks/useThrottling';
 import arrow_back from '../assets/icons/arrow_back.svg';
 import arrow_forward from '../assets/icons/arrow_forward.svg';
 import { TextDisplay } from './TextDisplay';
 import styles from './ReactScriptPlayer.module.scss';
 
-interface LineViewProps {
-  subtitles: Subtitle[];
-  selectedLanguages: LanguageCode[];
-  currentSubtitleIndex: number;
+// LineView에 제네릭 T 추가
+interface LineViewProps<T extends string = LanguageCode> {
+  scripts: Script<T>[];
+  selectedLanguages: T[];
+  currentScriptIndex: number;
   seekTo: (timeInSeconds: number) => void;
-  onSelectWord: (word: string, subtitle: Subtitle, index: number) => void;
+  onSelectWord: (word: string, script: Script<T>, index: number) => void;
 
   // 자막 텍스트 스타일링
   textStyle?: TextStyle;
@@ -20,31 +21,28 @@ interface LineViewProps {
   NextButton?: ({ onClick }: { onClick: () => void }) => JSX.Element;
 }
 
-export function LineView({
-  subtitles,
+// LineView 컴포넌트에 제네릭 T를 적용
+export function LineView<T extends string = LanguageCode>({
+  scripts,
   selectedLanguages,
-  currentSubtitleIndex,
+  currentScriptIndex,
   seekTo,
   onSelectWord,
-
-  // 자막 텍스트 스타일링
   textStyle,
-
-  // 자막 넘기기 버튼
   PrevButton,
   NextButton,
-}: LineViewProps) {
-  const totalSubtitles = subtitles.length;
+}: LineViewProps<T>) {
+  const totalScripts = scripts.length;
 
   const handlePrevious = () => {
-    if (currentSubtitleIndex > 0) {
-      seekTo(subtitles[currentSubtitleIndex - 1].startTimeInSecond);
+    if (currentScriptIndex > 0) {
+      seekTo(scripts[currentScriptIndex - 1].startTimeInSecond);
     }
   };
 
   const handleNext = () => {
-    if (currentSubtitleIndex < totalSubtitles - 1) {
-      seekTo(subtitles[currentSubtitleIndex + 1].startTimeInSecond);
+    if (currentScriptIndex < totalScripts - 1) {
+      seekTo(scripts[currentScriptIndex + 1].startTimeInSecond);
     }
   };
 
@@ -75,13 +73,11 @@ export function LineView({
       </div>
 
       {/* TextDisplay에서 현재 자막과 선택된 언어를 표시 */}
-      {subtitles[currentSubtitleIndex] && (
-        // TODO(@smosco): 사용자가 자막이 언제 넘어갈지 알 수 있도록 progressbar 추가
+      {scripts[currentScriptIndex] && (
         <TextDisplay
-          subtitle={subtitles[currentSubtitleIndex]}
+          script={scripts[currentScriptIndex]}
           selectedLanguages={selectedLanguages}
           onSelectWord={onSelectWord}
-          // 자막 텍스트 스타일링
           textStyle={textStyle}
         />
       )}

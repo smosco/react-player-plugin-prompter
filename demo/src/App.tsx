@@ -1,10 +1,9 @@
-import React from 'react';
+import React, { useState, useRef } from 'react';
 import { ReactScriptPlayer } from 'react-player-plugin-prompter';
 import ReactPlayer from 'react-player';
-import { LanguageCode } from './interfaces/Scripts';
-import { useState, useRef } from 'react';
-import SubtitleOption from './components/SubtitleOption';
-import scriptsMockData from './mocks/subtitleMockData';
+import { CustomScriptLanguageCode } from './interfaces/Scripts';
+import ScriptOption from './components/ScriptOption';
+import scriptsMockData from './mocks/scriptsMockData';
 import { mockUrl } from './mocks/mockUrl';
 import ControlBar from './components/ControlBar';
 import Style from './components/VideoPlayer.module.scss';
@@ -15,15 +14,20 @@ type Mode = 'line' | 'block';
 function App() {
   const playerRef = useRef<ReactPlayer | null>(null);
   const [mode, setMode] = useState<Mode>('line');
-  const availableLanguages: LanguageCode[] = ['en', 'ko', 'fr'];
+  const availableLanguages: CustomScriptLanguageCode[] = [
+    'enScript',
+    'koScript',
+    'frScript',
+  ];
   const [selectedLanguages, setSelectedLanguages] =
-    useState<LanguageCode[]>(availableLanguages);
+    useState<CustomScriptLanguageCode[]>(availableLanguages);
   const [currentTime, setCurrentTime] = useState(0);
-  const seekTo = (timeInSeconds: number) =>
-    playerRef.current?.seekTo(timeInSeconds, 'seconds');
   const [isPlaying, setIsPlaying] = useState(false);
   const [volume, setVolume] = useState(0.5);
   const [playbackRate, setPlayBackRate] = useState(1);
+
+  const seekTo = (timeInSeconds: number) =>
+    playerRef.current?.seekTo(timeInSeconds, 'seconds');
 
   const BasicControlBarProps = {
     handlePlayPause: () => setIsPlaying(!isPlaying),
@@ -59,36 +63,33 @@ function App() {
           playing={isPlaying}
           width="100%"
           onPlay={() => setIsPlaying(true)}
-          onStart={() => setIsPlaying(true)}
           onPause={() => setIsPlaying(false)}
-          onProgress={({ playedSeconds }) => setCurrentTime(playedSeconds)} // 쓸모없다고 생각한 이 onProgress 구문을 삭제하면 controlbar의 progressbar업데이트가 느려지는 문제 발생.따라서 안 지움.
+          onProgress={({ playedSeconds }) => setCurrentTime(playedSeconds)}
           volume={volume}
-          controls={false} // 유튜브 자체 컨트롤러 안 뜨게
+          controls={false}
           playbackRate={playbackRate}
-          progressInterval={100} // 기존 progress 업데이트 1초에서 0.1초로 변경 -> controlBar 클릭반응 느린문제 개
+          progressInterval={100}
         />
         <ControlBar
           playerRef={playerRef}
           BasicControlBarProps={BasicControlBarProps}
         />
       </div>
-      <SubtitleOption
+      <ScriptOption
         mode={mode}
         selectedLanguages={selectedLanguages}
         setMode={setMode}
         setSelectedLanguages={setSelectedLanguages}
         availableLanguages={availableLanguages}
       />
-      <ReactScriptPlayer
+      <ReactScriptPlayer<CustomScriptLanguageCode>
         mode={mode}
-        subtitles={scriptsMockData}
+        scripts={scriptsMockData}
         selectedLanguages={selectedLanguages}
         seekTo={seekTo}
         currentTime={currentTime}
-        onClickSubtitle={(subtitle, index) => console.log(subtitle, index)}
-        onSelectWord={(word, subtitle, index) =>
-          console.log(word, subtitle, index)
-        }
+        onClickScript={(script, index) => console.log(script, index)}
+        onSelectWord={(word, script, index) => console.log(word, script, index)}
         containerStyle={{
           width: '',
           height: '',
