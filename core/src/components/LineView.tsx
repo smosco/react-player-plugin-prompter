@@ -29,6 +29,7 @@ export function LineView<T extends string = LanguageCode>({
   PrevButton,
   NextButton,
 }: LineViewProps<T>) {
+  // 이전 코드
   // const totalScripts = scripts.length;
 
   // const handlePrevious = () => {
