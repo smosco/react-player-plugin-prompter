@@ -82,7 +82,7 @@ var css = `* {
 var ReactScriptPlayer_module_default = classes;
 
 // src/utils/findClickedIndex.ts
-var findClickIndex = (scripts, clickedIndex) => {
+var findClickedIndex = (scripts, clickedIndex) => {
   if (!scripts || scripts.length === 0) return null;
   return clickedIndex >= 0 && clickedIndex < scripts.length ? clickedIndex : null;
 };
@@ -318,7 +318,7 @@ function ReactScriptPlayer({
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [isAsync, setIsAsync] = useState2(true);
   const [clickedIndex, setClickedIndex] = useState2(0);
-  const currentScriptIndex = isAsync ? (_a = findCurrentScriptIndex(scripts, currentTime)) != null ? _a : 0 : (_b = findClickIndex(scripts, clickedIndex)) != null ? _b : 0;
+  const currentScriptIndex = isAsync ? (_a = findCurrentScriptIndex(scripts, currentTime)) != null ? _a : 0 : (_b = findClickedIndex(scripts, clickedIndex)) != null ? _b : 0;
   const handleClickScript = (script, index) => {
     setClickedIndex(index);
     onClickScript(script, index);

@@ -7,7 +7,7 @@ import {
   TextStyle,
   TimeStyle,
 } from '../interfaces/Scripts';
-import { findClickIndex } from 'utils/findClickedIndex';
+import { findClickedIndex } from 'utils/findClickedIndex';
 import { LineView } from './LineView';
 import { BlockView } from './BlockView';
 import { findCurrentScriptIndex } from 'utils/findCurrentScriptIndex';
@@ -51,7 +51,7 @@ export function ReactScriptPlayer<T extends string = LanguageCode>({
   // async여부에 따라 currentScriptIndex가 달라져야합니다
   const currentScriptIndex = isAsync
     ? (findCurrentScriptIndex(scripts, currentTime) ?? 0) // 동영상 재생에 동기화되는 script Index찾는 함수
-    : (findClickIndex(scripts, clickedIndex) ?? 0); // 클릭한 script index 찾는 함수
+    : (findClickedIndex(scripts, clickedIndex) ?? 0); // 클릭한 script index 찾는 함수
 
   const handleClickScript = (script: Script<T>, index: number) => {
     setClickedIndex(index);

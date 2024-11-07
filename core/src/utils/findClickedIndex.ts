@@ -1,7 +1,7 @@
-// findClickIndex.ts
+// findClickedIndex.ts
 import { Script } from 'interfaces/Scripts';
 
-export const findClickIndex = (
+export const findClickedIndex = (
   scripts: Script[] | undefined,
   clickedIndex: number,
 ): number | null => {
