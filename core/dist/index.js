@@ -304,6 +304,7 @@ function ReactScriptPlayer({
   scripts,
   selectedLanguages,
   seekTo,
+  // isAsync,  // TODO(@godhyzzang) : isAsync를 props로 넘겨줘야합니다
   currentTime,
   onClickScript,
   onSelectWord,

@@ -17,6 +17,7 @@ export interface ReactScriptPlayerProps<T extends string = LanguageCode> {
   scripts: Script<T>[];
   selectedLanguages: T[];
   seekTo: (timeInSeconds: number) => void;
+  // isAsync: boolean;   // TODO(@godhyzzang) : isAsync를 props로 넘겨줘야합니다
   currentTime: number;
   onClickScript: (script: Script<T>, index: number) => void;
   onSelectWord: (word: string, script: Script<T>, index: number) => void;
@@ -32,6 +33,7 @@ export function ReactScriptPlayer<T extends string = LanguageCode>({
   scripts,
   selectedLanguages,
   seekTo,
+  // isAsync,  // TODO(@godhyzzang) : isAsync를 props로 넘겨줘야합니다
   currentTime,
   onClickScript,
   onSelectWord,
@@ -41,11 +43,12 @@ export function ReactScriptPlayer<T extends string = LanguageCode>({
   PrevButton,
   NextButton,
 }: ReactScriptPlayerProps<T>) {
-  //async여부에 따라 currentScriptIndex가 달라져야함
-
+  // TODO(@godhyzzang) : isAsync를 props로 넘겨줘야합니다
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [isAsync, setIsAsync] = useState<boolean>(true);
   const [clickedIndex, setClickedIndex] = useState<number>(0);
 
+  // async여부에 따라 currentScriptIndex가 달라져야합니다
   const currentScriptIndex = isAsync
     ? (findCurrentScriptIndex(scripts, currentTime) ?? 0)
     : (findClickIndex(scripts, clickedIndex) ?? 0);
