@@ -3,6 +3,7 @@ import { LanguageCode, Script, TimeStyle, TextStyle } from 'interfaces/Scripts';
 import styles from './ReactScriptPlayer.module.scss';
 import { convertTime } from 'utils/convertTime';
 import { TextDisplay } from './TextDisplay';
+import { moveToScriptAtIndex } from '../utils/moveToScriptAtIndex';
 
 // BlockView에 제네릭 T 추가
 interface BlockViewProps<T extends string = LanguageCode> {
@@ -55,7 +56,7 @@ export function BlockView<T extends string = LanguageCode>({
           className={styles.scriptItem}
           key={index}
           onClick={() => {
-            seekTo(script.startTimeInSecond);
+            moveToScriptAtIndex(index, scripts, seekTo);
             onClickScript(script, index);
           }}
           style={{

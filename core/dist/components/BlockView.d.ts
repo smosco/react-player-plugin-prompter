@@ -1,7 +1,8 @@
 import { LanguageCode, Script, TimeStyle, TextStyle } from 'interfaces/Scripts';
 interface BlockViewProps<T extends string = LanguageCode> {
     scripts: Script<T>[];
-    currentScriptIndex: number;
+    currentScriptIndex: number | null;
+    currentVideoScriptIndex: number | null;
     selectedLanguages: T[];
     seekTo: (timeInSeconds: number) => void;
     onClickScript: (script: Script<T>, index: number) => void;
@@ -9,6 +10,6 @@ interface BlockViewProps<T extends string = LanguageCode> {
     timeStyle?: TimeStyle;
     textStyle?: TextStyle;
 }
-export declare function BlockView<T extends string = LanguageCode>({ scripts, currentScriptIndex, selectedLanguages, seekTo, onClickScript, onSelectWord, timeStyle, textStyle, }: BlockViewProps<T>): import("react/jsx-runtime").JSX.Element;
+export declare function BlockView<T extends string = LanguageCode>({ scripts, currentScriptIndex, currentVideoScriptIndex, selectedLanguages, seekTo, onClickScript, onSelectWord, timeStyle, textStyle, }: BlockViewProps<T>): import("react/jsx-runtime").JSX.Element;
 export {};
 //# sourceMappingURL=BlockView.d.ts.map

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styles from './ReactScriptPlayer.module.scss';
 import {
   LanguageCode,
@@ -7,6 +7,7 @@ import {
   TextStyle,
   TimeStyle,
 } from '../interfaces/Scripts';
+import { findClickIndex } from 'utils/findClickedIndex';
 import { LineView } from './LineView';
 import { BlockView } from './BlockView';
 import { findCurrentScriptIndex } from 'utils/findCurrentScriptIndex';
@@ -40,7 +41,19 @@ export function ReactScriptPlayer<T extends string = LanguageCode>({
   PrevButton,
   NextButton,
 }: ReactScriptPlayerProps<T>) {
-  const currentScriptIndex = findCurrentScriptIndex(scripts, currentTime) ?? 0;
+  //async여부에 따라 currentScriptIndex가 달라져야함
+
+  const [isAsync, setIsAsync] = useState<boolean>(true);
+  const [clickedIndex, setClickedIndex] = useState<number>(0);
+
+  const currentScriptIndex = isAsync
+    ? (findCurrentScriptIndex(scripts, currentTime) ?? 0)
+    : (findClickIndex(scripts, clickedIndex) ?? 0);
+
+  const handleClickScript = (script: Script<T>, index: number) => {
+    setClickedIndex(index);
+    onClickScript(script, index);
+  };
 
   const scriptPlayerProps = {
     scripts,
@@ -62,7 +75,7 @@ export function ReactScriptPlayer<T extends string = LanguageCode>({
         ) : (
           <BlockView
             {...scriptPlayerProps}
-            onClickScript={onClickScript}
+            onClickScript={handleClickScript}
             timeStyle={timeStyle}
             textStyle={textStyle}
           />

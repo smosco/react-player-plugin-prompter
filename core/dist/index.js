@@ -1,3 +1,6 @@
+// src/components/ReactScriptPlayer.tsx
+import { useState as useState2 } from "react";
+
 // esbuild-scss-modules-plugin:./ReactScriptPlayer.module.scss
 var digest = "9b88b24bc5ba973e3b88f2c5f7446f6da86e199e8003f6a24f080d5601160c50";
 var classes = { "scriptsContainer": "_scriptsContainer_1tyea_7", "title": "_title_1tyea_18", "lineViewContainer": "_lineViewContainer_1tyea_23", "skipButtonContainer": "_skipButtonContainer_1tyea_28", "blockViewContainer": "_blockViewContainer_1tyea_35", "scriptItem": "_scriptItem_1tyea_42", "timeButton": "_timeButton_1tyea_47", "textView": "_textView_1tyea_60", "highlighted": "_highlighted_1tyea_65" };
@@ -78,6 +81,12 @@ var css = `* {
 })();
 var ReactScriptPlayer_module_default = classes;
 
+// src/utils/findClickedIndex.ts
+var findClickIndex = (scripts, clickedIndex) => {
+  if (!scripts || scripts.length === 0) return null;
+  return clickedIndex >= 0 && clickedIndex < scripts.length ? clickedIndex : null;
+};
+
 // src/hooks/useThrottling.ts
 import { useState, useCallback } from "react";
 function useThrottling({
@@ -85,15 +94,18 @@ function useThrottling({
   delay = 300
 }) {
   const [isThrottled, setIsThrottled] = useState(false);
-  const throttledCallback = useCallback(() => {
-    if (!isThrottled) {
-      buttonClicked();
-      setIsThrottled(true);
-      setTimeout(() => {
-        setIsThrottled(false);
-      }, delay);
-    }
-  }, [isThrottled, buttonClicked, delay]);
+  const throttledCallback = useCallback(
+    (arg) => {
+      if (!isThrottled) {
+        buttonClicked(arg);
+        setIsThrottled(true);
+        setTimeout(() => {
+          setIsThrottled(false);
+        }, delay);
+      }
+    },
+    [isThrottled, buttonClicked, delay]
+  );
   return throttledCallback;
 }
 
@@ -137,6 +149,16 @@ function TextDisplay({
   );
 }
 
+// src/utils/moveToScriptAtIndex.ts
+var moveToScriptAtIndex = (index, scripts, seekTo) => {
+  if (index < 0 || index >= scripts.length - 1) {
+    console.warn("Invalid script index:", index);
+    return;
+  }
+  console.log("Seeking to:", scripts[index]);
+  seekTo(scripts[index].startTimeInSecond);
+};
+
 // src/components/LineView.tsx
 import { jsx as jsx2, jsxs } from "react/jsx-runtime";
 function LineView({
@@ -149,27 +171,21 @@ function LineView({
   PrevButton,
   NextButton
 }) {
-  const totalScripts = scripts.length;
-  const handlePrevious = () => {
-    if (currentScriptIndex > 0) {
-      seekTo(scripts[currentScriptIndex - 1].startTimeInSecond);
-    }
-  };
-  const handleNext = () => {
-    if (currentScriptIndex < totalScripts - 1) {
-      seekTo(scripts[currentScriptIndex + 1].startTimeInSecond);
-    }
-  };
   const throttledHandlePrevious = useThrottling({
-    buttonClicked: handlePrevious
+    buttonClicked: (currentScriptIndex2) => moveToScriptAtIndex(currentScriptIndex2 - 1, scripts, seekTo)
   });
   const throttledHandleNext = useThrottling({
-    buttonClicked: handleNext
+    buttonClicked: (currentScriptIndex2) => moveToScriptAtIndex(currentScriptIndex2 + 1, scripts, seekTo)
   });
   return /* @__PURE__ */ jsxs("div", { className: ReactScriptPlayer_module_default.lineViewContainer, children: [
     /* @__PURE__ */ jsxs("div", { className: ReactScriptPlayer_module_default.skipButtonContainer, children: [
-      PrevButton ? /* @__PURE__ */ jsx2(PrevButton, { onClick: throttledHandlePrevious }) : /* @__PURE__ */ jsx2("button", { onClick: throttledHandlePrevious, children: /* @__PURE__ */ jsx2("img", { src: arrow_back_default, alt: "Back Arrow" }) }),
-      NextButton ? /* @__PURE__ */ jsx2(NextButton, { onClick: throttledHandleNext }) : /* @__PURE__ */ jsx2("button", { onClick: throttledHandleNext, children: /* @__PURE__ */ jsx2("img", { src: arrow_forward_default, alt: "Forward Arrow" }) })
+      PrevButton ? /* @__PURE__ */ jsx2(
+        PrevButton,
+        {
+          onClick: () => throttledHandlePrevious(currentScriptIndex)
+        }
+      ) : /* @__PURE__ */ jsx2("button", { onClick: () => throttledHandlePrevious(currentScriptIndex), children: /* @__PURE__ */ jsx2("img", { src: arrow_back_default, alt: "Back Arrow" }) }),
+      NextButton ? /* @__PURE__ */ jsx2(NextButton, { onClick: () => throttledHandleNext(currentScriptIndex) }) : /* @__PURE__ */ jsx2("button", { onClick: () => throttledHandleNext(currentScriptIndex), children: /* @__PURE__ */ jsx2("img", { src: arrow_forward_default, alt: "Forward Arrow" }) })
     ] }),
     scripts[currentScriptIndex] && /* @__PURE__ */ jsx2(
       TextDisplay,
@@ -228,7 +244,7 @@ function BlockView({
     {
       className: ReactScriptPlayer_module_default.scriptItem,
       onClick: () => {
-        seekTo(script.startTimeInSecond);
+        moveToScriptAtIndex(index, scripts, seekTo);
         onClickScript(script, index);
       },
       style: {
@@ -297,8 +313,14 @@ function ReactScriptPlayer({
   PrevButton,
   NextButton
 }) {
-  var _a;
-  const currentScriptIndex = (_a = findCurrentScriptIndex(scripts, currentTime)) != null ? _a : 0;
+  var _a, _b;
+  const [isAsync, setIsAsync] = useState2(true);
+  const [clickedIndex, setClickedIndex] = useState2(0);
+  const currentScriptIndex = isAsync ? (_a = findCurrentScriptIndex(scripts, currentTime)) != null ? _a : 0 : (_b = findClickIndex(scripts, clickedIndex)) != null ? _b : 0;
+  const handleClickScript = (script, index) => {
+    setClickedIndex(index);
+    onClickScript(script, index);
+  };
   const scriptPlayerProps = {
     scripts,
     currentScriptIndex,
@@ -315,7 +337,7 @@ function ReactScriptPlayer({
       BlockView,
       {
         ...scriptPlayerProps,
-        onClickScript,
+        onClickScript: handleClickScript,
         timeStyle,
         textStyle
       }
