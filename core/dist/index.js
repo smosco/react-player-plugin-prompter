@@ -315,10 +315,9 @@ function ReactScriptPlayer({
   NextButton
 }) {
   var _a, _b;
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [isAsync, setIsAsync] = useState2(true);
+  const [isAsync, setIsAsync] = useState2();
   const [clickedIndex, setClickedIndex] = useState2(0);
-  const currentScriptIndex = isAsync ? (_a = findCurrentScriptIndex(scripts, currentTime)) != null ? _a : 0 : (_b = findClickedIndex(scripts, clickedIndex)) != null ? _b : 0;
+  const currentScriptIndex = isAsync ? (_a = findClickedIndex(scripts, clickedIndex)) != null ? _a : 0 : (_b = findCurrentScriptIndex(scripts, currentTime)) != null ? _b : 0;
   const handleClickScript = (script, index) => {
     setClickedIndex(index);
     onClickScript(script, index);

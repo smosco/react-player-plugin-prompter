@@ -3,7 +3,6 @@ interface LineViewProps<T extends string = LanguageCode> {
     scripts: Script<T>[];
     selectedLanguages: T[];
     currentScriptIndex: number;
-    currentVideoScriptIndex: number | null;
     seekTo: (timeInSeconds: number) => void;
     onSelectWord: (word: string, script: Script<T>, index: number) => void;
     textStyle?: TextStyle;
