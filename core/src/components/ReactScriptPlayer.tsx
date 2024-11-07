@@ -48,7 +48,6 @@ export function ReactScriptPlayer<T extends string = LanguageCode>({
   const [isAsync, setIsAsync] = useState<boolean>(true);
   const [clickedIndex, setClickedIndex] = useState<number>(0);
 
-  // TODO(@godhyzzang) : async여부에 따라 currentScriptIndex가 달라져야합니다
   const currentScriptIndex = isAsync
     ? (findCurrentScriptIndex(scripts, currentTime) ?? 0) // 동영상 재생에 동기화되는 script Index찾는 함수
     : (findClickedIndex(scripts, clickedIndex) ?? 0); // 클릭한 script index 찾는 함수
