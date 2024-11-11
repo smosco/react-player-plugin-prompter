@@ -4,13 +4,13 @@ import styles from './ReactScriptPlayer.module.scss';
 import { convertTime } from 'utils/convertTime';
 import { TextDisplay } from './TextDisplay';
 import { moveToScriptAtIndex } from '../utils/moveToScriptAtIndex';
-
 // BlockView에 제네릭 T 추가
 interface BlockViewProps<T extends string = LanguageCode> {
   scripts: Script<T>[];
   currentScriptIndex: number;
   selectedLanguages: T[];
   seekTo: (timeInSeconds: number) => void;
+  isSubtitleCentered?: boolean;
   onClickScript: (script: Script<T>, index: number) => void;
   onSelectWord: (word: string, script: Script<T>, index: number) => void;
   timeStyle?: TimeStyle;
@@ -23,15 +23,19 @@ export function BlockView<T extends string = LanguageCode>({
   currentScriptIndex,
   selectedLanguages,
   seekTo,
+  isSubtitleCentered,
   onClickScript,
   onSelectWord,
   timeStyle,
   textStyle,
 }: BlockViewProps<T>) {
   const containerRef = useRef<HTMLDivElement>(null);
-
   useEffect(() => {
-    if (containerRef.current) {
+    if (
+      containerRef.current &&
+      isSubtitleCentered !== undefined &&
+      isSubtitleCentered
+    ) {
       if (currentScriptIndex < containerRef.current.children.length - 1) {
         const container = containerRef.current;
         const target = container.children[currentScriptIndex];
@@ -47,7 +51,7 @@ export function BlockView<T extends string = LanguageCode>({
         });
       }
     }
-  }, [currentScriptIndex]);
+  }, [currentScriptIndex, isSubtitleCentered]);
 
   return (
     <div ref={containerRef} className={styles.blockViewContainer}>
