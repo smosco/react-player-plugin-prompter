@@ -7,6 +7,7 @@ import scriptsMockData from './mocks/scriptsMockData';
 import { mockUrl } from './mocks/mockUrl';
 import ControlBar from './components/ControlBar';
 import Style from './components/VideoPlayer.module.scss';
+
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 
 type Mode = 'line' | 'block';
@@ -54,6 +55,43 @@ function App() {
     </button>
   );
 
+  const FocusButton = ({
+    isFocus,
+    setIsFocus,
+  }: {
+    isFocus: boolean;
+    setIsFocus: React.Dispatch<React.SetStateAction<boolean>>;
+  }) => (
+    <div className={Style.focusButtonContainer}>
+      <button
+        className={Style.focusButton}
+        type="button"
+        disabled={isFocus}
+        onClick={() => {
+          setIsFocus(!isFocus); // isFocus 값을 반전시켜 업데이트
+        }}
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="24"
+          height="24"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke={isFocus === true ? '#cbc2d6' : '#8e48ea'}
+          strokeWidth="2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          className="lucide lucide-crosshair"
+        >
+          <circle cx="12" cy="12" r="10" />
+          <line x1="22" x2="18" y1="12" y2="12" />
+          <line x1="6" x2="2" y1="12" y2="12" />
+          <line x1="12" x2="12" y1="6" y2="2" />
+          <line x1="12" x2="12" y1="22" y2="18" />
+        </svg>
+      </button>
+    </div>
+  );
   return (
     <div className={Style.container}>
       <div className={Style.video}>
@@ -113,6 +151,7 @@ function App() {
         }}
         PrevButton={PrevButton}
         NextButton={NextButton}
+        FocusButton={FocusButton}
       />
     </div>
   );

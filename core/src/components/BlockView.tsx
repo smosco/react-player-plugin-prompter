@@ -1,45 +1,70 @@
-import React, { useRef, useEffect } from 'react';
+import React, { useRef, useEffect, useState } from 'react';
 import { LanguageCode, Script, TimeStyle, TextStyle } from 'interfaces/Scripts';
 import styles from './ReactScriptPlayer.module.scss';
 import { convertTime } from 'utils/convertTime';
 import { TextDisplay } from './TextDisplay';
 import { moveToScriptAtIndex } from '../utils/moveToScriptAtIndex';
-// BlockView에 제네릭 T 추가
+
 interface BlockViewProps<T extends string = LanguageCode> {
   scripts: Script<T>[];
   currentScriptIndex: number;
   selectedLanguages: T[];
   seekTo: (timeInSeconds: number) => void;
-  isSubtitleCentered?: boolean;
   onClickScript: (script: Script<T>, index: number) => void;
   onSelectWord: (word: string, script: Script<T>, index: number) => void;
   timeStyle?: TimeStyle;
   textStyle?: TextStyle;
+  FocusButton?: ({
+    isFocus,
+    setIsFocus,
+  }: {
+    isFocus: boolean;
+    setIsFocus: React.Dispatch<React.SetStateAction<boolean>>;
+  }) => JSX.Element;
 }
 
-// BlockView에 제네릭 T를 적용
 export function BlockView<T extends string = LanguageCode>({
   scripts,
   currentScriptIndex,
   selectedLanguages,
   seekTo,
-  isSubtitleCentered,
   onClickScript,
   onSelectWord,
   timeStyle,
   textStyle,
+  FocusButton,
 }: BlockViewProps<T>) {
   const containerRef = useRef<HTMLDivElement>(null);
+  const [isFocused, setIsFocused] = useState(true);
+
   useEffect(() => {
-    if (
-      containerRef.current &&
-      isSubtitleCentered !== undefined &&
-      isSubtitleCentered
-    ) {
+    const handleInteraction = () => {
+      setIsFocused(false);
+      console.log(isFocused + 'isFocused');
+      console.log(setIsFocused + 'setIsFocused');
+    };
+    console.log(isFocused + 'isFocused');
+    console.log(setIsFocused + 'setIsFocused');
+
+    const container = containerRef.current;
+    if (container) {
+      container.addEventListener('wheel', handleInteraction);
+      container.addEventListener('touchmove', handleInteraction);
+    }
+
+    return () => {
+      if (container) {
+        container.removeEventListener('wheel', handleInteraction);
+        container.removeEventListener('touchmove', handleInteraction);
+      }
+    };
+  }, [setIsFocused, isFocused]);
+
+  useEffect(() => {
+    if (containerRef.current && isFocused !== undefined && isFocused) {
       if (currentScriptIndex < containerRef.current.children.length - 1) {
         const container = containerRef.current;
         const target = container.children[currentScriptIndex];
-
         // 컨테이너의 상단에서부터 타겟까지의 거리 계산
         const targetTop = target.getBoundingClientRect().top;
         const containerTop = container.getBoundingClientRect().top;
@@ -51,46 +76,51 @@ export function BlockView<T extends string = LanguageCode>({
         });
       }
     }
-  }, [currentScriptIndex, isSubtitleCentered]);
+  }, [currentScriptIndex, isFocused]);
 
   return (
-    <div ref={containerRef} className={styles.blockViewContainer}>
-      {scripts.map((script, index) => (
-        <div
-          className={styles.scriptItem}
-          key={index}
-          onClick={() => {
-            moveToScriptAtIndex(index, scripts, seekTo);
-            onClickScript(script, index);
-          }}
-          style={{
-            backgroundColor:
-              index === currentScriptIndex
-                ? textStyle?.activeColor || 'lightgray'
-                : 'transparent',
-          }}
-        >
-          <button
-            className={styles.timeButton}
+    <div className={styles.blockViewContainer}>
+      {FocusButton && (
+        <FocusButton setIsFocus={setIsFocused} isFocus={isFocused} />
+      )}
+      <div ref={containerRef} className={styles.blockViewContainer}>
+        {scripts.map((script, index) => (
+          <div
+            className={styles.scriptItem}
+            key={index}
+            onClick={() => {
+              moveToScriptAtIndex(index, scripts, seekTo);
+              onClickScript(script, index);
+            }}
             style={{
-              color: timeStyle?.color,
-              fontSize: timeStyle?.fontSize,
-              backgroundColor: timeStyle?.backgroundColor,
-              borderRadius: timeStyle?.borderRadius,
-              padding: timeStyle?.padding,
+              backgroundColor:
+                index === currentScriptIndex
+                  ? textStyle?.activeColor || 'lightgray'
+                  : 'transparent',
             }}
           >
-            {convertTime(script.startTimeInSecond)}
-          </button>
+            <button
+              className={styles.timeButton}
+              style={{
+                color: timeStyle?.color,
+                fontSize: timeStyle?.fontSize,
+                backgroundColor: timeStyle?.backgroundColor,
+                borderRadius: timeStyle?.borderRadius,
+                padding: timeStyle?.padding,
+              }}
+            >
+              {convertTime(script.startTimeInSecond)}
+            </button>
 
-          <TextDisplay
-            script={scripts[index]}
-            selectedLanguages={selectedLanguages}
-            onSelectWord={onSelectWord}
-            textStyle={textStyle}
-          />
-        </div>
-      ))}
+            <TextDisplay
+              script={scripts[index]}
+              selectedLanguages={selectedLanguages}
+              onSelectWord={onSelectWord}
+              textStyle={textStyle}
+            />
+          </div>
+        ))}
+      </div>
     </div>
   );
 }
