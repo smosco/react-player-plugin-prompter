@@ -35,12 +35,16 @@ export function BlockView<T extends string = LanguageCode>({
   FocusButton,
 }: BlockViewProps<T>) {
   const containerRef = useRef<HTMLDivElement>(null);
-  const [isSubtitleCentered, setIsSubtitleCentered] = useState(true);
+  const [isFocused, setIsFocused] = useState(true);
 
   useEffect(() => {
     const handleInteraction = () => {
-      setIsSubtitleCentered(false);
+      setIsFocused(false);
+      console.log(isFocused + 'isFocused');
+      console.log(setIsFocused + 'setIsFocused');
     };
+    console.log(isFocused + 'isFocused');
+    console.log(setIsFocused + 'setIsFocused');
 
     const container = containerRef.current;
     if (container) {
@@ -54,14 +58,10 @@ export function BlockView<T extends string = LanguageCode>({
         container.removeEventListener('touchmove', handleInteraction);
       }
     };
-  }, [setIsSubtitleCentered]);
+  }, [setIsFocused, isFocused]);
 
   useEffect(() => {
-    if (
-      containerRef.current &&
-      isSubtitleCentered !== undefined &&
-      isSubtitleCentered
-    ) {
+    if (containerRef.current && isFocused !== undefined && isFocused) {
       if (currentScriptIndex < containerRef.current.children.length - 1) {
         const container = containerRef.current;
         const target = container.children[currentScriptIndex];
@@ -76,15 +76,12 @@ export function BlockView<T extends string = LanguageCode>({
         });
       }
     }
-  }, [currentScriptIndex, isSubtitleCentered]);
+  }, [currentScriptIndex, isFocused]);
 
   return (
     <div className={styles.blockViewContainer}>
       {FocusButton && (
-        <FocusButton
-          setIsFocus={setIsSubtitleCentered}
-          isFocus={isSubtitleCentered}
-        />
+        <FocusButton setIsFocus={setIsFocused} isFocus={isFocused} />
       )}
       <div ref={containerRef} className={styles.blockViewContainer}>
         {scripts.map((script, index) => (

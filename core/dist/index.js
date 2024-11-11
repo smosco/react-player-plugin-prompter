@@ -216,11 +216,15 @@ function BlockView({
   FocusButton
 }) {
   const containerRef = useRef(null);
-  const [isSubtitleCentered, setIsSubtitleCentered] = useState2(true);
+  const [isFocused, setIsFocused] = useState2(true);
   useEffect(() => {
     const handleInteraction = () => {
-      setIsSubtitleCentered(false);
+      setIsFocused(false);
+      console.log(isFocused + "isFocused");
+      console.log(setIsFocused + "setIsFocused");
     };
+    console.log(isFocused + "isFocused");
+    console.log(setIsFocused + "setIsFocused");
     const container = containerRef.current;
     if (container) {
       container.addEventListener("wheel", handleInteraction);
@@ -232,9 +236,9 @@ function BlockView({
         container.removeEventListener("touchmove", handleInteraction);
       }
     };
-  }, [setIsSubtitleCentered]);
+  }, [setIsFocused, isFocused]);
   useEffect(() => {
-    if (containerRef.current && isSubtitleCentered !== void 0 && isSubtitleCentered) {
+    if (containerRef.current && isFocused !== void 0 && isFocused) {
       if (currentScriptIndex < containerRef.current.children.length - 1) {
         const container = containerRef.current;
         const target = container.children[currentScriptIndex];
@@ -247,15 +251,9 @@ function BlockView({
         });
       }
     }
-  }, [currentScriptIndex, isSubtitleCentered]);
+  }, [currentScriptIndex, isFocused]);
   return /* @__PURE__ */ jsxs2("div", { className: ReactScriptPlayer_module_default.blockViewContainer, children: [
-    FocusButton && /* @__PURE__ */ jsx3(
-      FocusButton,
-      {
-        setIsFocus: setIsSubtitleCentered,
-        isFocus: isSubtitleCentered
-      }
-    ),
+    FocusButton && /* @__PURE__ */ jsx3(FocusButton, { setIsFocus: setIsFocused, isFocus: isFocused }),
     /* @__PURE__ */ jsx3("div", { ref: containerRef, className: ReactScriptPlayer_module_default.blockViewContainer, children: scripts.map((script, index) => /* @__PURE__ */ jsxs2(
       "div",
       {
