@@ -1,4 +1,5 @@
 import { LanguageCode, Script, ContainerStyle, TextStyle, TimeStyle } from '../interfaces/Scripts';
+import { Dispatch, SetStateAction } from 'react';
 export interface ReactScriptPlayerProps<T extends string = LanguageCode> {
     mode: 'line' | 'block';
     scripts: Script<T>[];
@@ -16,6 +17,10 @@ export interface ReactScriptPlayerProps<T extends string = LanguageCode> {
     NextButton?: ({ onClick }: {
         onClick: () => void;
     }) => JSX.Element;
+    FocusButton?: ({ state, setState, }: {
+        state: boolean;
+        setState: Dispatch<SetStateAction<boolean>>;
+    }) => JSX.Element;
 }
-export declare function ReactScriptPlayer<T extends string = LanguageCode>({ mode, scripts, selectedLanguages, seekTo, currentTime, onClickScript, onSelectWord, containerStyle, textStyle, timeStyle, PrevButton, NextButton, }: ReactScriptPlayerProps<T>): import("react/jsx-runtime").JSX.Element;
+export declare function ReactScriptPlayer<T extends string = LanguageCode>({ mode, scripts, selectedLanguages, seekTo, currentTime, onClickScript, onSelectWord, containerStyle, textStyle, timeStyle, PrevButton, NextButton, FocusButton, }: ReactScriptPlayerProps<T>): import("react/jsx-runtime").JSX.Element;
 //# sourceMappingURL=ReactScriptPlayer.d.ts.map

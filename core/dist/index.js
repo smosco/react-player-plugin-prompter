@@ -1,16 +1,13 @@
-// src/components/ReactScriptPlayer.tsx
-import { useState as useState2 } from "react";
-
 // esbuild-scss-modules-plugin:./ReactScriptPlayer.module.scss
-var digest = "25156907bebcaf0559a742aed223c85038fcb2fc79508f6e84460a864423278b";
-var classes = { "scriptsContainer": "_scriptsContainer_dilkp_7", "horizontalContainer": "_horizontalContainer_dilkp_18", "title": "_title_dilkp_24", "lineViewContainer": "_lineViewContainer_dilkp_29", "skipButtonContainer": "_skipButtonContainer_dilkp_34", "blockViewContainer": "_blockViewContainer_dilkp_41", "scriptItem": "_scriptItem_dilkp_48", "timeButton": "_timeButton_dilkp_53", "textView": "_textView_dilkp_66", "highlighted": "_highlighted_dilkp_71", "switchButton": "_switchButton_dilkp_75", "switch": "_switch_dilkp_75", "slider": "_slider_dilkp_97" };
+var digest = "9b88b24bc5ba973e3b88f2c5f7446f6da86e199e8003f6a24f080d5601160c50";
+var classes = { "scriptsContainer": "_scriptsContainer_1tyea_7", "title": "_title_1tyea_18", "lineViewContainer": "_lineViewContainer_1tyea_23", "skipButtonContainer": "_skipButtonContainer_1tyea_28", "blockViewContainer": "_blockViewContainer_1tyea_35", "scriptItem": "_scriptItem_1tyea_42", "timeButton": "_timeButton_1tyea_47", "textView": "_textView_1tyea_60", "highlighted": "_highlighted_1tyea_65" };
 var css = `* {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
 }
 
-._scriptsContainer_dilkp_7 {
+._scriptsContainer_1tyea_7 {
   display: flex;
   flex-direction: column;
   gap: 2rem;
@@ -21,42 +18,36 @@ var css = `* {
   border-radius: 0.75rem;
 }
 
-._horizontalContainer_dilkp_18 {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-}
-
-._title_dilkp_24 {
+._title_1tyea_18 {
   font-size: 1.25rem;
   font-weight: 700;
 }
 
-._lineViewContainer_dilkp_29 {
+._lineViewContainer_1tyea_23 {
   display: flex;
   flex-direction: column;
   gap: 2rem;
 }
-._lineViewContainer_dilkp_29 ._skipButtonContainer_dilkp_34 {
+._lineViewContainer_1tyea_23 ._skipButtonContainer_1tyea_28 {
   align-self: end;
 }
-._lineViewContainer_dilkp_29 ._skipButtonContainer_dilkp_34 button {
+._lineViewContainer_1tyea_23 ._skipButtonContainer_1tyea_28 button {
   cursor: pointer;
 }
 
-._blockViewContainer_dilkp_41 {
+._blockViewContainer_1tyea_35 {
   display: flex;
   flex-direction: column;
   gap: 2rem;
   height: 16rem;
   overflow-y: auto;
 }
-._blockViewContainer_dilkp_41 ._scriptItem_dilkp_48 {
+._blockViewContainer_1tyea_35 ._scriptItem_1tyea_42 {
   padding: 16px;
   border-radius: 12px;
   transition: background-color 0.5s ease-in-out;
 }
-._blockViewContainer_dilkp_41 ._scriptItem_dilkp_48 ._timeButton_dilkp_53 {
+._blockViewContainer_1tyea_35 ._scriptItem_1tyea_42 ._timeButton_1tyea_47 {
   width: 5rem;
   padding-inline: 0.75rem;
   padding-block: 0.5rem;
@@ -69,64 +60,13 @@ var css = `* {
   color: white;
 }
 
-._textView_dilkp_66 {
+._textView_1tyea_60 {
   display: flex;
   flex-direction: column;
   gap: 1rem;
 }
-._textView_dilkp_66._highlighted_dilkp_71 {
+._textView_1tyea_60._highlighted_1tyea_65 {
   background-color: #fef08a;
-}
-
-._switchButton_dilkp_75 {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  border: none;
-  background-color: white;
-  cursor: pointer;
-  padding: 0.5rem;
-  border-radius: 0.5rem;
-}
-
-._switch_dilkp_75 {
-  position: relative;
-  display: inline-block;
-  width: 40px;
-  height: 20px;
-}
-._switch_dilkp_75 input {
-  opacity: 0;
-  width: 0;
-  height: 0;
-}
-._switch_dilkp_75 ._slider_dilkp_97 {
-  position: absolute;
-  cursor: pointer;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: #ccc;
-  transition: 0.4s;
-  border-radius: 20px;
-}
-._switch_dilkp_75 ._slider_dilkp_97:before {
-  position: absolute;
-  content: "";
-  height: 14px;
-  width: 14px;
-  left: 3px;
-  bottom: 3px;
-  background-color: white;
-  transition: 0.4s;
-  border-radius: 50%;
-}
-._switch_dilkp_75 input:checked + ._slider_dilkp_97 {
-  background-color: gray;
-}
-._switch_dilkp_75 input:checked + ._slider_dilkp_97:before {
-  transform: translateX(20px);
 }`;
 (function() {
   if (typeof document !== "undefined" && !document.getElementById(digest)) {
@@ -137,40 +77,6 @@ var css = `* {
   }
 })();
 var ReactScriptPlayer_module_default = classes;
-
-// src/components/SwitchButton.tsx
-import { jsx, jsxs } from "react/jsx-runtime";
-function SwitchButton({
-  toggle,
-  isToggle
-}) {
-  return /* @__PURE__ */ jsxs(
-    "button",
-    {
-      className: ReactScriptPlayer_module_default.switchButton,
-      type: "button",
-      onClick: () => {
-        toggle((prev) => !prev);
-      },
-      children: [
-        /* @__PURE__ */ jsxs("label", { className: ReactScriptPlayer_module_default.switch, children: [
-          /* @__PURE__ */ jsx(
-            "input",
-            {
-              type: "checkbox",
-              checked: isToggle,
-              onChange: () => {
-                toggle((prev) => !prev);
-              }
-            }
-          ),
-          /* @__PURE__ */ jsx("span", { className: ReactScriptPlayer_module_default.slider })
-        ] }),
-        /* @__PURE__ */ jsx("span", { children: "\uC790\uB9C9 \uAC00\uC6B4\uB370 \uC815\uB82C" })
-      ]
-    }
-  );
-}
 
 // src/hooks/useThrottling.ts
 import { useState, useCallback } from "react";
@@ -201,18 +107,18 @@ var arrow_back_default = 'data:image/svg+xml,<svg width="24" height="24" viewBox
 var arrow_forward_default = 'data:image/svg+xml,<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">%0A<g clip-path="url(%23clip0_17_4639)">%0A<path d="M6.49023 20.13L8.26023 21.9L18.1602 12L8.26023 2.09998L6.49023 3.86998L14.6202 12L6.49023 20.13Z" fill="%23707070"/>%0A</g>%0A<defs>%0A<clipPath id="clip0_17_4639">%0A<rect width="24" height="24" fill="white"/>%0A</clipPath>%0A</defs>%0A</svg>%0A';
 
 // src/components/TextDisplay.tsx
-import { jsx as jsx2 } from "react/jsx-runtime";
+import { jsx } from "react/jsx-runtime";
 function TextDisplay({
   script,
   selectedLanguages,
   onSelectWord,
   textStyle
 }) {
-  return /* @__PURE__ */ jsx2(
+  return /* @__PURE__ */ jsx(
     "div",
     {
       className: `${ReactScriptPlayer_module_default.textView} ${script.isHighlighted ? ReactScriptPlayer_module_default.highlighted : ""}`,
-      children: selectedLanguages.map((language) => /* @__PURE__ */ jsx2(
+      children: selectedLanguages.map((language) => /* @__PURE__ */ jsx(
         "p",
         {
           className: ReactScriptPlayer_module_default.text,
@@ -245,7 +151,7 @@ var moveToScriptAtIndex = (index, scripts, seekTo) => {
 };
 
 // src/components/LineView.tsx
-import { jsx as jsx3, jsxs as jsxs2 } from "react/jsx-runtime";
+import { jsx as jsx2, jsxs } from "react/jsx-runtime";
 function LineView({
   scripts,
   selectedLanguages,
@@ -262,17 +168,17 @@ function LineView({
   const throttledHandleNext = useThrottling({
     buttonClicked: (currentScriptIndex2) => moveToScriptAtIndex(currentScriptIndex2 + 1, scripts, seekTo)
   });
-  return /* @__PURE__ */ jsxs2("div", { className: ReactScriptPlayer_module_default.lineViewContainer, children: [
-    /* @__PURE__ */ jsxs2("div", { className: ReactScriptPlayer_module_default.skipButtonContainer, children: [
-      PrevButton ? /* @__PURE__ */ jsx3(
+  return /* @__PURE__ */ jsxs("div", { className: ReactScriptPlayer_module_default.lineViewContainer, children: [
+    /* @__PURE__ */ jsxs("div", { className: ReactScriptPlayer_module_default.skipButtonContainer, children: [
+      PrevButton ? /* @__PURE__ */ jsx2(
         PrevButton,
         {
           onClick: () => throttledHandlePrevious(currentScriptIndex)
         }
-      ) : /* @__PURE__ */ jsx3("button", { onClick: () => throttledHandlePrevious(currentScriptIndex), children: /* @__PURE__ */ jsx3("img", { src: arrow_back_default, alt: "Back Arrow" }) }),
-      NextButton ? /* @__PURE__ */ jsx3(NextButton, { onClick: () => throttledHandleNext(currentScriptIndex) }) : /* @__PURE__ */ jsx3("button", { onClick: () => throttledHandleNext(currentScriptIndex), children: /* @__PURE__ */ jsx3("img", { src: arrow_forward_default, alt: "Forward Arrow" }) })
+      ) : /* @__PURE__ */ jsx2("button", { onClick: () => throttledHandlePrevious(currentScriptIndex), children: /* @__PURE__ */ jsx2("img", { src: arrow_back_default, alt: "Back Arrow" }) }),
+      NextButton ? /* @__PURE__ */ jsx2(NextButton, { onClick: () => throttledHandleNext(currentScriptIndex) }) : /* @__PURE__ */ jsx2("button", { onClick: () => throttledHandleNext(currentScriptIndex), children: /* @__PURE__ */ jsx2("img", { src: arrow_forward_default, alt: "Forward Arrow" }) })
     ] }),
-    scripts[currentScriptIndex] && /* @__PURE__ */ jsx3(
+    scripts[currentScriptIndex] && /* @__PURE__ */ jsx2(
       TextDisplay,
       {
         script: scripts[currentScriptIndex],
@@ -285,7 +191,7 @@ function LineView({
 }
 
 // src/components/BlockView.tsx
-import { useRef, useEffect } from "react";
+import { useRef, useEffect, useState as useState2 } from "react";
 
 // src/utils/convertTime.ts
 function convertTime(seconds) {
@@ -297,19 +203,36 @@ function convertTime(seconds) {
 }
 
 // src/components/BlockView.tsx
-import { jsx as jsx4, jsxs as jsxs3 } from "react/jsx-runtime";
+import { jsx as jsx3, jsxs as jsxs2 } from "react/jsx-runtime";
 function BlockView({
   scripts,
   currentScriptIndex,
   selectedLanguages,
   seekTo,
-  isSubtitleCentered,
   onClickScript,
   onSelectWord,
   timeStyle,
-  textStyle
+  textStyle,
+  FocusButton
 }) {
   const containerRef = useRef(null);
+  const [isSubtitleCentered, setIsSubtitleCentered] = useState2(true);
+  useEffect(() => {
+    const handleInteraction = () => {
+      setIsSubtitleCentered(false);
+    };
+    const container = containerRef.current;
+    if (container) {
+      container.addEventListener("wheel", handleInteraction);
+      container.addEventListener("touchmove", handleInteraction);
+    }
+    return () => {
+      if (container) {
+        container.removeEventListener("wheel", handleInteraction);
+        container.removeEventListener("touchmove", handleInteraction);
+      }
+    };
+  }, [setIsSubtitleCentered]);
   useEffect(() => {
     if (containerRef.current && isSubtitleCentered !== void 0 && isSubtitleCentered) {
       if (currentScriptIndex < containerRef.current.children.length - 1) {
@@ -325,45 +248,57 @@ function BlockView({
       }
     }
   }, [currentScriptIndex, isSubtitleCentered]);
-  return /* @__PURE__ */ jsx4("div", { ref: containerRef, className: ReactScriptPlayer_module_default.blockViewContainer, children: scripts.map((script, index) => /* @__PURE__ */ jsxs3(
-    "div",
-    {
-      className: ReactScriptPlayer_module_default.scriptItem,
-      onClick: () => {
-        moveToScriptAtIndex(index, scripts, seekTo);
-        onClickScript(script, index);
+  useEffect(() => {
+    console.log("isSubtitleCentered:", isSubtitleCentered);
+  }, [isSubtitleCentered]);
+  return /* @__PURE__ */ jsxs2("div", { className: ReactScriptPlayer_module_default.blockViewContainer, children: [
+    FocusButton && /* @__PURE__ */ jsx3(
+      FocusButton,
+      {
+        setState: setIsSubtitleCentered,
+        state: isSubtitleCentered
+      }
+    ),
+    /* @__PURE__ */ jsx3("div", { ref: containerRef, className: ReactScriptPlayer_module_default.blockViewContainer, children: scripts.map((script, index) => /* @__PURE__ */ jsxs2(
+      "div",
+      {
+        className: ReactScriptPlayer_module_default.scriptItem,
+        onClick: () => {
+          moveToScriptAtIndex(index, scripts, seekTo);
+          onClickScript(script, index);
+        },
+        style: {
+          backgroundColor: index === currentScriptIndex ? (textStyle == null ? void 0 : textStyle.activeColor) || "lightgray" : "transparent"
+        },
+        children: [
+          /* @__PURE__ */ jsx3(
+            "button",
+            {
+              className: ReactScriptPlayer_module_default.timeButton,
+              style: {
+                color: timeStyle == null ? void 0 : timeStyle.color,
+                fontSize: timeStyle == null ? void 0 : timeStyle.fontSize,
+                backgroundColor: timeStyle == null ? void 0 : timeStyle.backgroundColor,
+                borderRadius: timeStyle == null ? void 0 : timeStyle.borderRadius,
+                padding: timeStyle == null ? void 0 : timeStyle.padding
+              },
+              children: convertTime(script.startTimeInSecond)
+            }
+          ),
+          /* @__PURE__ */ jsx3(
+            TextDisplay,
+            {
+              script: scripts[index],
+              selectedLanguages,
+              onSelectWord,
+              textStyle
+            }
+          )
+        ]
       },
-      style: {
-        backgroundColor: index === currentScriptIndex ? (textStyle == null ? void 0 : textStyle.activeColor) || "lightgray" : "transparent"
-      },
-      children: [
-        /* @__PURE__ */ jsx4(
-          "button",
-          {
-            className: ReactScriptPlayer_module_default.timeButton,
-            style: {
-              color: timeStyle == null ? void 0 : timeStyle.color,
-              fontSize: timeStyle == null ? void 0 : timeStyle.fontSize,
-              backgroundColor: timeStyle == null ? void 0 : timeStyle.backgroundColor,
-              borderRadius: timeStyle == null ? void 0 : timeStyle.borderRadius,
-              padding: timeStyle == null ? void 0 : timeStyle.padding
-            },
-            children: convertTime(script.startTimeInSecond)
-          }
-        ),
-        /* @__PURE__ */ jsx4(
-          TextDisplay,
-          {
-            script: scripts[index],
-            selectedLanguages,
-            onSelectWord,
-            textStyle
-          }
-        )
-      ]
-    },
-    index
-  )) });
+      index
+    )) })
+  ] });
 }
 
 // src/utils/findCurrentScriptIndex.ts
@@ -384,7 +319,7 @@ var findCurrentScriptIndex = (scripts, currentTime, adjustmentTime = 0.05, exten
 };
 
 // src/components/ReactScriptPlayer.tsx
-import { jsx as jsx5, jsxs as jsxs4 } from "react/jsx-runtime";
+import { jsx as jsx4, jsxs as jsxs3 } from "react/jsx-runtime";
 function ReactScriptPlayer({
   mode,
   scripts,
@@ -397,11 +332,11 @@ function ReactScriptPlayer({
   textStyle,
   timeStyle,
   PrevButton,
-  NextButton
+  NextButton,
+  FocusButton
 }) {
   var _a;
   const currentScriptIndex = (_a = findCurrentScriptIndex(scripts, currentTime)) != null ? _a : 0;
-  const [isSubtitleCentered, setIsSubtitleCentered] = useState2(true);
   const handleClickScript = (script, index) => {
     onClickScript(script, index);
   };
@@ -415,22 +350,13 @@ function ReactScriptPlayer({
     PrevButton,
     NextButton
   };
-  return /* @__PURE__ */ jsx5("div", { className: ReactScriptPlayer_module_default.scriptsContainer, style: { ...containerStyle }, children: /* @__PURE__ */ jsxs4("div", { className: ReactScriptPlayer_module_default.displayContainer, children: [
-    /* @__PURE__ */ jsxs4("div", { className: ReactScriptPlayer_module_default.horizontalContainer, children: [
-      /* @__PURE__ */ jsx5("p", { className: ReactScriptPlayer_module_default.title, children: "Transcript" }),
-      mode === "block" && SwitchButton && /* @__PURE__ */ jsx5(
-        SwitchButton,
-        {
-          isToggle: isSubtitleCentered,
-          toggle: setIsSubtitleCentered
-        }
-      )
-    ] }),
-    mode === "line" ? /* @__PURE__ */ jsx5(LineView, { ...scriptPlayerProps, textStyle }) : /* @__PURE__ */ jsx5(
+  return /* @__PURE__ */ jsx4("div", { className: ReactScriptPlayer_module_default.scriptsContainer, style: { ...containerStyle }, children: /* @__PURE__ */ jsxs3("div", { className: ReactScriptPlayer_module_default.displayContainer, children: [
+    /* @__PURE__ */ jsx4("p", { className: ReactScriptPlayer_module_default.title, children: "Transcript" }),
+    mode === "line" ? /* @__PURE__ */ jsx4(LineView, { ...scriptPlayerProps, textStyle }) : /* @__PURE__ */ jsx4(
       BlockView,
       {
         ...scriptPlayerProps,
-        isSubtitleCentered,
+        FocusButton,
         onClickScript: handleClickScript,
         timeStyle,
         textStyle
