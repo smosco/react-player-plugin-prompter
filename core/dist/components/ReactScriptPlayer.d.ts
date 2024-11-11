@@ -17,9 +17,9 @@ export interface ReactScriptPlayerProps<T extends string = LanguageCode> {
     NextButton?: ({ onClick }: {
         onClick: () => void;
     }) => JSX.Element;
-    FocusButton?: ({ state, setState, }: {
-        state: boolean;
-        setState: Dispatch<SetStateAction<boolean>>;
+    FocusButton?: ({ isFocus, setIsFocus, }: {
+        isFocus: boolean;
+        setIsFocus: Dispatch<SetStateAction<boolean>>;
     }) => JSX.Element;
 }
 export declare function ReactScriptPlayer<T extends string = LanguageCode>({ mode, scripts, selectedLanguages, seekTo, currentTime, onClickScript, onSelectWord, containerStyle, textStyle, timeStyle, PrevButton, NextButton, FocusButton, }: ReactScriptPlayerProps<T>): import("react/jsx-runtime").JSX.Element;

@@ -255,8 +255,8 @@ function BlockView({
     FocusButton && /* @__PURE__ */ jsx3(
       FocusButton,
       {
-        setState: setIsSubtitleCentered,
-        state: isSubtitleCentered
+        setIsFocus: setIsSubtitleCentered,
+        isFocus: isSubtitleCentered
       }
     ),
     /* @__PURE__ */ jsx3("div", { ref: containerRef, className: ReactScriptPlayer_module_default.blockViewContainer, children: scripts.map((script, index) => /* @__PURE__ */ jsxs2(
