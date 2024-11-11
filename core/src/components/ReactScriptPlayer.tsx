@@ -1,6 +1,5 @@
-import React, { useState } from 'react';
+import React from 'react';
 import styles from './ReactScriptPlayer.module.scss';
-import { SwitchButton } from './SwitchButton';
 import {
   LanguageCode,
   Script,
@@ -8,6 +7,7 @@ import {
   TextStyle,
   TimeStyle,
 } from '../interfaces/Scripts';
+import { Dispatch, SetStateAction } from 'react';
 import { LineView } from './LineView';
 import { BlockView } from './BlockView';
 import { findCurrentScriptIndex } from 'utils/findCurrentScriptIndex';
@@ -24,6 +24,13 @@ export interface ReactScriptPlayerProps<T extends string = LanguageCode> {
   timeStyle?: TimeStyle;
   PrevButton?: ({ onClick }: { onClick: () => void }) => JSX.Element;
   NextButton?: ({ onClick }: { onClick: () => void }) => JSX.Element;
+  FocusButton?: ({
+    state,
+    setState,
+  }: {
+    state: boolean;
+    setState: Dispatch<SetStateAction<boolean>>;
+  }) => JSX.Element;
 }
 
 export function ReactScriptPlayer<T extends string = LanguageCode>({
@@ -39,9 +46,9 @@ export function ReactScriptPlayer<T extends string = LanguageCode>({
   timeStyle,
   PrevButton,
   NextButton,
+  FocusButton,
 }: ReactScriptPlayerProps<T>) {
   const currentScriptIndex = findCurrentScriptIndex(scripts, currentTime) ?? 0; // 동영상 재생에 동기화되는 script Index찾는 함수
-  const [isSubtitleCentered, setIsSubtitleCentered] = useState(true);
 
   const handleClickScript = (script: Script<T>, index: number) => {
     onClickScript(script, index);
@@ -61,21 +68,13 @@ export function ReactScriptPlayer<T extends string = LanguageCode>({
   return (
     <div className={styles.scriptsContainer} style={{ ...containerStyle }}>
       <div className={styles.displayContainer}>
-        <div className={styles.horizontalContainer}>
-          <p className={styles.title}>Transcript</p>
-          {mode === 'block' && SwitchButton && (
-            <SwitchButton
-              isToggle={isSubtitleCentered}
-              toggle={setIsSubtitleCentered}
-            />
-          )}
-        </div>
+        <p className={styles.title}>Transcript</p>
         {mode === 'line' ? (
           <LineView {...scriptPlayerProps} textStyle={textStyle} />
         ) : (
           <BlockView
             {...scriptPlayerProps}
-            isSubtitleCentered={isSubtitleCentered}
+            FocusButton={FocusButton}
             onClickScript={handleClickScript}
             timeStyle={timeStyle}
             textStyle={textStyle}

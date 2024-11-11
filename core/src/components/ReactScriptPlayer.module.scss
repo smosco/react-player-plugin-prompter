@@ -15,12 +15,6 @@
   border-radius: 0.75rem;
 }
 
-.horizontalContainer {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-}
-
 .title {
   font-size: 1.25rem;
   font-weight: 700;
@@ -74,61 +68,5 @@
 
   &.highlighted {
     background-color: #fef08a;
-  }
-}
-
-.switchButton {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  border: none;
-  background-color: white;
-  cursor: pointer;
-  padding: 0.5rem;
-  border-radius: 0.5rem;
-}
-
-.switch {
-  position: relative;
-  display: inline-block;
-  width: 40px;
-  height: 20px;
-
-  input {
-    opacity: 0;
-    width: 0;
-    height: 0;
-  }
-
-  .slider {
-    position: absolute;
-    cursor: pointer;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: #ccc;
-    transition: 0.4s;
-    border-radius: 20px;
-
-    &:before {
-      position: absolute;
-      content: '';
-      height: 14px;
-      width: 14px;
-      left: 3px;
-      bottom: 3px;
-      background-color: white;
-      transition: 0.4s;
-      border-radius: 50%;
-    }
-  }
-
-  input:checked + .slider {
-    background-color: gray;
-  }
-
-  input:checked + .slider:before {
-    transform: translateX(20px);
   }
 }
