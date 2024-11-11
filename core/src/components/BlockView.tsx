@@ -15,11 +15,11 @@ interface BlockViewProps<T extends string = LanguageCode> {
   timeStyle?: TimeStyle;
   textStyle?: TextStyle;
   FocusButton?: ({
-    state,
-    setState,
+    isFocus,
+    setIsFocus,
   }: {
-    state: boolean;
-    setState: React.Dispatch<React.SetStateAction<boolean>>;
+    isFocus: boolean;
+    setIsFocus: React.Dispatch<React.SetStateAction<boolean>>;
   }) => JSX.Element;
 }
 
@@ -86,8 +86,8 @@ export function BlockView<T extends string = LanguageCode>({
     <div className={styles.blockViewContainer}>
       {FocusButton && (
         <FocusButton
-          setState={setIsSubtitleCentered}
-          state={isSubtitleCentered}
+          setIsFocus={setIsSubtitleCentered}
+          isFocus={isSubtitleCentered}
         />
       )}
       <div ref={containerRef} className={styles.blockViewContainer}>
