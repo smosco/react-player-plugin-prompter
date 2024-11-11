@@ -78,10 +78,6 @@ export function BlockView<T extends string = LanguageCode>({
     }
   }, [currentScriptIndex, isSubtitleCentered]);
 
-  useEffect(() => {
-    console.log('isSubtitleCentered:', isSubtitleCentered);
-  }, [isSubtitleCentered]);
-
   return (
     <div className={styles.blockViewContainer}>
       {FocusButton && (

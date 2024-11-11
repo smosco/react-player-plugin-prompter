@@ -248,9 +248,6 @@ function BlockView({
       }
     }
   }, [currentScriptIndex, isSubtitleCentered]);
-  useEffect(() => {
-    console.log("isSubtitleCentered:", isSubtitleCentered);
-  }, [isSubtitleCentered]);
   return /* @__PURE__ */ jsxs2("div", { className: ReactScriptPlayer_module_default.blockViewContainer, children: [
     FocusButton && /* @__PURE__ */ jsx3(
       FocusButton,
