@@ -29,29 +29,6 @@ export function LineView<T extends string = LanguageCode>({
   PrevButton,
   NextButton,
 }: LineViewProps<T>) {
-  // 이전 코드
-  // const totalScripts = scripts.length;
-
-  // const handlePrevious = () => {
-  //   if (currentScriptIndex > 0) {
-  //     seekTo(scripts[currentScriptIndex - 1].startTimeInSecond);
-  //   }
-  //   console.log(
-  //     '전으로 이동 ',
-  //     scripts[currentScriptIndex - 1].startTimeInSecond,
-  //   );
-  // };
-
-  // const handleNext = () => {
-  //   if (currentScriptIndex < totalScripts - 1) {
-  //     console.log(
-  //       '다음으로 이동',
-  //       scripts[currentScriptIndex + 1].startTimeInSecond,
-  //     );
-  //     seekTo(scripts[currentScriptIndex + 1].startTimeInSecond);
-  //   }
-  // };
-
   const throttledHandlePrevious = useThrottling({
     buttonClicked: (currentScriptIndex: number) =>
       moveToScriptAtIndex(currentScriptIndex - 1, scripts, seekTo),
