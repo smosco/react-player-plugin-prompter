@@ -106,7 +106,7 @@ function App() {
           volume={volume}
           controls={false}
           playbackRate={playbackRate}
-          progressInterval={100}
+          progressInterval={1000}
         />
         <ControlBar
           playerRef={playerRef}
