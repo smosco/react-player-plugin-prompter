@@ -1,1 +1,0 @@
-{"version":3,"file":"SwithButton.d.ts","sourceRoot":"","sources":["../../src/components/SwithButton.tsx"],"names":[],"mappings":"AAAA,OAAO,KAAK,MAAM,OAAO,CAAC;AAG1B,MAAM,WAAW,iBAAiB;IAChC,MAAM,EAAE,KAAK,CAAC,QAAQ,CAAC,KAAK,CAAC,cAAc,CAAC,OAAO,CAAC,CAAC,CAAC;IACtD,QAAQ,EAAE,OAAO,CAAC;CACnB;AAED,wBAAgB,YAAY,CAAC,EAC3B,MAAM,EACN,QAAQ,GACT,EAAE,iBAAiB,GAAG,GAAG,CAAC,OAAO,CAwBjC"}

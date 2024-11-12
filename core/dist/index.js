@@ -82,7 +82,7 @@ var ReactScriptPlayer_module_default = classes;
 import { useState, useCallback } from "react";
 function useThrottling({
   buttonClicked,
-  delay = 300
+  delay = 1e3
 }) {
   const [isThrottled, setIsThrottled] = useState(false);
   const throttledCallback = useCallback(
@@ -297,7 +297,7 @@ function BlockView({
 }
 
 // src/utils/findCurrentScriptIndex.ts
-var findCurrentScriptIndex = (scripts, currentTime, adjustmentTime = 0.05, extendedTime = 0.05) => {
+var findCurrentScriptIndex = (scripts, currentTime, adjustmentTime = 0.3, extendedTime = 0) => {
   if (!scripts || scripts.length === 0) return null;
   const middleIndex = Math.floor(scripts.length / 2);
   if (currentTime < scripts[middleIndex].startTimeInSecond) {

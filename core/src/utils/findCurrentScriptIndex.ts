@@ -3,8 +3,8 @@ import { Script } from 'interfaces/Scripts';
 export const findCurrentScriptIndex = (
   scripts: Script[] | undefined,
   currentTime: number,
-  adjustmentTime: number = 0.05, // 자막을 약간 일찍 표시
-  extendedTime: number = 0.05, // 자막을 약간 늦게 종료
+  adjustmentTime: number = 0.3, // 자막을 약간 일찍 표시
+  extendedTime: number = 0, // 자막을 약간 늦게 종료
 ): number | null => {
   if (!scripts || scripts.length === 0) return null;
 
