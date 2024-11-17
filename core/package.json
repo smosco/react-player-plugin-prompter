@@ -5,7 +5,7 @@
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "publishConfig": {
-  "registry": "https://registry.npmjs.org/"
+    "registry": "https://registry.npmjs.org/"
   },
   "packageManager": "yarn@4.3.1",
   "repository": {
