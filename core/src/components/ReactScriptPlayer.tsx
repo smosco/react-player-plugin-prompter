@@ -7,10 +7,10 @@ import {
   TextStyle,
   TimeStyle,
 } from '../interfaces/Scripts';
+import { Dispatch, SetStateAction } from 'react';
 import { LineView } from './LineView';
 import { BlockView } from './BlockView';
 import { findCurrentScriptIndex } from 'utils/findCurrentScriptIndex';
-
 export interface ReactScriptPlayerProps<T extends string = LanguageCode> {
   mode: 'line' | 'block';
   scripts: Script<T>[];
@@ -24,6 +24,13 @@ export interface ReactScriptPlayerProps<T extends string = LanguageCode> {
   timeStyle?: TimeStyle;
   PrevButton?: ({ onClick }: { onClick: () => void }) => JSX.Element;
   NextButton?: ({ onClick }: { onClick: () => void }) => JSX.Element;
+  FocusButton?: ({
+    isFocus,
+    setIsFocus,
+  }: {
+    isFocus: boolean;
+    setIsFocus: Dispatch<SetStateAction<boolean>>;
+  }) => JSX.Element;
 }
 
 export function ReactScriptPlayer<T extends string = LanguageCode>({
@@ -39,8 +46,13 @@ export function ReactScriptPlayer<T extends string = LanguageCode>({
   timeStyle,
   PrevButton,
   NextButton,
+  FocusButton,
 }: ReactScriptPlayerProps<T>) {
-  const currentScriptIndex = findCurrentScriptIndex(scripts, currentTime) ?? 0;
+  const currentScriptIndex = findCurrentScriptIndex(scripts, currentTime) ?? 0; // 동영상 재생에 동기화되는 script Index찾는 함수
+
+  const handleClickScript = (script: Script<T>, index: number) => {
+    onClickScript(script, index);
+  };
 
   const scriptPlayerProps = {
     scripts,
@@ -62,7 +74,8 @@ export function ReactScriptPlayer<T extends string = LanguageCode>({
         ) : (
           <BlockView
             {...scriptPlayerProps}
-            onClickScript={onClickScript}
+            FocusButton={FocusButton}
+            onClickScript={handleClickScript}
             timeStyle={timeStyle}
             textStyle={textStyle}
           />

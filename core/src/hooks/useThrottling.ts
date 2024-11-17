@@ -1,25 +1,28 @@
 import { useState, useCallback } from 'react';
 
-interface ThrottlingProps {
-  buttonClicked: () => void;
+interface ThrottlingProps<T> {
+  buttonClicked: (arg: T) => void;
   delay?: number; // Optional delay prop
 }
 
-export default function useThrottling({
+export default function useThrottling<T>({
   buttonClicked,
-  delay = 300,
-}: ThrottlingProps) {
+  delay = 1000,
+}: ThrottlingProps<T>) {
   const [isThrottled, setIsThrottled] = useState(false);
 
-  const throttledCallback = useCallback(() => {
-    if (!isThrottled) {
-      buttonClicked();
-      setIsThrottled(true);
-      setTimeout(() => {
-        setIsThrottled(false);
-      }, delay);
-    }
-  }, [isThrottled, buttonClicked, delay]);
+  const throttledCallback = useCallback(
+    (arg: T) => {
+      if (!isThrottled) {
+        buttonClicked(arg);
+        setIsThrottled(true);
+        setTimeout(() => {
+          setIsThrottled(false);
+        }, delay);
+      }
+    },
+    [isThrottled, buttonClicked, delay],
+  );
 
   return throttledCallback;
 }

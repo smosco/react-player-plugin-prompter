@@ -82,18 +82,21 @@ var ReactScriptPlayer_module_default = classes;
 import { useState, useCallback } from "react";
 function useThrottling({
   buttonClicked,
-  delay = 300
+  delay = 1e3
 }) {
   const [isThrottled, setIsThrottled] = useState(false);
-  const throttledCallback = useCallback(() => {
-    if (!isThrottled) {
-      buttonClicked();
-      setIsThrottled(true);
-      setTimeout(() => {
-        setIsThrottled(false);
-      }, delay);
-    }
-  }, [isThrottled, buttonClicked, delay]);
+  const throttledCallback = useCallback(
+    (arg) => {
+      if (!isThrottled) {
+        buttonClicked(arg);
+        setIsThrottled(true);
+        setTimeout(() => {
+          setIsThrottled(false);
+        }, delay);
+      }
+    },
+    [isThrottled, buttonClicked, delay]
+  );
   return throttledCallback;
 }
 
@@ -137,6 +140,16 @@ function TextDisplay({
   );
 }
 
+// src/utils/moveToScriptAtIndex.ts
+var moveToScriptAtIndex = (index, scripts, seekTo) => {
+  if (index < 0 || index >= scripts.length - 1) {
+    console.warn("Invalid script index:", index);
+    return;
+  }
+  console.log("Seeking to:", scripts[index]);
+  seekTo(scripts[index].startTimeInSecond);
+};
+
 // src/components/LineView.tsx
 import { jsx as jsx2, jsxs } from "react/jsx-runtime";
 function LineView({
@@ -149,27 +162,21 @@ function LineView({
   PrevButton,
   NextButton
 }) {
-  const totalScripts = scripts.length;
-  const handlePrevious = () => {
-    if (currentScriptIndex > 0) {
-      seekTo(scripts[currentScriptIndex - 1].startTimeInSecond);
-    }
-  };
-  const handleNext = () => {
-    if (currentScriptIndex < totalScripts - 1) {
-      seekTo(scripts[currentScriptIndex + 1].startTimeInSecond);
-    }
-  };
   const throttledHandlePrevious = useThrottling({
-    buttonClicked: handlePrevious
+    buttonClicked: (currentScriptIndex2) => moveToScriptAtIndex(currentScriptIndex2 - 1, scripts, seekTo)
   });
   const throttledHandleNext = useThrottling({
-    buttonClicked: handleNext
+    buttonClicked: (currentScriptIndex2) => moveToScriptAtIndex(currentScriptIndex2 + 1, scripts, seekTo)
   });
   return /* @__PURE__ */ jsxs("div", { className: ReactScriptPlayer_module_default.lineViewContainer, children: [
     /* @__PURE__ */ jsxs("div", { className: ReactScriptPlayer_module_default.skipButtonContainer, children: [
-      PrevButton ? /* @__PURE__ */ jsx2(PrevButton, { onClick: throttledHandlePrevious }) : /* @__PURE__ */ jsx2("button", { onClick: throttledHandlePrevious, children: /* @__PURE__ */ jsx2("img", { src: arrow_back_default, alt: "Back Arrow" }) }),
-      NextButton ? /* @__PURE__ */ jsx2(NextButton, { onClick: throttledHandleNext }) : /* @__PURE__ */ jsx2("button", { onClick: throttledHandleNext, children: /* @__PURE__ */ jsx2("img", { src: arrow_forward_default, alt: "Forward Arrow" }) })
+      PrevButton ? /* @__PURE__ */ jsx2(
+        PrevButton,
+        {
+          onClick: () => throttledHandlePrevious(currentScriptIndex)
+        }
+      ) : /* @__PURE__ */ jsx2("button", { onClick: () => throttledHandlePrevious(currentScriptIndex), children: /* @__PURE__ */ jsx2("img", { src: arrow_back_default, alt: "Back Arrow" }) }),
+      NextButton ? /* @__PURE__ */ jsx2(NextButton, { onClick: () => throttledHandleNext(currentScriptIndex) }) : /* @__PURE__ */ jsx2("button", { onClick: () => throttledHandleNext(currentScriptIndex), children: /* @__PURE__ */ jsx2("img", { src: arrow_forward_default, alt: "Forward Arrow" }) })
     ] }),
     scripts[currentScriptIndex] && /* @__PURE__ */ jsx2(
       TextDisplay,
@@ -184,7 +191,7 @@ function LineView({
 }
 
 // src/components/BlockView.tsx
-import { useRef, useEffect } from "react";
+import { useRef, useEffect, useState as useState2 } from "react";
 
 // src/utils/convertTime.ts
 function convertTime(seconds) {
@@ -205,11 +212,33 @@ function BlockView({
   onClickScript,
   onSelectWord,
   timeStyle,
-  textStyle
+  textStyle,
+  FocusButton
 }) {
   const containerRef = useRef(null);
+  const [isFocused, setIsFocused] = useState2(true);
   useEffect(() => {
-    if (containerRef.current) {
+    const handleInteraction = () => {
+      setIsFocused(false);
+      console.log(isFocused + "isFocused");
+      console.log(setIsFocused + "setIsFocused");
+    };
+    console.log(isFocused + "isFocused");
+    console.log(setIsFocused + "setIsFocused");
+    const container = containerRef.current;
+    if (container) {
+      container.addEventListener("wheel", handleInteraction);
+      container.addEventListener("touchmove", handleInteraction);
+    }
+    return () => {
+      if (container) {
+        container.removeEventListener("wheel", handleInteraction);
+        container.removeEventListener("touchmove", handleInteraction);
+      }
+    };
+  }, [setIsFocused, isFocused]);
+  useEffect(() => {
+    if (containerRef.current && isFocused !== void 0 && isFocused) {
       if (currentScriptIndex < containerRef.current.children.length - 1) {
         const container = containerRef.current;
         const target = container.children[currentScriptIndex];
@@ -222,50 +251,53 @@ function BlockView({
         });
       }
     }
-  }, [currentScriptIndex]);
-  return /* @__PURE__ */ jsx3("div", { ref: containerRef, className: ReactScriptPlayer_module_default.blockViewContainer, children: scripts.map((script, index) => /* @__PURE__ */ jsxs2(
-    "div",
-    {
-      className: ReactScriptPlayer_module_default.scriptItem,
-      onClick: () => {
-        seekTo(script.startTimeInSecond);
-        onClickScript(script, index);
+  }, [currentScriptIndex, isFocused]);
+  return /* @__PURE__ */ jsxs2("div", { className: ReactScriptPlayer_module_default.blockViewContainer, children: [
+    FocusButton && /* @__PURE__ */ jsx3(FocusButton, { setIsFocus: setIsFocused, isFocus: isFocused }),
+    /* @__PURE__ */ jsx3("div", { ref: containerRef, className: ReactScriptPlayer_module_default.blockViewContainer, children: scripts.map((script, index) => /* @__PURE__ */ jsxs2(
+      "div",
+      {
+        className: ReactScriptPlayer_module_default.scriptItem,
+        onClick: () => {
+          moveToScriptAtIndex(index, scripts, seekTo);
+          onClickScript(script, index);
+        },
+        style: {
+          backgroundColor: index === currentScriptIndex ? (textStyle == null ? void 0 : textStyle.activeColor) || "lightgray" : "transparent"
+        },
+        children: [
+          /* @__PURE__ */ jsx3(
+            "button",
+            {
+              className: ReactScriptPlayer_module_default.timeButton,
+              style: {
+                color: timeStyle == null ? void 0 : timeStyle.color,
+                fontSize: timeStyle == null ? void 0 : timeStyle.fontSize,
+                backgroundColor: timeStyle == null ? void 0 : timeStyle.backgroundColor,
+                borderRadius: timeStyle == null ? void 0 : timeStyle.borderRadius,
+                padding: timeStyle == null ? void 0 : timeStyle.padding
+              },
+              children: convertTime(script.startTimeInSecond)
+            }
+          ),
+          /* @__PURE__ */ jsx3(
+            TextDisplay,
+            {
+              script: scripts[index],
+              selectedLanguages,
+              onSelectWord,
+              textStyle
+            }
+          )
+        ]
       },
-      style: {
-        backgroundColor: index === currentScriptIndex ? (textStyle == null ? void 0 : textStyle.activeColor) || "lightgray" : "transparent"
-      },
-      children: [
-        /* @__PURE__ */ jsx3(
-          "button",
-          {
-            className: ReactScriptPlayer_module_default.timeButton,
-            style: {
-              color: timeStyle == null ? void 0 : timeStyle.color,
-              fontSize: timeStyle == null ? void 0 : timeStyle.fontSize,
-              backgroundColor: timeStyle == null ? void 0 : timeStyle.backgroundColor,
-              borderRadius: timeStyle == null ? void 0 : timeStyle.borderRadius,
-              padding: timeStyle == null ? void 0 : timeStyle.padding
-            },
-            children: convertTime(script.startTimeInSecond)
-          }
-        ),
-        /* @__PURE__ */ jsx3(
-          TextDisplay,
-          {
-            script: scripts[index],
-            selectedLanguages,
-            onSelectWord,
-            textStyle
-          }
-        )
-      ]
-    },
-    index
-  )) });
+      index
+    )) })
+  ] });
 }
 
 // src/utils/findCurrentScriptIndex.ts
-var findCurrentScriptIndex = (scripts, currentTime, adjustmentTime = 0.05, extendedTime = 0.05) => {
+var findCurrentScriptIndex = (scripts, currentTime, adjustmentTime = 0.3, extendedTime = 0) => {
   if (!scripts || scripts.length === 0) return null;
   const middleIndex = Math.floor(scripts.length / 2);
   if (currentTime < scripts[middleIndex].startTimeInSecond) {
@@ -295,10 +327,14 @@ function ReactScriptPlayer({
   textStyle,
   timeStyle,
   PrevButton,
-  NextButton
+  NextButton,
+  FocusButton
 }) {
   var _a;
   const currentScriptIndex = (_a = findCurrentScriptIndex(scripts, currentTime)) != null ? _a : 0;
+  const handleClickScript = (script, index) => {
+    onClickScript(script, index);
+  };
   const scriptPlayerProps = {
     scripts,
     currentScriptIndex,
@@ -315,7 +351,8 @@ function ReactScriptPlayer({
       BlockView,
       {
         ...scriptPlayerProps,
-        onClickScript,
+        FocusButton,
+        onClickScript: handleClickScript,
         timeStyle,
         textStyle
       }

@@ -5,7 +5,7 @@ import arrow_back from '../assets/icons/arrow_back.svg';
 import arrow_forward from '../assets/icons/arrow_forward.svg';
 import { TextDisplay } from './TextDisplay';
 import styles from './ReactScriptPlayer.module.scss';
-
+import { moveToScriptAtIndex } from '../utils/moveToScriptAtIndex';
 // LineView에 제네릭 T 추가
 interface LineViewProps<T extends string = LanguageCode> {
   scripts: Script<T>[];
@@ -13,10 +13,7 @@ interface LineViewProps<T extends string = LanguageCode> {
   currentScriptIndex: number;
   seekTo: (timeInSeconds: number) => void;
   onSelectWord: (word: string, script: Script<T>, index: number) => void;
-
-  // 자막 텍스트 스타일링
   textStyle?: TextStyle;
-  // 자막 넘기기 버튼
   PrevButton?: ({ onClick }: { onClick: () => void }) => JSX.Element;
   NextButton?: ({ onClick }: { onClick: () => void }) => JSX.Element;
 }
@@ -32,41 +29,33 @@ export function LineView<T extends string = LanguageCode>({
   PrevButton,
   NextButton,
 }: LineViewProps<T>) {
-  const totalScripts = scripts.length;
-
-  const handlePrevious = () => {
-    if (currentScriptIndex > 0) {
-      seekTo(scripts[currentScriptIndex - 1].startTimeInSecond);
-    }
-  };
-
-  const handleNext = () => {
-    if (currentScriptIndex < totalScripts - 1) {
-      seekTo(scripts[currentScriptIndex + 1].startTimeInSecond);
-    }
-  };
-
   const throttledHandlePrevious = useThrottling({
-    buttonClicked: handlePrevious,
+    buttonClicked: (currentScriptIndex: number) =>
+      moveToScriptAtIndex(currentScriptIndex - 1, scripts, seekTo),
   });
   const throttledHandleNext = useThrottling({
-    buttonClicked: handleNext,
+    buttonClicked: (currentScriptIndex: number) =>
+      moveToScriptAtIndex(currentScriptIndex + 1, scripts, seekTo),
   });
+
+  // console.log(currentScriptIndex);
 
   return (
     <div className={styles.lineViewContainer}>
       <div className={styles.skipButtonContainer}>
         {PrevButton ? (
-          <PrevButton onClick={throttledHandlePrevious} />
+          <PrevButton
+            onClick={() => throttledHandlePrevious(currentScriptIndex)}
+          />
         ) : (
-          <button onClick={throttledHandlePrevious}>
+          <button onClick={() => throttledHandlePrevious(currentScriptIndex)}>
             <img src={arrow_back} alt="Back Arrow" />
           </button>
         )}
         {NextButton ? (
-          <NextButton onClick={throttledHandleNext} />
+          <NextButton onClick={() => throttledHandleNext(currentScriptIndex)} />
         ) : (
-          <button onClick={throttledHandleNext}>
+          <button onClick={() => throttledHandleNext(currentScriptIndex)}>
             <img src={arrow_forward} alt="Forward Arrow" />
           </button>
         )}

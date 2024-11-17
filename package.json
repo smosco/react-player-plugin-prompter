@@ -11,7 +11,7 @@
     "core": "yarn workspace react-player-plugin-prompter",
     "demo": "yarn workspace demo",
     "docs": "yarn workspace docs",
-    "dev" : "yarn core dev & yarn demo dev",
+    "dev": "yarn core dev & yarn demo dev",
     "typecheck": "yarn workspaces foreach --all run typecheck",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",

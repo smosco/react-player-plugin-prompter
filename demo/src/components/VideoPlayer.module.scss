@@ -142,3 +142,19 @@
     background-color: #f3f4f6;
   }
 }
+
+.focusButtonContainer {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.focusButton {
+  width: 2rem;
+  height: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  background: none;
+  cursor: pointer;
+}
