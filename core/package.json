@@ -4,6 +4,9 @@
   "version": "0.0.4",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
+  "publishConfig": {
+  "@smosco:registry": "https://npm.pkg.github.com"
+  },
   "packageManager": "yarn@4.3.1",
   "repository": {
     "type": "git",
