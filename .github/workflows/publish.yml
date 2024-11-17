@@ -38,7 +38,7 @@ jobs:
         run: yarn build
 
       # 6. Publish core to npm
-      - name: Publish core to npm (Dry Run)
+      - name: Publish core to npm
         working-directory: ./core
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
