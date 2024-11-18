@@ -1,12 +1,9 @@
 {
   "name": "react-player-plugin-prompter",
   "description": "A React Player plugin specialized for subtitle handling",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
-  "publishConfig": {
-    "registry": "https://registry.npmjs.org/"
-  },
   "packageManager": "yarn@4.3.1",
   "repository": {
     "type": "git",
