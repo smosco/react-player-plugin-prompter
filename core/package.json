@@ -1,13 +1,13 @@
 {
   "name": "react-player-plugin-prompter",
   "description": "A React Player plugin specialized for subtitle handling",
-  "version": "0.0.1",
+  "version": "0.0.5",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "packageManager": "yarn@4.3.1",
   "repository": {
     "type": "git",
-    "url": "https://github.com/smosco/react-player-plugin-prompter"
+    "url": "git+https://github.com/smosco/react-player-plugin-prompter.git"
   },
   "keywords": [
     "react",
@@ -32,12 +32,14 @@
     "dev": "node ./esbuild.config.js --watch",
     "typecheck": "tsc --noEmit"
   },
+  "dependencies": {
+    "esbuild": "^0.24.0",
+    "esbuild-scss-modules-plugin": "^1.1.1"
+  },
   "devDependencies": {
     "@types/react": "^18",
     "@types/react-dom": "^18",
     "@typescript-eslint/eslint-plugin": "^8.8.0",
-    "esbuild": "^0.24.0",
-    "esbuild-scss-modules-plugin": "^1.1.1",
     "eslint-plugin-prettier": "^5.2.1",
     "eslint-plugin-react": "^7.37.1",
     "eslint-plugin-react-hooks": "^4.6.2",
