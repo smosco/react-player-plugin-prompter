@@ -6,16 +6,16 @@ labels: ''
 assignees: ''
 ---
 
-## 이슈 설명
+## Issue Description
 
-> 이슈에 대한 간략한 설명을 적어주세요 (버그, 기능 추가, 개선 사항 등)
+> Briefly describe the issue (bug, feature request, improvement, etc.)
 
-## 작업 상세 내용
+## Detailed Tasks
 
 - [ ] TODO
 - [ ] TODO
 - [ ] TODO
 
-## 참고 자료 (선택)
+## Additional Resources (Optional)
 
-> 관련 문서나 링크가 있다면 첨부해주세요
+> Attach any relevant documents or links if available.
