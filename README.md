@@ -1,6 +1,6 @@
 # 📚 React Player Plugin
 
-**React Player Plugin** enhances `react-player` by adding robust subtitle control features, making it ideal for educational content and language learning platforms. This library allows you to synchronize subtitles, navigate through sentences, and interact with words, providing a richer learning experience.
+**React Player Plugin** enhances `react-player` by adding robust subtitle control features, making it ideal for educational content and language learning platforms.
 
 ---
 
@@ -25,6 +25,11 @@ Check out the demo page to see the plugin in action!
 2. **Highly Customizable**: Provides flexibility to style the subtitle container, text, and timestamps according to your design needs.
 3. **Accessibility**: Designed to improve accessibility and user engagement, especially for educational content.
 4. **Language Support**: Supports multiple languages, allowing users to switch between different subtitle tracks.
+
+---
+
+## 📦 npm Library
+For more details about the core library and its integration, refer to the [npm README](https://www.npmjs.com/package/react-player-plugin-prompter). This includes detailed installation and usage instructions for the core functionality.
 
 ---
 

@@ -1,6 +1,6 @@
 # 📚 react-player-plugin-prompter
 
-**react-player-plugin-prompter** is a powerful, open-source library that enhances the capabilities of `react-player` by adding subtitle synchronization, sentence navigation, and word selection features. It is particularly useful for educational content and language learning platforms.
+**React Player Plugin** enhances `react-player` by adding robust subtitle control features, making it ideal for educational content and language learning platforms.
 
 ---
 
