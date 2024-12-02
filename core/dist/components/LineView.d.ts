@@ -6,12 +6,8 @@ interface LineViewProps<T extends string = LanguageCode> {
     seekTo: (timeInSeconds: number) => void;
     onSelectWord: (word: string, script: Script<T>, index: number) => void;
     textStyle?: TextStyle;
-    PrevButton?: ({ onClick }: {
-        onClick: () => void;
-    }) => JSX.Element;
-    NextButton?: ({ onClick }: {
-        onClick: () => void;
-    }) => JSX.Element;
+    PrevButton?: JSX.Element;
+    NextButton?: JSX.Element;
 }
 export declare function LineView<T extends string = LanguageCode>({ scripts, selectedLanguages, currentScriptIndex, seekTo, onSelectWord, textStyle, PrevButton, NextButton, }: LineViewProps<T>): import("react/jsx-runtime").JSX.Element;
 export {};
