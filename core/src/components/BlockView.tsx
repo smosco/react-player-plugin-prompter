@@ -3,7 +3,6 @@ import { LanguageCode, Script, TimeStyle, TextStyle } from 'interfaces/Scripts';
 import styles from './ReactScriptPlayer.module.scss';
 import { convertTime } from 'utils/convertTime';
 import { TextDisplay } from './TextDisplay';
-import { moveToScriptAtIndex } from '../utils/moveToScriptAtIndex';
 
 interface BlockViewProps<T extends string = LanguageCode> {
   scripts: Script<T>[];
@@ -15,11 +14,11 @@ interface BlockViewProps<T extends string = LanguageCode> {
   timeStyle?: TimeStyle;
   textStyle?: TextStyle;
   FocusButton?: ({
-    isFocus,
-    setIsFocus,
+    isFocused,
+    setIsFocused,
   }: {
-    isFocus: boolean;
-    setIsFocus: React.Dispatch<React.SetStateAction<boolean>>;
+    isFocused: boolean;
+    setIsFocused: React.Dispatch<React.SetStateAction<boolean>>;
   }) => JSX.Element;
 }
 
@@ -40,11 +39,7 @@ export function BlockView<T extends string = LanguageCode>({
   useEffect(() => {
     const handleInteraction = () => {
       setIsFocused(false);
-      console.log(isFocused + 'isFocused');
-      console.log(setIsFocused + 'setIsFocused');
     };
-    console.log(isFocused + 'isFocused');
-    console.log(setIsFocused + 'setIsFocused');
 
     const container = containerRef.current;
     if (container) {
@@ -58,14 +53,13 @@ export function BlockView<T extends string = LanguageCode>({
         container.removeEventListener('touchmove', handleInteraction);
       }
     };
-  }, [setIsFocused, isFocused]);
+  }, []);
 
   useEffect(() => {
-    if (containerRef.current && isFocused !== undefined && isFocused) {
+    if (containerRef.current && isFocused) {
       if (currentScriptIndex < containerRef.current.children.length - 1) {
         const container = containerRef.current;
         const target = container.children[currentScriptIndex];
-        // 컨테이너의 상단에서부터 타겟까지의 거리 계산
         const targetTop = target.getBoundingClientRect().top;
         const containerTop = container.getBoundingClientRect().top;
         const relativeTop = targetTop - containerTop;
@@ -80,16 +74,18 @@ export function BlockView<T extends string = LanguageCode>({
 
   return (
     <div className={styles.blockViewContainer}>
-      {FocusButton && (
-        <FocusButton setIsFocus={setIsFocused} isFocus={isFocused} />
-      )}
+      {FocusButton &&
+        // TODO(@smosco): 뭘 바꿨는지 cloneElement를 사용하지 않으면 클릭이 안됨
+        React.cloneElement(FocusButton({ isFocused, setIsFocused }), {
+          onClick: () => setIsFocused(!isFocused),
+        })}
       <div ref={containerRef} className={styles.blockViewContainer}>
         {scripts.map((script, index) => (
           <div
             className={styles.scriptItem}
             key={index}
             onClick={() => {
-              moveToScriptAtIndex(index, scripts, seekTo);
+              seekTo(script.startTimeInSecond);
               onClickScript(script, index);
             }}
             style={{

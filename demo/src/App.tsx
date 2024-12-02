@@ -79,19 +79,19 @@ function App() {
   );
 
   const FocusButton = ({
-    isFocus,
-    setIsFocus,
+    isFocused,
+    setIsFocused,
   }: {
-    isFocus: boolean;
-    setIsFocus: React.Dispatch<React.SetStateAction<boolean>>;
+    isFocused: boolean;
+    setIsFocused: React.Dispatch<React.SetStateAction<boolean>>;
   }) => (
     <div className={Style.focusButtonContainer}>
       <button
         className={Style.focusButton}
         type="button"
-        disabled={isFocus}
+        disabled={isFocused}
         onClick={() => {
-          setIsFocus(!isFocus); // isFocus 값을 반전시켜 업데이트
+          setIsFocused(!isFocused);
         }}
       >
         <svg
@@ -100,7 +100,7 @@ function App() {
           height="24"
           viewBox="0 0 24 24"
           fill="none"
-          stroke={isFocus === true ? '#cbc2d6' : '#8e48ea'}
+          stroke={isFocused === true ? '#cbc2d6' : '#8e48ea'}
           strokeWidth="2"
           strokeLinecap="round"
           strokeLinejoin="round"

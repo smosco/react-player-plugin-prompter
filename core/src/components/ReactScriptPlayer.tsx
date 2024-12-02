@@ -25,11 +25,11 @@ export interface ReactScriptPlayerProps<T extends string = LanguageCode> {
   PrevButton?: JSX.Element;
   NextButton?: JSX.Element;
   FocusButton?: ({
-    isFocus,
-    setIsFocus,
+    isFocused,
+    setIsFocused,
   }: {
-    isFocus: boolean;
-    setIsFocus: Dispatch<SetStateAction<boolean>>;
+    isFocused: boolean;
+    setIsFocused: Dispatch<SetStateAction<boolean>>;
   }) => JSX.Element;
 }
 
