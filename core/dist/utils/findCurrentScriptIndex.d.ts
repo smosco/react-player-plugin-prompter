@@ -1,3 +1,3 @@
 import { Script } from 'interfaces/Scripts';
-export declare const findCurrentScriptIndex: (scripts: Script[] | undefined, currentTime: number, adjustmentTime?: number, extendedTime?: number) => number | null;
+export declare function findCurrentScriptIndex(scripts: Script[], currentTime: number): number;
 //# sourceMappingURL=findCurrentScriptIndex.d.ts.map

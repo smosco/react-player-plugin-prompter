@@ -78,27 +78,8 @@ var css = `* {
 })();
 var ReactScriptPlayer_module_default = classes;
 
-// src/hooks/useThrottling.ts
-import { useState, useCallback } from "react";
-function useThrottling({
-  buttonClicked,
-  delay = 1e3
-}) {
-  const [isThrottled, setIsThrottled] = useState(false);
-  const throttledCallback = useCallback(
-    (arg) => {
-      if (!isThrottled) {
-        buttonClicked(arg);
-        setIsThrottled(true);
-        setTimeout(() => {
-          setIsThrottled(false);
-        }, delay);
-      }
-    },
-    [isThrottled, buttonClicked, delay]
-  );
-  return throttledCallback;
-}
+// src/components/LineView.tsx
+import React from "react";
 
 // src/assets/icons/arrow_back.svg
 var arrow_back_default = 'data:image/svg+xml,<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">%0A<g clip-path="url(%23clip0_17_4620)">%0A<path d="M17.5098 3.86998L15.7298 2.09998L5.83984 12L15.7398 21.9L17.5098 20.13L9.37984 12L17.5098 3.86998Z" fill="%23707070"/>%0A</g>%0A<defs>%0A<clipPath id="clip0_17_4620">%0A<rect width="24" height="24" fill="white"/>%0A</clipPath>%0A</defs>%0A</svg>%0A';
@@ -140,16 +121,6 @@ function TextDisplay({
   );
 }
 
-// src/utils/moveToScriptAtIndex.ts
-var moveToScriptAtIndex = (index, scripts, seekTo) => {
-  if (index < 0 || index >= scripts.length - 1) {
-    console.warn("Invalid script index:", index);
-    return;
-  }
-  console.log("Seeking to:", scripts[index]);
-  seekTo(scripts[index].startTimeInSecond);
-};
-
 // src/components/LineView.tsx
 import { jsx as jsx2, jsxs } from "react/jsx-runtime";
 function LineView({
@@ -162,21 +133,18 @@ function LineView({
   PrevButton,
   NextButton
 }) {
-  const throttledHandlePrevious = useThrottling({
-    buttonClicked: (currentScriptIndex2) => moveToScriptAtIndex(currentScriptIndex2 - 1, scripts, seekTo)
-  });
-  const throttledHandleNext = useThrottling({
-    buttonClicked: (currentScriptIndex2) => moveToScriptAtIndex(currentScriptIndex2 + 1, scripts, seekTo)
-  });
+  const handlePrevious = () => {
+    const prevIndex = Math.max(0, currentScriptIndex - 1);
+    seekTo(scripts[prevIndex].startTimeInSecond);
+  };
+  const handleNext = () => {
+    const nextIndex = Math.min(scripts.length - 1, currentScriptIndex + 1);
+    seekTo(scripts[nextIndex].startTimeInSecond);
+  };
   return /* @__PURE__ */ jsxs("div", { className: ReactScriptPlayer_module_default.lineViewContainer, children: [
     /* @__PURE__ */ jsxs("div", { className: ReactScriptPlayer_module_default.skipButtonContainer, children: [
-      PrevButton ? /* @__PURE__ */ jsx2(
-        PrevButton,
-        {
-          onClick: () => throttledHandlePrevious(currentScriptIndex)
-        }
-      ) : /* @__PURE__ */ jsx2("button", { onClick: () => throttledHandlePrevious(currentScriptIndex), children: /* @__PURE__ */ jsx2("img", { src: arrow_back_default, alt: "Back Arrow" }) }),
-      NextButton ? /* @__PURE__ */ jsx2(NextButton, { onClick: () => throttledHandleNext(currentScriptIndex) }) : /* @__PURE__ */ jsx2("button", { onClick: () => throttledHandleNext(currentScriptIndex), children: /* @__PURE__ */ jsx2("img", { src: arrow_forward_default, alt: "Forward Arrow" }) })
+      PrevButton ? React.cloneElement(PrevButton, { onClick: handlePrevious }) : /* @__PURE__ */ jsx2("button", { onClick: handlePrevious, children: /* @__PURE__ */ jsx2("img", { src: arrow_back_default, alt: "Back Arrow" }) }),
+      NextButton ? React.cloneElement(NextButton, { onClick: handleNext }) : /* @__PURE__ */ jsx2("button", { onClick: handleNext, children: /* @__PURE__ */ jsx2("img", { src: arrow_forward_default, alt: "Forward Arrow" }) })
     ] }),
     scripts[currentScriptIndex] && /* @__PURE__ */ jsx2(
       TextDisplay,
@@ -191,7 +159,7 @@ function LineView({
 }
 
 // src/components/BlockView.tsx
-import { useRef, useEffect, useState as useState2 } from "react";
+import React2, { useRef, useEffect, useState } from "react";
 
 // src/utils/convertTime.ts
 function convertTime(seconds) {
@@ -216,15 +184,11 @@ function BlockView({
   FocusButton
 }) {
   const containerRef = useRef(null);
-  const [isFocused, setIsFocused] = useState2(true);
+  const [isFocused, setIsFocused] = useState(true);
   useEffect(() => {
     const handleInteraction = () => {
       setIsFocused(false);
-      console.log(isFocused + "isFocused");
-      console.log(setIsFocused + "setIsFocused");
     };
-    console.log(isFocused + "isFocused");
-    console.log(setIsFocused + "setIsFocused");
     const container = containerRef.current;
     if (container) {
       container.addEventListener("wheel", handleInteraction);
@@ -236,9 +200,9 @@ function BlockView({
         container.removeEventListener("touchmove", handleInteraction);
       }
     };
-  }, [setIsFocused, isFocused]);
+  }, []);
   useEffect(() => {
-    if (containerRef.current && isFocused !== void 0 && isFocused) {
+    if (containerRef.current && isFocused) {
       if (currentScriptIndex < containerRef.current.children.length - 1) {
         const container = containerRef.current;
         const target = container.children[currentScriptIndex];
@@ -253,13 +217,16 @@ function BlockView({
     }
   }, [currentScriptIndex, isFocused]);
   return /* @__PURE__ */ jsxs2("div", { className: ReactScriptPlayer_module_default.blockViewContainer, children: [
-    FocusButton && /* @__PURE__ */ jsx3(FocusButton, { setIsFocus: setIsFocused, isFocus: isFocused }),
+    FocusButton && // TODO(@smosco): 뭘 바꿨는지 cloneElement를 사용하지 않으면 클릭이 안됨
+    React2.cloneElement(FocusButton({ isFocused, setIsFocused }), {
+      onClick: () => setIsFocused(!isFocused)
+    }),
     /* @__PURE__ */ jsx3("div", { ref: containerRef, className: ReactScriptPlayer_module_default.blockViewContainer, children: scripts.map((script, index) => /* @__PURE__ */ jsxs2(
       "div",
       {
         className: ReactScriptPlayer_module_default.scriptItem,
         onClick: () => {
-          moveToScriptAtIndex(index, scripts, seekTo);
+          seekTo(script.startTimeInSecond);
           onClickScript(script, index);
         },
         style: {
@@ -297,21 +264,22 @@ function BlockView({
 }
 
 // src/utils/findCurrentScriptIndex.ts
-var findCurrentScriptIndex = (scripts, currentTime, adjustmentTime = 0.3, extendedTime = 0) => {
-  if (!scripts || scripts.length === 0) return null;
-  const middleIndex = Math.floor(scripts.length / 2);
-  if (currentTime < scripts[middleIndex].startTimeInSecond) {
-    const index2 = scripts.findIndex(
-      (script) => script.startTimeInSecond - adjustmentTime <= currentTime && script.startTimeInSecond + script.durationInSecond + extendedTime >= currentTime
-    );
-    return index2 !== -1 ? index2 : null;
+function findCurrentScriptIndex(scripts, currentTime) {
+  let left = 0;
+  let right = scripts.length - 1;
+  while (left <= right) {
+    const mid = Math.floor((left + right) / 2);
+    const script = scripts[mid];
+    if (currentTime >= script.startTimeInSecond && currentTime < script.startTimeInSecond + script.durationInSecond) {
+      return mid;
+    } else if (currentTime < script.startTimeInSecond) {
+      right = mid - 1;
+    } else {
+      left = mid + 1;
+    }
   }
-  const reversedScripts = [...scripts].reverse();
-  const index = reversedScripts.findIndex(
-    (script) => script.startTimeInSecond - adjustmentTime <= currentTime && script.startTimeInSecond + script.durationInSecond + extendedTime >= currentTime
-  );
-  return index !== -1 ? scripts.length - 1 - index : null;
-};
+  return left;
+}
 
 // src/components/ReactScriptPlayer.tsx
 import { jsx as jsx4, jsxs as jsxs3 } from "react/jsx-runtime";
@@ -320,7 +288,7 @@ function ReactScriptPlayer({
   scripts,
   selectedLanguages,
   seekTo,
-  currentTime,
+  getCurrentTime,
   onClickScript,
   onSelectWord,
   containerStyle,
@@ -331,6 +299,7 @@ function ReactScriptPlayer({
   FocusButton
 }) {
   var _a;
+  const currentTime = getCurrentTime();
   const currentScriptIndex = (_a = findCurrentScriptIndex(scripts, currentTime)) != null ? _a : 0;
   const handleClickScript = (script, index) => {
     onClickScript(script, index);

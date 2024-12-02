@@ -16,20 +16,20 @@ export interface ReactScriptPlayerProps<T extends string = LanguageCode> {
   scripts: Script<T>[];
   selectedLanguages: T[];
   seekTo: (timeInSeconds: number) => void;
-  currentTime: number;
+  getCurrentTime: () => number;
   onClickScript: (script: Script<T>, index: number) => void;
   onSelectWord: (word: string, script: Script<T>, index: number) => void;
   containerStyle?: ContainerStyle;
   textStyle?: TextStyle;
   timeStyle?: TimeStyle;
-  PrevButton?: ({ onClick }: { onClick: () => void }) => JSX.Element;
-  NextButton?: ({ onClick }: { onClick: () => void }) => JSX.Element;
+  PrevButton?: JSX.Element;
+  NextButton?: JSX.Element;
   FocusButton?: ({
-    isFocus,
-    setIsFocus,
+    isFocused,
+    setIsFocused,
   }: {
-    isFocus: boolean;
-    setIsFocus: Dispatch<SetStateAction<boolean>>;
+    isFocused: boolean;
+    setIsFocused: Dispatch<SetStateAction<boolean>>;
   }) => JSX.Element;
 }
 
@@ -38,7 +38,7 @@ export function ReactScriptPlayer<T extends string = LanguageCode>({
   scripts,
   selectedLanguages,
   seekTo,
-  currentTime,
+  getCurrentTime,
   onClickScript,
   onSelectWord,
   containerStyle,
@@ -48,7 +48,8 @@ export function ReactScriptPlayer<T extends string = LanguageCode>({
   NextButton,
   FocusButton,
 }: ReactScriptPlayerProps<T>) {
-  const currentScriptIndex = findCurrentScriptIndex(scripts, currentTime) ?? 0; // 동영상 재생에 동기화되는 script Index찾는 함수
+  const currentTime = getCurrentTime();
+  const currentScriptIndex = findCurrentScriptIndex(scripts, currentTime) ?? 0;
 
   const handleClickScript = (script: Script<T>, index: number) => {
     onClickScript(script, index);
