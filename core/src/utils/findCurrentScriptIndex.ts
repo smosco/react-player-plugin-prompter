@@ -1,34 +1,27 @@
 import { Script } from 'interfaces/Scripts';
 
-export const findCurrentScriptIndex = (
-  scripts: Script[] | undefined,
+export function findCurrentScriptIndex(
+  scripts: Script[],
   currentTime: number,
-  adjustmentTime: number = 0.3, // 자막을 약간 일찍 표시
-  extendedTime: number = 0, // 자막을 약간 늦게 종료
-): number | null => {
-  if (!scripts || scripts.length === 0) return null;
+): number {
+  let left = 0;
+  let right = scripts.length - 1;
 
-  const middleIndex = Math.floor(scripts.length / 2);
+  while (left <= right) {
+    const mid = Math.floor((left + right) / 2);
+    const script = scripts[mid];
 
-  if (currentTime < scripts[middleIndex].startTimeInSecond) {
-    // 앞부분 자막 탐색 (순차적으로)
-    const index = scripts.findIndex(
-      (script) =>
-        script.startTimeInSecond - adjustmentTime <= currentTime &&
-        script.startTimeInSecond + script.durationInSecond + extendedTime >=
-          currentTime,
-    );
-    return index !== -1 ? index : null;
+    if (
+      currentTime >= script.startTimeInSecond &&
+      currentTime < script.startTimeInSecond + script.durationInSecond
+    ) {
+      return mid;
+    } else if (currentTime < script.startTimeInSecond) {
+      right = mid - 1;
+    } else {
+      left = mid + 1;
+    }
   }
-  // 뒷부분 자막 탐색 (뒤에서부터)
-  const reversedScripts = [...scripts].reverse();
-  const index = reversedScripts.findIndex(
-    (script) =>
-      script.startTimeInSecond - adjustmentTime <= currentTime &&
-      script.startTimeInSecond + script.durationInSecond + extendedTime >=
-        currentTime,
-  );
-  return index !== -1
-    ? scripts.length - 1 - index // 원래 배열 기준 인덱스 반환
-    : null;
-};
+
+  return left; // 가장 가까운 다음 자막 인덱스 반환
+}

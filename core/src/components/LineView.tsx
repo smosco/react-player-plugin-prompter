@@ -1,11 +1,10 @@
 import React from 'react';
 import { LanguageCode, Script, TextStyle } from '../interfaces/Scripts';
-import useThrottling from 'hooks/useThrottling';
 import arrow_back from '../assets/icons/arrow_back.svg';
 import arrow_forward from '../assets/icons/arrow_forward.svg';
 import { TextDisplay } from './TextDisplay';
 import styles from './ReactScriptPlayer.module.scss';
-import { moveToScriptAtIndex } from '../utils/moveToScriptAtIndex';
+
 // LineView에 제네릭 T 추가
 interface LineViewProps<T extends string = LanguageCode> {
   scripts: Script<T>[];
@@ -14,8 +13,8 @@ interface LineViewProps<T extends string = LanguageCode> {
   seekTo: (timeInSeconds: number) => void;
   onSelectWord: (word: string, script: Script<T>, index: number) => void;
   textStyle?: TextStyle;
-  PrevButton?: ({ onClick }: { onClick: () => void }) => JSX.Element;
-  NextButton?: ({ onClick }: { onClick: () => void }) => JSX.Element;
+  PrevButton?: JSX.Element;
+  NextButton?: JSX.Element;
 }
 
 // LineView 컴포넌트에 제네릭 T를 적용
@@ -29,33 +28,33 @@ export function LineView<T extends string = LanguageCode>({
   PrevButton,
   NextButton,
 }: LineViewProps<T>) {
-  const throttledHandlePrevious = useThrottling({
-    buttonClicked: (currentScriptIndex: number) =>
-      moveToScriptAtIndex(currentScriptIndex - 1, scripts, seekTo),
-  });
-  const throttledHandleNext = useThrottling({
-    buttonClicked: (currentScriptIndex: number) =>
-      moveToScriptAtIndex(currentScriptIndex + 1, scripts, seekTo),
-  });
+  const handlePrevious = () => {
+    const prevIndex = Math.max(0, currentScriptIndex - 1); // 최소 0
+    // console.log('Previous Index:', prevIndex);
+    seekTo(scripts[prevIndex].startTimeInSecond); // 이전 자막으로 이동
+  };
 
-  // console.log(currentScriptIndex);
+  const handleNext = () => {
+    const nextIndex = Math.min(scripts.length - 1, currentScriptIndex + 1);
+    // console.log('Next Index:', nextIndex);
+    seekTo(scripts[nextIndex].startTimeInSecond);
+  };
 
   return (
     <div className={styles.lineViewContainer}>
       <div className={styles.skipButtonContainer}>
         {PrevButton ? (
-          <PrevButton
-            onClick={() => throttledHandlePrevious(currentScriptIndex)}
-          />
+          React.cloneElement(PrevButton, { onClick: handlePrevious })
         ) : (
-          <button onClick={() => throttledHandlePrevious(currentScriptIndex)}>
+          <button onClick={handlePrevious}>
             <img src={arrow_back} alt="Back Arrow" />
           </button>
         )}
+
         {NextButton ? (
-          <NextButton onClick={() => throttledHandleNext(currentScriptIndex)} />
+          React.cloneElement(NextButton, { onClick: handleNext })
         ) : (
-          <button onClick={() => throttledHandleNext(currentScriptIndex)}>
+          <button onClick={handleNext}>
             <img src={arrow_forward} alt="Forward Arrow" />
           </button>
         )}
