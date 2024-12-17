@@ -1,1 +1,0 @@
-{"version":3,"file":"useThrottling.d.ts","sourceRoot":"","sources":["../../src/hooks/useThrottling.ts"],"names":[],"mappings":"AAEA,UAAU,eAAe,CAAC,CAAC;IACzB,aAAa,EAAE,CAAC,GAAG,EAAE,CAAC,KAAK,IAAI,CAAC;IAChC,KAAK,CAAC,EAAE,MAAM,CAAC;CAChB;AAED,MAAM,CAAC,OAAO,UAAU,aAAa,CAAC,CAAC,EAAE,EACvC,aAAa,EACb,KAAY,GACb,EAAE,eAAe,CAAC,CAAC,CAAC,SAIX,CAAC,UAaV"}
